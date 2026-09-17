@@ -23,8 +23,8 @@ Add a short entry at the end of each work session.
 
 ### What Is Broken / Uncertain
 - No application code exists yet.
-- First target unit/workflow has not yet been selected in this project kickoff.
-- Exact first-report fields have not yet been defined.
+- First target unit/workflow had not yet been selected at initial kickoff.
+- Exact first-report fields had not yet been defined.
 - Future Epic/EHR access/export method is unknown and intentionally not blocking v0.1.
 
 ### Files Changed
@@ -49,5 +49,44 @@ Add a short entry at the end of each work session.
 ```text
 # Local repo already cloned.
 # Before beginning a new session after remote documentation changes:
+git pull
+```
+
+---
+
+## 2026-09-17 - ICU Prototype Added
+
+### What We Worked On
+- Added a concrete prototype artifact to the project workflow.
+- Resolved the first target unit.
+
+### What Changed
+- `Support Sheets/Report Sheet V.2 ICU - Prototype.pdf` is now the v0.1 design anchor.
+- ICU is now explicitly the first unit/workflow target.
+- The task board was changed from "choose a first unit" to "extract the ICU prototype into a structured field specification."
+
+### What Works
+- We no longer need to invent the first report layout from scratch.
+- The project now has a concrete artifact that can be decomposed into data requirements before implementation.
+
+### What Is Broken / Uncertain
+- The PDF still needs to be inspected field by field.
+- We have not yet classified which fields can be auto-populated, which need nurse input, and which are calculated/repeating.
+- Epic/EHR source mapping remains intentionally later than the report-field inventory.
+
+### Files Changed
+- Support Sheets/Report Sheet V.2 ICU - Prototype.pdf
+- Support Sheets/00_PROJECT_CONTEXT.md
+- Support Sheets/03_DECISIONS.md
+- Support Sheets/04_TASKS.md
+- Support Sheets/05_DEV_LOG.md
+- Support Sheets/09_CHATGPT_HANDOFF.md
+
+### Next Starting Point
+- Inspect the ICU prototype itself.
+- Build the first field inventory directly from the sheet rather than brainstorming a new report.
+
+### Commands / Setup Worth Remembering
+```text
 git pull
 ```
