@@ -90,3 +90,57 @@ git pull
 ```text
 git pull
 ```
+
+---
+
+## 2026-09-17 - ICU Field Model Checkpoint / WGU Pause
+
+### What We Worked On
+- Inspected the uploaded two-page ICU prototype and converted every visible section/field into a field inventory.
+- Began classifying the prototype into a normalized data model rather than treating it as a flat digital form.
+- Locked several Neuro/header modeling decisions and the project-wide source-preservation rule.
+
+### What Changed
+- Created `10_ICU_FIELD_INVENTORY.md` from the actual prototype.
+- Created `11_ICU_FIELD_CLASSIFICATION.md` for behavior/cardinality classification.
+- Created `12_ICU_MODEL_DECISIONS.md` for settled field-level decisions.
+- PMH, Diagnosis, and Allergies are discrete repeating lists.
+- A/O stores the final level plus specific deficits when abnormal.
+- Pupils preserve right/left size and reaction separately; equality is derived.
+- GCS preserves Eye/Verbal/Motor plus total.
+- NIHSS preserves full component detail plus total, with compact default display and expandable detail.
+- Extremity strength preserves RUE/LUE/RLE/LLE grades separately.
+- Governing rule established: preserve clinically relevant source data as source data; derived values stay separate and never overwrite source facts; missing source data stay missing.
+
+### Current Project State
+- Application code has **not** started.
+- Field inventory is complete.
+- Field classification/model design is in progress.
+- The project is intentionally paused because two additional WGU classes became available and school work is taking priority.
+
+### Exact Resume Point
+- Resume at the **Cardiac** section.
+- Rhythm follows the source-preservation rule.
+- Next unresolved structure: bilateral radial/pedal pulses and repeating edema findings with source-provided location/laterality/grade/type/detail.
+- After Cardiac, continue Respiratory -> GI -> GU -> remaining repeated/conditional sections.
+
+### Do Not Redo
+- Do not re-inspect the PDF from scratch.
+- Do not reopen settled Header/Neuro decisions without new evidence.
+- Do not choose a framework yet.
+- Do not begin Epic API/source mapping until the report field behavior pass is complete.
+
+### Files Changed This Checkpoint
+- Support Sheets/00_PROJECT_CONTEXT.md
+- Support Sheets/03_DECISIONS.md
+- Support Sheets/04_TASKS.md
+- Support Sheets/05_DEV_LOG.md
+- Support Sheets/09_CHATGPT_HANDOFF.md
+- Support Sheets/11_ICU_FIELD_CLASSIFICATION.md
+- Support Sheets/12_ICU_MODEL_DECISIONS.md
+
+### Commands / Setup Worth Remembering
+```text
+# Remote support docs were updated directly through GitHub.
+git pull
+```
