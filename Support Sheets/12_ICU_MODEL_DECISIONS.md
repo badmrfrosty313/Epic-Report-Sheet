@@ -167,3 +167,37 @@ Examples:
 
 Rationale:
 The application is not a replacement chart and should not become a second author of clinical facts. Its job is to preserve trusted source data, organize them into a useful ICU model, and render them efficiently for handoff.
+
+## Pause Checkpoint
+Project work paused on 2026-09-17 because two additional WGU classes became available.
+
+### Exact Resume Point
+Resume in the **Cardiac** section immediately after the completed Neuro pass.
+
+Next unresolved model shape:
+```text
+cardiac:
+  rhythm: <preserve source value/detail>
+  pulses:
+    radial:
+      right: <TBD source-preserved detail>
+      left: <TBD source-preserved detail>
+    pedal:
+      right: <TBD source-preserved detail>
+      left: <TBD source-preserved detail>
+  edema:
+    - <TBD repeating structured finding: location/laterality/grade/type/source detail>
+```
+
+Do not treat the sketch above as a final schema. It is a resume marker showing exactly which decisions remain.
+
+### Do Not Reopen on Resume
+- PMH/Diagnosis/Allergy list behavior.
+- A/O behavior.
+- Bilateral pupil behavior.
+- GCS component behavior.
+- NIHSS expandable-detail behavior.
+- Extremity strength behavior.
+- The source-preservation rule.
+
+Unless new evidence changes one of those assumptions, continue forward rather than re-litigating settled fields.
