@@ -127,3 +127,25 @@ Display behavior:
 
 Rationale:
 The report sheet needs rapid scanability, while an interactive digital version is not constrained to paper. Keeping the detailed assessment in the data model and exposing it on demand gives the nurse depth without turning the primary report into a wall of stroke-scale fields.
+
+### Extremity Strength / Grips / Pedals
+- Store strength as a **structured grade for each extremity**, not only a freeform `strong/weak` label.
+- Keep right and left upper and lower extremities independently addressable: `RUE`, `LUE`, `RLE`, `LLE`.
+- Preserve the actual documented strength grade from the source when available.
+- The report can render the four values compactly, while the normalized model keeps each extremity as its own structured field.
+- Do not infer a missing grade from narrative terms or manufacture a normal value when the source is absent.
+
+Conceptual normalized shape:
+```text
+strength:
+  rue: 5
+  lue: 5
+  rle: 4
+  lle: 4
+```
+
+Potential compact display:
+- `RUE 5/5 | LUE 5/5 | RLE 4/5 | LLE 4/5`
+
+Rationale:
+The prototype already separates upper and lower extremity findings by side. Since the application is intended to ingest charted data, retaining the documented structured grade avoids throwing away detail while still keeping the report scan-friendly.
