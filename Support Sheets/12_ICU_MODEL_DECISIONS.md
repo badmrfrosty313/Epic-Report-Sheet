@@ -99,3 +99,31 @@ Potential display examples:
 
 Rationale:
 The ICU prototype explicitly includes `GCS/EMV`, and the system is intended to ingest structured chart data. Preserving the component scores keeps clinically useful detail while allowing the printed report to remain compact.
+
+### NIHSS
+- Store the **full NIH Stroke Scale assessment at the item/component level** when those source data are available, plus the total NIHSS score.
+- The default ICU report view should remain compact and show the **total NIHSS score** rather than permanently consuming report space with every NIHSS component.
+- In the interactive application, the NIHSS field should be **expandable/clickable** so a nurse can open the full component breakdown when needed.
+- The expanded detail is a presentation behavior; the normalized model retains the detailed components regardless of whether they are currently visible.
+- Preserve source-provided component values and source-provided total when available. The application may calculate/validate a total from the components, but must not silently overwrite a conflicting source value.
+
+Conceptual normalized shape:
+```text
+nihss:
+  total: 4
+  items:
+    - item: "..."
+      score: 1
+    - item: "..."
+      score: 0
+```
+
+The exact NIHSS item names/codes should be mapped from the approved Epic/EHR source rather than invented in the prototype model.
+
+Display behavior:
+- Collapsed/default: `NIHSS 4`
+- Expanded: show the available structured item-by-item assessment beneath or beside the total.
+- Print/PDF output should default to the compact total unless a later workflow decision explicitly includes the expanded assessment.
+
+Rationale:
+The report sheet needs rapid scanability, while an interactive digital version is not constrained to paper. Keeping the detailed assessment in the data model and exposing it on demand gives the nurse depth without turning the primary report into a wall of stroke-scale fields.
