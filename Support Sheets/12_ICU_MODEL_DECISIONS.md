@@ -149,3 +149,21 @@ Potential compact display:
 
 Rationale:
 The prototype already separates upper and lower extremity findings by side. Since the application is intended to ingest charted data, retaining the documented structured grade avoids throwing away detail while still keeping the report scan-friendly.
+
+### Governing Source-Preservation Rule
+- If a value, code, unit, timestamp, status, label, component, or other clinically relevant attribute can be pulled directly from the approved Epic/EHR source, preserve it as **source data** rather than replacing it with a simplified interpretation.
+- Normalization may reorganize source facts into the application's internal model, but must not silently change their meaning.
+- Derived values, summaries, flags, comparisons, calculations, and display shorthand must be stored or generated separately from source values and clearly treated as **derived**.
+- A derived value must never overwrite the source value that produced it.
+- If source data are absent, the application should represent them as absent/unknown rather than inventing a normal/default value.
+- When practical, retain useful provenance metadata such as source field/resource identity, source timestamp, units, coded value, display text, and status so later UI or audit behavior can distinguish what Epic supplied from what the report engine calculated.
+- The UI may aggressively compress information for scanability, but expansion/detail views should be able to reveal the richer preserved source data when useful.
+
+Examples:
+- Pupil equality is derived from right/left pupil source values; the bilateral source values remain intact.
+- GCS total may be validated/calculated from E/V/M, but source components and source total remain intact.
+- NIHSS can display only the total by default while retaining all available source components underneath.
+- Rhythm should preserve the source-documented rhythm and any additional source detail we can legitimately ingest; presentation may shorten it without altering the stored source value.
+
+Rationale:
+The application is not a replacement chart and should not become a second author of clinical facts. Its job is to preserve trusted source data, organize them into a useful ICU model, and render them efficiently for handoff.
