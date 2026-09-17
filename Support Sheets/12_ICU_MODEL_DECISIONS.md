@@ -77,3 +77,25 @@ Derived display logic may later label pupils equal/unequal or summarize PERRLA-s
 
 Rationale:
 This project is intended to pull structured chart data rather than reproduce handwritten shorthand. Keeping size and reaction separately for each eye preserves the useful clinical detail while still allowing the final report to stay compact.
+
+### GCS / EMV
+- Store the full Glasgow Coma Scale component scores, not only the final total.
+- Preserve **Eye**, **Verbal**, and **Motor** as separate structured values.
+- Also retain the total GCS score when supplied by the source.
+- The application may calculate the total from the three components for validation/display, but a calculated value should not silently overwrite a source-provided total if they disagree.
+
+Proposed normalized shape:
+```text
+gcs:
+  eye: 4
+  verbal: 5
+  motor: 6
+  total: 15
+```
+
+Potential display examples:
+- `GCS 15 (E4 V5 M6)`
+- `GCS 10 (E3 V2 M5)`
+
+Rationale:
+The ICU prototype explicitly includes `GCS/EMV`, and the system is intended to ingest structured chart data. Preserving the component scores keeps clinically useful detail while allowing the printed report to remain compact.
