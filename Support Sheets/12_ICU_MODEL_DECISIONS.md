@@ -37,3 +37,43 @@ Display rule:
 
 Rationale:
 The report should preserve the compact bedside shorthand while retaining the clinically useful exception when the patient is not fully oriented.
+
+### PERRLA / Pupils
+- Model the **right and left pupil separately** because the report sheet already gives each eye its own field and future EHR ingestion should preserve source detail rather than flattening it.
+- For each eye, store at minimum:
+  - pupil size in millimeters
+  - reaction to light
+- Do not store only a derived `PERRLA = true/false` value.
+- Pupil equality should be **derived from the two recorded pupil sizes**, not entered as an independent source-of-truth field.
+- The report may render a compact summary when findings are normal, but the normalized model keeps the detailed right/left values.
+
+Proposed normalized shape:
+```text
+pupils:
+  right:
+    size_mm: 3
+    reaction: "brisk"
+  left:
+    size_mm: 3
+    reaction: "brisk"
+```
+
+Example abnormal/asymmetric data:
+```text
+pupils:
+  right:
+    size_mm: 4
+    reaction: "sluggish"
+  left:
+    size_mm: 3
+    reaction: "brisk"
+```
+
+Potential display examples:
+- `R 3 mm brisk | L 3 mm brisk`
+- `R 4 mm sluggish | L 3 mm brisk`
+
+Derived display logic may later label pupils equal/unequal or summarize PERRLA-style normality, but derived labels must never overwrite or replace the source values.
+
+Rationale:
+This project is intended to pull structured chart data rather than reproduce handwritten shorthand. Keeping size and reaction separately for each eye preserves the useful clinical detail while still allowing the final report to stay compact.
