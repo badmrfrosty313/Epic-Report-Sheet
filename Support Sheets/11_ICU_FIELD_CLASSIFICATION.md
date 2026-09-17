@@ -15,13 +15,23 @@ This file separates what can be inferred safely from the prototype's layout from
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
 |---|---|---|---|---|
 | Room Number | Scalar structured | text | single | TBD |
-| PMH | Narrative or repeating diagnoses/history | TBD | TBD | TBD |
+| PMH | Repeating structured | history/problem item | zero or more | TBD |
 | Patient Name | Scalar structured | text | single | TBD |
 | Age | Scalar structured | integer/number | single | TBD |
 | Wt | Scalar structured | decimal + unit | single | TBD |
 | Code | Scalar structured | coded/text value | single | TBD |
-| Diagnosis | Narrative or repeating diagnosis items | TBD | TBD | TBD |
-| Allergies | Narrative or repeating allergy items | TBD | TBD | TBD |
+| Diagnosis | Repeating structured | diagnosis item | zero or more | TBD |
+| Allergies | Repeating structured | allergy item | zero or more | TBD |
+
+### Header List Decision
+PMH, Diagnosis, and Allergies are discrete lists in the normalized model, not freeform text blocks. The report template may render them compactly, but each item remains independently addressable so source metadata can be retained and future Epic/EHR ingestion can map cleanly into the model.
+
+Likely conceptual source categories to validate during Epic mapping:
+- PMH: medical-history/problem-list conditions.
+- Diagnosis: encounter/admission/visit/discharge diagnoses as appropriate to the ICU workflow.
+- Allergies: patient-chart allergy/intolerance records.
+
+Exact Epic API/resource fields, authorization, customer configuration, and which diagnosis category belongs on this specific report remain source-mapping decisions rather than assumptions in the normalized model.
 
 ## Neuro
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
@@ -185,11 +195,14 @@ Proposed behavior: scalar structured result values for v0.1 display. Whether to 
 5. `Treatment` is narrative/freeform.
 6. Named labs are structured result fields, not one lab text blob.
 7. Conditional therapies/devices should not require fabricated/default values when absent.
+8. PMH is a discrete repeating list of history/problem items.
+9. Diagnosis is a discrete repeating list of diagnosis items.
+10. Allergies is a discrete repeating list of allergy items.
 
 ## Clinical / Workflow Decisions Still Needed
-1. PMH, Diagnosis, and Allergies: freeform text vs discrete repeating items.
-2. Exact representation of A/O, PERRLA, GCS/EMV, grips, pedals, pulses, edema, lung findings, abdomen, and urine.
-3. Which fields are mandatory for every ICU report vs conditional/optional.
-4. Whether BGM should be stored as fixed slots or timestamped readings.
-5. Whether Pain is one current assessment or a repeating/time-based set.
-6. Which metadata labs should retain beyond the displayed value.
+1. Exact representation of A/O, PERRLA, GCS/EMV, grips, pedals, pulses, edema, lung findings, abdomen, and urine.
+2. Which fields are mandatory for every ICU report vs conditional/optional.
+3. Whether BGM should be stored as fixed slots or timestamped readings.
+4. Whether Pain is one current assessment or a repeating/time-based set.
+5. Which metadata labs should retain beyond the displayed value.
+6. Which Epic diagnosis category should populate the report's `Diagnosis` list for the ICU workflow.
