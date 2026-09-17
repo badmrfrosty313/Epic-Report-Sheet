@@ -1,26 +1,46 @@
-# Project Bootstrap Pack
+# Epic Report Sheet - Support Sheets
 
-This folder is a reusable context system for new software, automation, research, hardware, or portfolio projects.
+This folder is the persistent project memory for Epic Report Sheet. It exists so architecture, scope, decisions, tasks, testing, and handoff context survive across work sessions instead of being reconstructed from chat history.
 
-## Recommended workflow
+## Current Project Snapshot
 
-1. Copy this folder into the new project.
-2. Fill out `00_PROJECT_CONTEXT.md` first.
-3. Use `01_REQUIREMENTS.md` and `02_ARCHITECTURE.md` before major implementation.
-4. Record irreversible or important choices in `03_DECISIONS.md`.
-5. Keep active work in `04_TASKS.md`.
-6. Add a short entry to `05_DEV_LOG.md` after each meaningful work session.
-7. Keep setup/version information in `06_TECH_STACK.md`.
-8. Build test coverage from `07_TEST_PLAN.md`.
-9. Dump distracting future ideas into `08_IDEAS_PARKING_LOT.md`.
-10. When opening a fresh ChatGPT thread, attach the relevant source files plus `09_CHATGPT_HANDOFF.md`.
+Epic Report Sheet is in **Planning** as of **2026-09-17**. The v0.1 finish line is intentionally narrow:
 
-## Minimum viable set
+> A realistic mock patient goes in and a useful, readable, printable first-unit nursing report sheet comes out.
 
-For a small project, you only need:
-- `00_PROJECT_CONTEXT.md`
-- `03_DECISIONS.md`
-- `04_TASKS.md`
-- `09_CHATGPT_HANDOFF.md`
+Live Epic connectivity is **not** required for v0.1. Prototype development uses mock/de-identified data, and the architecture keeps future EHR ingestion separate from the normalized patient model and report presentation.
 
-The other files become useful as complexity increases.
+## File Guide
+
+1. `00_PROJECT_CONTEXT.md` - purpose, scope, constraints, and definition of done.
+2. `01_REQUIREMENTS.md` - functional/non-functional requirements and acceptance criteria.
+3. `02_ARCHITECTURE.md` - system boundaries and data flow.
+4. `03_DECISIONS.md` - settled decisions, assumptions, and open questions.
+5. `04_TASKS.md` - active task board and v0.1 finish line.
+6. `05_DEV_LOG.md` - chronological work-session record.
+7. `06_TECH_STACK.md` - selected tools/versions; stack is currently intentionally TBD.
+8. `07_TEST_PLAN.md` - automated and manual validation strategy.
+9. `08_IDEAS_PARKING_LOT.md` - future ideas that should not derail v0.1.
+10. `09_CHATGPT_HANDOFF.md` - compact context for resuming work in a new conversation.
+
+## Working Rhythm
+
+At the beginning of a session:
+1. Read `09_CHATGPT_HANDOFF.md`.
+2. Check `04_TASKS.md` for the current objective.
+3. Pull the latest repository state.
+
+During a session:
+1. Keep the current objective narrow.
+2. Record important architecture/scope decisions in `03_DECISIONS.md`.
+3. Put tempting nonessential ideas in `08_IDEAS_PARKING_LOT.md` instead of expanding scope.
+4. Preserve working states before large experiments.
+
+At the end of a meaningful session:
+1. Update `04_TASKS.md`.
+2. Add an entry to `05_DEV_LOG.md`.
+3. Refresh `09_CHATGPT_HANDOFF.md` if the project state materially changed.
+4. Commit the finished state.
+
+## Immediate Next Move
+Define the first nursing report's purpose, target unit/workflow, and exact information requirements. The implementation stack comes after that decision, not before it.
