@@ -12,10 +12,10 @@ Nurses spend time manually gathering and reorganizing information from the EHR i
 The idea comes from real hospital workflow experience with Epic, but this repository is an independent project and is not affiliated with Epic Systems.
 
 ## Primary Goal
-Produce a working prototype that can accept safe/mock patient data and generate a practical nursing report sheet with a clear path toward later automation from permitted EHR data sources.
+Produce a working prototype that can accept safe/mock patient data and generate a practical ICU nursing report sheet with a clear path toward later automation from permitted EHR data sources.
 
 ## Secondary Goals
-- Support unit-specific report layouts, beginning with a clearly defined first unit/workflow.
+- Use the existing ICU report-sheet prototype as the first concrete product specification.
 - Make the report useful on screen and printable without duplicating data-entry work.
 - Separate the patient-data model from the visual report layout so new unit templates can be added later.
 - Document what Epic data would be needed and how each source field maps to the report.
@@ -24,34 +24,37 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Do not access a live Epic environment, scrape Epic, bypass access controls, or depend on undocumented/private interfaces.
 - Do not use real PHI during prototype development.
 - Do not attempt to reproduce the entire EHR.
-- Do not build every unit-specific report before the first workflow is validated.
+- Do not build every unit-specific report before the ICU workflow is validated.
 
 ## Intended Users
-- Primary: bedside nurses receiving and giving shift report.
-- Later: unit educators, charge nurses, or organizations that want standardized report-sheet templates.
+- Primary: ICU bedside nurses receiving and giving shift report.
+- Later: nurses on additional units, unit educators, charge nurses, or organizations that want standardized report-sheet templates.
 
 ## Current Status
-- Stage: Planning
+- Stage: Planning / Prototype Definition
 - Last updated: 2026-09-17
-- Current focus: Define the first report's purpose, workflow, and required data before implementation.
+- Current focus: Convert `Report Sheet V.2 ICU - Prototype.pdf` into an explicit field/data specification and workflow requirements.
 - Repository: badmrfrosty313/Epic-Report-Sheet
 
 ## Constraints
 - Budget: Prefer free/local development tools during prototype work.
 - Time: Build the smallest useful vertical slice before expanding scope.
 - Hardware: Must be practical to develop on the existing Windows laptop.
-- Software/platform: Technology stack is intentionally not locked until the first workflow and interface requirements are defined.
+- Software/platform: Technology stack is intentionally not locked until the ICU workflow and interface requirements are defined.
 - Legal/safety/privacy: Prototype with mock/de-identified data only. Any future clinical deployment would require organizational authorization, privacy/security review, and approved integration methods.
 - Other: Epic access/export capabilities are currently unknown and must be investigated rather than assumed.
 
 ## Definition of Done
-- [ ] First nursing workflow and report purpose are explicitly defined.
-- [ ] Required report fields are documented and mapped to conceptual EHR/Epic source data.
-- [ ] Prototype accepts mock patient data and produces the first usable report sheet.
-- [ ] Report is validated against a realistic nursing handoff scenario.
+- [x] First target unit selected: ICU.
+- [x] Existing ICU report-sheet prototype added to the repository.
+- [ ] ICU report purpose/workflow is explicitly defined.
+- [ ] Prototype fields are inventoried and documented.
+- [ ] Required report fields are mapped to conceptual EHR/Epic source data.
+- [ ] Application accepts mock patient data and produces the first usable ICU report sheet.
+- [ ] Report is validated against a realistic ICU nursing handoff scenario.
 - [ ] Print/export behavior is usable.
 - [ ] Architecture leaves a clean boundary for future authorized data integration.
 - [ ] Usage/setup documentation is sufficient to run the prototype again without reconstructing prior decisions.
 
 ## Important Context for ChatGPT
-This is a workflow project first and an Epic integration project later. Preserve the separation between data ingestion, normalized patient data, and report presentation. Start with mock data and a real nursing use case. Avoid artificial complexity and do not let future interoperability work block the first usable prototype.
+This is a workflow project first and an Epic integration project later. The existing ICU PDF prototype is the design anchor for v0.1; do not casually redesign it before understanding why its sections exist. Preserve the separation between data ingestion, normalized patient data, and report presentation. Start with mock data and the real ICU use case. Avoid artificial complexity and do not let future interoperability work block the first usable prototype.
