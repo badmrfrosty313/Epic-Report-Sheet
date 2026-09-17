@@ -4,12 +4,23 @@ Source: `10_ICU_FIELD_INVENTORY.md`, transcribed from `Report Sheet V.2 ICU - Pr
 
 This file separates what can be inferred safely from the prototype's layout from decisions that still require clinical/workflow confirmation. `TBD` means the prototype does not provide enough information to decide without inventing behavior.
 
+## Checkpoint Status
+- Field inventory: complete.
+- Header modeling: partially resolved.
+- Neuro modeling: resolved for the current v0.1 specification.
+- **Resume next at Cardiac.**
+- Project paused 2026-09-17 while two newly available WGU classes take priority.
+
 ## Classification Key
 - **Scalar structured**: one discrete value for the patient/report.
 - **Repeating structured**: zero or more records sharing the same fields.
 - **Narrative**: freeform text.
-- **Composite / TBD**: visibly structured concept, but exact software representation needs workflow confirmation.
+- **Composite structured**: multiple related source values represented together.
 - **Conditional**: relevant only when the corresponding therapy/device/condition applies.
+- **Derived**: calculated/summarized from preserved source fields and never used to overwrite them.
+
+## Governing Rule
+Preserve clinically relevant source values and useful provenance that can legitimately be pulled from the approved Epic/EHR source. Normalization may reorganize those facts but must not silently reinterpret them. Derived values/display shorthand remain separate. Missing source data remain missing rather than being defaulted to normal.
 
 ## Patient / Header
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
@@ -34,27 +45,36 @@ Likely conceptual source categories to validate during Epic mapping:
 Exact Epic API/resource fields, authorization, customer configuration, and which diagnosis category belongs on this specific report remain source-mapping decisions rather than assumptions in the normalized model.
 
 ## Neuro
-| Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
+| Field | Behavior | Data Shape | Cardinality | Required Status |
 |---|---|---|---|---|
-| A/O | Composite / structured | TBD | single | TBD |
-| PERRLA - Right | Composite / structured | TBD | single | TBD |
-| PERRLA - Left | Composite / structured | TBD | single | TBD |
-| GCS/EMV | Composite / structured | TBD | single | TBD |
-| NIH | Scalar structured | integer/score | single | Conditional/TBD |
-| Grips - RUE | Scalar structured | categorical/text | single | TBD |
-| Grips - LUE | Scalar structured | categorical/text | single | TBD |
-| Pedals - RLE | Scalar structured | categorical/text | single | TBD |
-| Pedals - LLE | Scalar structured | categorical/text | single | TBD |
+| A/O | Composite structured | final orientation level + explicit deficit list when abnormal | single | TBD |
+| PERRLA - Right | Composite structured | pupil size mm + reaction | single | TBD |
+| PERRLA - Left | Composite structured | pupil size mm + reaction | single | TBD |
+| GCS/EMV | Composite structured | Eye + Verbal + Motor + total | single assessment/current display | TBD |
+| NIH | Composite structured | full NIHSS item breakdown + total | conditional/current assessment | Conditional/TBD |
+| Grips - RUE | Scalar structured | documented strength grade | single | TBD |
+| Grips - LUE | Scalar structured | documented strength grade | single | TBD |
+| Pedals - RLE | Scalar structured | documented strength grade | single | TBD |
+| Pedals - LLE | Scalar structured | documented strength grade | single | TBD |
 | Misc | Narrative | text | single | Optional |
 
-## Cardiac
+### Neuro Display / Derivation Rules
+- A/O displays compactly as `A/O x4`; if below x4, include the specific disoriented domain(s).
+- Pupil equality/symmetry is derived from right/left source values; the bilateral source data remain intact.
+- GCS may display as `GCS 15 (E4 V5 M6)` while preserving component and total source values.
+- NIHSS shows total by default in the primary report; the interactive UI may expand to the full item-level assessment.
+- Extremity strength remains side-specific and limb-specific. Missing strength grades are not assumed normal.
+
+## Cardiac — RESUME HERE
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
 |---|---|---|---|---|
-| Rhythm | Scalar structured | coded/text value | single | TBD |
-| Pulses - Radial | Composite / structured | TBD | single | TBD |
-| Pulses - Pedal | Composite / structured | TBD | single | TBD |
-| Edema | Composite / structured | TBD | single | TBD |
+| Rhythm | Scalar/composite source-preserved | coded/text source value + available metadata/detail | single/current | TBD |
+| Pulses - Radial | Composite structured | **TBD: bilateral right/left pulse detail** | TBD | TBD |
+| Pulses - Pedal | Composite structured | **TBD: bilateral right/left pulse detail** | TBD | TBD |
+| Edema | Repeating structured candidate | **TBD: location/laterality/grade/type/source detail** | zero or more | TBD |
 | Misc | Narrative | text | single | Optional |
+
+Immediate next decision when project resumes: confirm bilateral radial/pedal pulse structure and repeating edema findings while preserving everything useful from source.
 
 ## Respiratory
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
@@ -130,17 +150,17 @@ Per drip record:
 | Medication | Repeating structured | text/coded medication |
 | Rate | Repeating structured | decimal/text + unit |
 
-Exact rate representation is TBD because the prototype does not specify units.
+Exact rate representation is TBD because the prototype does not specify units. When source data provide units/timestamps/status, preserve them.
 
 ## BGM
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
 |---|---|---|---|---|
-| 8a | Scalar structured | decimal/number | single time slot | Conditional/TBD |
-| 12p | Scalar structured | decimal/number | single time slot | Conditional/TBD |
-| 16p | Scalar structured | decimal/number | single time slot | Conditional/TBD |
+| 8a | Scalar structured | decimal/number | single display slot | Conditional/TBD |
+| 12p | Scalar structured | decimal/number | single display slot | Conditional/TBD |
+| 16p | Scalar structured | decimal/number | single display slot | Conditional/TBD |
 | Misc | Narrative | text | single | Optional |
 
-The prototype uses fixed display slots. We still need to decide whether the underlying software model should use fixed slots or timestamped glucose measurements and merely render these slots.
+The prototype uses fixed display slots. We still need to decide whether the underlying software model stores timestamped glucose measurements and merely renders the appropriate display slots.
 
 ## Pain
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
@@ -158,7 +178,7 @@ The prototype does not show whether multiple pain assessments should be retained
 - Required status: TBD.
 
 ## Labs
-All named lab fields are discrete structured values in the prototype. Software should keep the numeric/result value separate from display formatting and units if source data eventually provide them.
+All named lab fields are discrete structured values in the prototype. Software should preserve result values and any available source units/timestamps/status/flags/reference information separately from report formatting.
 
 Fields:
 - WBC
@@ -185,9 +205,7 @@ Fields:
 - Phos
 - Mag
 
-Proposed behavior: scalar structured result values for v0.1 display. Whether to retain timestamps, reference ranges, abnormal flags, units, and result history in the normalized model is TBD.
-
-## Decisions We Can Lock In Now
+## Decisions Locked So Far
 1. IV access is a repeating collection.
 2. Skin findings are a repeating collection.
 3. IV drips are a repeating collection.
@@ -198,11 +216,21 @@ Proposed behavior: scalar structured result values for v0.1 display. Whether to 
 8. PMH is a discrete repeating list of history/problem items.
 9. Diagnosis is a discrete repeating list of diagnosis items.
 10. Allergies is a discrete repeating list of allergy items.
+11. A/O stores final orientation level plus specific deficits when abnormal.
+12. Pupils preserve bilateral size/reaction; equality is derived.
+13. GCS preserves E/V/M plus total.
+14. NIHSS preserves item-level detail plus total and is expandable in the digital UI.
+15. Extremity strength preserves RUE/LUE/RLE/LLE documented grades separately.
+16. Source facts are preserved; derived values remain separate; missing data are never defaulted to normal.
 
 ## Clinical / Workflow Decisions Still Needed
-1. Exact representation of A/O, PERRLA, GCS/EMV, grips, pedals, pulses, edema, lung findings, abdomen, and urine.
-2. Which fields are mandatory for every ICU report vs conditional/optional.
-3. Whether BGM should be stored as fixed slots or timestamped readings.
-4. Whether Pain is one current assessment or a repeating/time-based set.
-5. Which metadata labs should retain beyond the displayed value.
-6. Which Epic diagnosis category should populate the report's `Diagnosis` list for the ICU workflow.
+1. Cardiac pulses and edema structure.
+2. Exact representation of lung findings, abdomen, and urine.
+3. Which fields are mandatory for every ICU report vs conditional/optional.
+4. Whether BGM should be stored as timestamped readings beneath fixed display slots.
+5. Whether Pain is one current assessment or a repeating/time-based set.
+6. Which metadata labs should retain beyond what the approved source provides and what the report needs to display.
+7. Which Epic diagnosis category should populate the report's `Diagnosis` list for the ICU workflow.
+
+## Resume Pin
+**Next action: Cardiac -> bilateral radial/pedal pulses + repeating edema structure.** Do not restart the Header or Neuro pass.
