@@ -31,9 +31,11 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Later: nurses on additional units, unit educators, charge nurses, or organizations that want standardized report-sheet templates.
 
 ## Current Status
-- Stage: Planning / Prototype Definition
+- Stage: **Paused checkpoint / ICU model definition in progress**
 - Last updated: 2026-09-17
-- Current focus: Convert `Report Sheet V.2 ICU - Prototype.pdf` into an explicit field/data specification and workflow requirements.
+- Pause reason: Two additional WGU classes became available, so school work temporarily takes priority.
+- Completed before pause: ICU selected, prototype captured, full visible-field inventory created, and several field-behavior/model decisions locked.
+- Exact resume point: **Cardiac section**, beginning with source-preserving rhythm/pulse/edema modeling. The next unresolved decision is bilateral radial/pedal pulse structure and repeating edema findings.
 - Repository: badmrfrosty313/Epic-Report-Sheet
 
 ## Constraints
@@ -48,7 +50,8 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - [x] First target unit selected: ICU.
 - [x] Existing ICU report-sheet prototype added to the repository.
 - [ ] ICU report purpose/workflow is explicitly defined.
-- [ ] Prototype fields are inventoried and documented.
+- [x] Prototype fields are inventoried and documented.
+- [ ] Field behavior/classification is completed for every section.
 - [ ] Required report fields are mapped to conceptual EHR/Epic source data.
 - [ ] Application accepts mock patient data and produces the first usable ICU report sheet.
 - [ ] Report is validated against a realistic ICU nursing handoff scenario.
@@ -58,3 +61,9 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 
 ## Important Context for ChatGPT
 This is a workflow project first and an Epic integration project later. The existing ICU PDF prototype is the design anchor for v0.1; do not casually redesign it before understanding why its sections exist. Preserve the separation between data ingestion, normalized patient data, and report presentation. Start with mock data and the real ICU use case. Avoid artificial complexity and do not let future interoperability work block the first usable prototype.
+
+### Source-Preservation Rule
+Preserve clinically relevant values, codes, units, timestamps, statuses, labels, components, and other useful attributes that can legitimately be pulled from an approved Epic/EHR source. Derived summaries, flags, calculations, and display shorthand remain separate and must never overwrite source facts. Missing source data stay missing rather than defaulting to normal.
+
+### Resume Rule
+When this project resumes, do **not** restart discovery, re-inventory the PDF, or reopen settled Neuro decisions. Continue from the Cardiac section using `11_ICU_FIELD_CLASSIFICATION.md`, `12_ICU_MODEL_DECISIONS.md`, and `09_CHATGPT_HANDOFF.md`.
