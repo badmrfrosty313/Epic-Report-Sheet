@@ -92,11 +92,11 @@ Exact Epic API/resource fields, authorization, customer configuration, and which
 | Vent - Tidal Volume | Scalar structured | decimal/number + unit | single | Conditional |
 | Vent - PEEP | Scalar structured | decimal/number + unit | single | Conditional |
 | Vent - Rate | Scalar structured | integer/number | single | Conditional |
-| Lungs - RUL | Scalar structured | categorical/text | single | TBD |
-| Lungs - LUL | Scalar structured | categorical/text | single | TBD |
-| Lungs - RML | Scalar structured | categorical/text | single | TBD |
-| Lungs - RLL | Scalar structured | categorical/text | single | TBD |
-| Lungs - LLL | Scalar structured | categorical/text | single | TBD |
+| Lungs - RUL | Source-preserved / derived display | one effective value per lobe; may derive from right-lung source scope | single displayed value | TBD |
+| Lungs - LUL | Source-preserved / derived display | one effective value per lobe; may derive from left-lung source scope | single displayed value | TBD |
+| Lungs - RML | Source-preserved / derived display | one effective value per lobe; may derive from right-lung source scope | single displayed value | TBD |
+| Lungs - RLL | Source-preserved / derived display | one effective value per lobe; may derive from right-lung source scope | single displayed value | TBD |
+| Lungs - LLL | Source-preserved / derived display | one effective value per lobe; may derive from left-lung source scope | single displayed value | TBD |
 | Misc | Narrative | text | single | Optional |
 
 ### Respiratory Oxygen / FiO2 Decision
@@ -106,6 +106,15 @@ Exact Epic API/resource fields, authorization, customer configuration, and which
 - `LPM` represents source flow rate when applicable to the oxygen device/method.
 - Conditional logic should allow these fields to coexist when the source documents both device/flow and FiO2; the model should not force one mutually exclusive respiratory mode.
 - Display can remain compact while richer device/settings detail stays available underneath.
+
+### Lung Finding Scope Decision
+- The report displays **one effective value per lobe**: RUL, RML, RLL, LUL, and LLL.
+- Preserve the scope actually documented by the source. A source finding may be lobe-specific, right-lung-wide, or left-lung-wide.
+- If the source records only a **right-lung** value, the report may derive that value across RUL/RML/RLL for display.
+- If the source records only a **left-lung** value, the report may derive that value across LUL/LLL for display.
+- Those derived lobe display values must remain distinguishable from true lobe-specific source observations.
+- If a lobe-specific source value exists, it takes precedence for that lobe over the broader side-level display derivation.
+- Do not create duplicate source observations merely to satisfy the five-lobe paper layout.
 
 ## GI
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
@@ -238,8 +247,8 @@ Fields:
 16. Source facts are preserved; derived values remain separate; missing data are never defaulted to normal.
 
 ## Clinical / Workflow Decisions Still Needed
-1. Exact representation of lung findings by lobe/site.
-2. Exact representation of abdomen and urine.
+1. Exact representation of abdomen and urine.
+2. Mandatory vs conditional/optional field pass.
 3. Which fields are mandatory for every ICU report vs conditional/optional.
 4. Whether BGM should be stored as timestamped readings beneath fixed display slots.
 5. Whether Pain is one current assessment or a repeating/time-based set.
@@ -247,4 +256,4 @@ Fields:
 7. Which Epic diagnosis category should populate the report's `Diagnosis` list for the ICU workflow.
 
 ## Resume Pin
-**Next action: Respiratory -> model lobe-specific lung findings while preserving richer source detail.** Oxygen/LPM/FiO2 semantics are now resolved.
+**Next action: GI -> define the Abdomen field structure.** Respiratory oxygen/flow/FiO2 and lung-scope behavior are resolved for the current pass.
