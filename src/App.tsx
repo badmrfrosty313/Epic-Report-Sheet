@@ -142,6 +142,20 @@ export default function App() {
               <DisplayField key={name} label={name} field={value} />
             ))}
           </Section>
+
+          <Section title="Radiology">
+            {report.radiology.length ? (
+              report.radiology.map((item, index) => (
+                <DisplayField
+                  key={index}
+                  label={`Study ${index + 1}`}
+                  field={item}
+                />
+              ))
+            ) : (
+              <p className="missing section-message">No radiology results</p>
+            )}
+          </Section>
         </div>
 
         <div className="report-column">
