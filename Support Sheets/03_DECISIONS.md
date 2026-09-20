@@ -13,6 +13,7 @@ Use this file to prevent us from repeatedly reopening settled questions.
 | 2026-09-17 | `Report Sheet V.2 ICU - Prototype.pdf` is the v0.1 design anchor. | The first software version should reproduce and automate a real report workflow before redesigning it. | Inventing a fresh UI before extracting requirements from the existing prototype. | Yes, after the first working version is validated |
 | 2026-09-17 | Preserve source data as source data and keep derived values separate. | The app should organize trusted chart facts, not silently reinterpret or overwrite them. | Flattening rich source data into simplified report-only values or inventing defaults. | No |
 | 2026-09-17 | Pause project work at the Cardiac modeling boundary while two newly available WGU classes take priority. | Preserve momentum without creating half-finished implementation work or losing the exact resume point. | Continuing project work in parallel and fragmenting focus. | Resume after current school push |
+| 2026-09-20 | Epic/source structure is the modeling authority; the ICU PDF is a workflow/display reference, not a schema contract. | The application should reflect how the EHR actually stores and exposes clinical data rather than forcing source data into handwritten-paper assumptions. | Preserving the paper sheet field-for-field even when Epic organizes the data differently. | No |
 
 ## Settled Field-Model Decisions So Far
 - PMH, Diagnosis, and Allergies are discrete repeating lists.
@@ -47,7 +48,7 @@ Use this file to prevent us from repeatedly reopening settled questions.
 ## Known Tradeoffs
 - Mock data proves workflow and software behavior but does not prove Epic integration feasibility.
 - A first-unit ICU focus intentionally postpones broader template design.
-- Using the existing paper/PDF layout as the design anchor may preserve some manual-workflow constraints initially; we can improve them after the first automated version is working.
+- The ICU PDF remains a workflow/display anchor, but it no longer constrains the canonical data shape. If Epic's actual structure differs, the model and report layout should change to fit the source reality while preserving nurse scanability.
 - Delaying the tech-stack decision costs almost nothing now and reduces the chance of choosing tools that fight the actual interface requirements.
 
 ## Resume Pin
