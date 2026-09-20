@@ -1,109 +1,113 @@
 # ChatGPT Handoff
 
-Use this file when starting a new ChatGPT conversation or returning after a long break.
-
 ## Project
 Epic Report Sheet
 
 ## Objective
-Build a digital nursing report-sheet system that takes structured patient data and produces a useful, unit-specific shift-report view, with a future path to authorized Epic/EHR data ingestion.
+Build a digital ICU nursing report system that ingests structured patient/encounter data, preserves Epic/EHR source semantics and provenance, and projects that data into a fast nurse-friendly handoff view with screen and print/export output.
 
-## Current State
-- Repository exists at `badmrfrosty313/Epic-Report-Sheet` and has been cloned locally.
-- Application implementation has not started.
-- ICU is the first target unit/workflow.
-- `Support Sheets/Report Sheet V.2 ICU - Prototype.pdf` is the concrete v0.1 design anchor.
-- The full visible-field inventory has been completed from the prototype.
-- Field behavior/model classification is partially complete through the Header and Neuro sections.
-- v0.1 is deliberately independent of live Epic access.
-- Initial architecture remains: input adapter -> normalized patient/report model -> validation -> report engine/unit template -> screen + print/export.
-- Prototype data must be mock or safely de-identified.
-- Implementation stack remains TBD until the ICU field/workflow model is sufficiently defined.
-- Project resumed on **2026-09-20** from the pinned Cardiac checkpoint.
+## Current State — 2026-09-20
+- Repo: `badmrfrosty313/Epic-Report-Sheet`.
+- ICU is the first target workflow.
+- Application code has not started.
+- The two-page ICU PDF has been fully inventoried.
+- **All prototype fields have now been mapped conceptually to Epic/FHIR source domains.**
+- The comprehensive map is `Support Sheets/13_EPIC_SOURCE_MAP.md`.
+- The source map is based on Epic's public FHIR/API catalog and specifications; exact customer-specific flowsheet/LDA codes remain deployment configuration.
+- Live Epic access is not required for v0.1.
+- Mock/de-identified source-shaped fixtures only during prototype development.
 
-## What We Just Finished
-- Inspected the actual two-page ICU prototype rather than brainstorming a replacement.
-- Created `10_ICU_FIELD_INVENTORY.md` with every visible field/section.
-- Created `11_ICU_FIELD_CLASSIFICATION.md` for field behavior/cardinality.
-- Created `12_ICU_MODEL_DECISIONS.md` for settled model choices.
-- Locked PMH, Diagnosis, and Allergies as discrete repeating lists.
-- Locked A/O as final orientation level plus specific deficits when abnormal.
-- Locked bilateral pupil detail: right/left size and reaction; equality is derived.
-- Locked GCS as Eye + Verbal + Motor + total.
-- Locked NIHSS as full structured detail + total, compact by default and expandable in the digital UI.
-- Locked RUE/LUE/RLE/LLE strength grades separately.
-- Locked the project-wide source-preservation rule.
+## Governing Architecture
+`Epic/EHR adapter -> source-preserving normalized model -> validation/selection -> ICU report projection -> interactive UI + print/export`
 
-## Governing Source-Preservation Rule
-If clinically relevant data can legitimately be pulled directly from an approved Epic/EHR source, preserve the original source facts and useful provenance when practical: values, codes, units, timestamps, statuses, labels, components, etc. Normalization may reorganize those facts but must not silently reinterpret them. Derived summaries, flags, calculations, comparisons, and display shorthand remain separate and never overwrite source data. Missing source data remain missing rather than becoming invented normal/default values.
+### Epic-First Rule
+Epic/source reality is the modeling authority. The ICU PDF is a workflow/display reference only. If the EHR stores a concept differently than the paper sheet, change the model and report rather than forcing Epic into paper boxes.
 
-## Epic-First Modeling Rule
-From 2026-09-20 forward, **model the remaining system according to how Epic/EHR actually represents and exposes the data, even if that requires changing the old ICU report layout**. The PDF remains a workflow reference, not the schema authority. Research/verify the source representation first, preserve its semantics and cardinality, then design the normalized model and nurse-facing projection around it. Do not force Epic data into old paper boxes.
+### Source-Preservation Rule
+Preserve source values, codes, units, timestamps, statuses, cardinality, encounter context, and provenance where practical. Derived values stay separate and reference their source records. Missing data stay missing.
 
-## EXACT RESUME POINT
-Cardiac modeling is resolved for the current v0.1 pass:
-- Rhythm remains source-preserved.
-- Pulses are repeating site/laterality findings so bilateral radial/pedal detail and more specific source sites can be retained.
-- Edema is a repeating structured finding with source-provided location/laterality/grade/type/detail.
+## What Is Now Mapped
 
-Continue with **Respiratory** next:
-- Confirm `Oxygen`, `LPM`, and `Percentage` semantics.
-- Preserve respiratory device/settings source detail.
-- Model lobe-specific lung findings without flattening richer source data.
+### Header
+- Patient -> Patient (Demographics)
+- Encounter/room context -> Encounter + location/context, exact room/bed deployment-specific
+- Age -> presentation-derived from demographic DOB when appropriate
+- Weight -> Observation (Vital Signs)
+- Code status -> Consent (Code Status)
+- PMH -> Condition (Medical History)
+- Diagnosis -> Condition (Encounter Diagnosis)
+- Allergies -> AllergyIntolerance
 
-Then continue GI, GU, IV access, Skin, IV drips, BGM, Pain, Treatment, and Labs.
-## Important Decisions Already Made
-- Workflow prototype first; live Epic integration later.
-- Mock/de-identified data only during prototype development.
-- Keep source ingestion separate from normalized patient data and report presentation.
-- ICU is the first target unit.
-- Use the existing ICU prototype as the workflow/display anchor, but allow its field layout to change when Epic's actual data organization requires it.
-- Store rich source data underneath while rendering concise nurse-friendly output.
-- Interactive UI may expose expandable detail where the paper sheet only has a compact summary.
-- Do not choose technology merely to create motion; choose it after interface/workflow requirements are known.
-- v0.1 success = realistic mock ICU patient in -> useful, readable, printable ICU report out.
+### Bedside Assessments
+Neuro, cardiac, respiratory, GI, GU, pain, BGM, UOP, and similar bedside findings use the **actual target Epic observation/flowsheet/assessment mapping**. Public Epic exposes Observation surfaces, but exact FLO IDs/value lists vary by organization/environment.
 
-## Current Problems / Bugs
-- No application exists yet, so there are no implementation bugs.
-- Field classification is unfinished from Cardiac onward.
-- We have not yet completed the auto-populated vs nurse-entered/source-mapping pass.
-- Future Epic/EHR access method is unknown, but this is not a blocker for v0.1.
+### Devices / LDA-W
+IVs, Foley, feeding tubes, airways, and wound/LDA data -> Device + DeviceUseStatement + Observation (Lines, Drains, Airways), preserving LDA properties and assessments.
 
-## Files Most Relevant When Resuming
-- `Support Sheets/Report Sheet V.2 ICU - Prototype.pdf`
-- `Support Sheets/10_ICU_FIELD_INVENTORY.md`
-- `Support Sheets/11_ICU_FIELD_CLASSIFICATION.md`
-- `Support Sheets/12_ICU_MODEL_DECISIONS.md`
-- `Support Sheets/04_TASKS.md`
-- `Support Sheets/09_CHATGPT_HANDOFF.md`
+### Nutrition
+Diet and enteral nutrition -> NutritionOrder. Tube-feed rate/FWF are source-dependent and must use whichever order/flowsheet fields the target environment actually exposes.
+
+### IV Drips
+Administered/current infusion state -> MedicationAdministration. Ordered intent -> medication-order resources where needed. Do not collapse order and administration into one record.
+
+### Labs
+Generic Observation (Labs) collection. The PDF lab list is a set of display selectors, not schema fields. `H/H` is a display combination of hemoglobin and hematocrit unless the source itself supplies a combined result.
+
+### Treatment / Narrative
+Handoff -> DocumentReference (Handoff) + Binary when available; nursing interventions -> Procedure (Nursing Intervention); selected notes -> DocumentReference (Clinical Notes). Report-only notes remain explicitly manual annotations.
+
+## Important Presentation Decisions Already Locked
+- A/O compact level + deficits when abnormal.
+- Bilateral pupil values preserved; equality is derived.
+- GCS E/V/M + total preserved.
+- NIHSS full detail retained, total collapsed by default, expandable on click.
+- Extremity strength preserved per limb.
+- Cardiac pulse findings preserve actual source site/laterality.
+- Edema repeating.
+- FiO2 meaning confirmed.
+- Side-level lung findings may derive lobe display values without fabricating lobe source records.
+- Fixed BGM time boxes are presentation-only; source model is timestamped readings.
+- Pain is repeating/time-based.
+- Paper IV row limits do not constrain the model.
+- Generic `Misc` is not a canonical clinical field.
+
+## What Is Still Unknown
+Public Epic docs do not provide universal customer-independent mappings for many nursing flowsheet items. A future target organization must supply/validate:
+- FLO IDs / assessment codes / local value lists
+- LDA types/properties
+- Purewick representation
+- room/bed exposure
+- enteral rate/FWF source
+- handoff field purposes
+- security/scopes/authorization
+
+These are adapter configuration, not blockers for the mock prototype.
+
+## Exact Next Step
+Define the **canonical normalized ICU model** from `13_EPIC_SOURCE_MAP.md`, including:
+1. encounter scoping and provenance
+2. generic observation/history representation
+3. devices/LDA-W
+4. nutrition orders
+5. medication administrations/orders
+6. labs
+7. handoff/intervention/note references
+8. manual report annotations
+9. derived report values with `derived_from` references
+10. explicit time/current-value selection rules
+
+Then create source-shaped mock fixtures and choose the implementation stack.
 
 ## Do Not Undo
-- Do not make live Epic access a prerequisite for building the prototype.
-- Do not use real PHI to make prototype development easier.
-- Do not couple report UI directly to source-specific/Epic field names.
-- Do not redesign the existing ICU prototype before understanding why each section exists.
-- Do not flatten detailed source data solely because the paper report displays a short summary.
-- Do not convert missing source data into assumed normal findings.
-- Do not reopen the completed Header/Neuro decisions unless new evidence requires it.
-- Do not expand to every nursing unit before the ICU workflow works.
-- Do not add infrastructure or abstractions without a demonstrated need.
+- Do not rebuild the model field-for-field from the PDF.
+- Do not invent universal Epic flowsheet IDs.
+- Do not flatten source history to one current scalar in the canonical model.
+- Do not merge source and derived/report-only data.
+- Do not make live Epic connectivity a prerequisite for v0.1.
+- Do not use PHI.
 
-## How I Want ChatGPT to Help
-- Preserve prior architectural and field-model decisions unless there is a strong reason to change them.
-- Explain important concepts and architecture.
-- Help heavily with boilerplate, setup, syntax, debugging, and repetitive work.
-- Keep Todoist and the support files synchronized as work is completed.
-- When proposing a change, explain what file changes and why.
-- Keep the project moving instead of repeatedly redesigning settled pieces.
-- Optimize away pointless friction while preserving the work that actually teaches or validates something.
-- Keep one concrete objective per work session when practical; finish and commit before wandering into unrelated improvements.
-
-## Immediate Prompt When Returning
-Continue Epic Report Sheet from the pinned checkpoint. Do not redo the prototype inventory or Neuro decisions. Resume with Cardiac field modeling: preserve rhythm as source data, then define bilateral radial/pedal pulse structure and repeating edema findings before moving to Respiratory.
-
-## Local Sync Reminder
-Remote support documentation was updated through GitHub during the checkpoint. Run:
+## Local Sync
+Remote support docs were updated directly through GitHub:
 ```text
 git pull
 ```
-before continuing locally.
