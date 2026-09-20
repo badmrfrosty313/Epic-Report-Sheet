@@ -54,6 +54,7 @@ Fixture report time: **2026-09-20 18:30 EDT**.
 | SEL-023 | Edema display | Include latest valid edema finding per source scope/laterality. | RLE 2+ pitting; LLE 1+ pitting |
 | SEL-024 | Oxygen summary | Select each concept independently under SEL-006; do not treat device/flow/FiO2 as mutually exclusive. | HFNC 40 L/min, FiO2 50% |
 | SEL-025 | Treatment / To Do | Project selected handoff fields + relevant nursing interventions + explicit manual annotations. Do not merge provenance. | source To Do + repositioning intervention + report-only family reminder |
+| SEL-026 | Radiology | Include usable radiology DiagnosticReports from the active encounter at/before report time, sorted newest-first. Preserve multiple studies; exclude entered-in-error/cancelled/invalid source reports. Display study + time + status + source impression. | Current portable CXR first, prior CT chest second; exclude `rad-cxr-error` |
 
 ---
 
@@ -221,6 +222,25 @@ H/H is a derived display composed from:
 - `lab-hgb-current`
 - `lab-hct-current`
 
+## Radiology
+
+```text
+Portable chest radiograph
+  09/20 16:40
+  FINAL
+  Impression: Persistent bibasilar airspace opacities, right greater than left, with small bilateral pleural effusions.
+
+CT chest with contrast
+  09/18 17:05
+  FINAL
+  Impression: Multifocal bilateral lower-lobe predominant airspace disease with small bilateral pleural effusions.
+```
+
+Excluded:
+- `rad-cxr-error` because its source status is `entered-in-error`.
+
+Full source findings remain preserved in the normalized radiology records and are not rewritten by the report layer.
+
 ## Treatment / To Do
 
 Source-backed:
@@ -265,6 +285,7 @@ These must remain visually/provenance-distinct in the eventual UI.
 8. **Order vs administration:** norepinephrine order does not independently prove infusion state.
 9. **No row cap:** all active LDAs remain available regardless of the old four-row paper layout.
 10. **Narrative provenance remains distinct:** Epic/source handoff, structured nursing intervention, and manual report annotation cannot be merged without labels.
+11. **Radiology preserves source impressions:** multiple encounter studies remain available, newest first, while entered-in-error reports are excluded.
 
 ## Pass condition
 
