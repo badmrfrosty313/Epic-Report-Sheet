@@ -144,3 +144,43 @@ git pull
 # Remote support docs were updated directly through GitHub.
 git pull
 ```
+
+
+---
+
+## 2026-09-20 - Comprehensive Epic-First Source Map
+
+### What We Worked On
+- Switched from one-field-at-a-time paper modeling to a comprehensive source-first pass.
+- Researched Epic's public FHIR/API catalog and specifications in parallel across demographics, diagnoses, allergies, code status, observations, LDA-W, nutrition, medications, labs, handoff, clinical notes, nursing interventions, and provenance.
+- Mapped every field on the ICU prototype to a source family, presentation derivation, manual annotation, or explicit deployment-specific mapping.
+
+### What Changed
+- Created `13_EPIC_SOURCE_MAP.md`.
+- Completed ICU field behavior/source-family classification.
+- Epic/source reality is now the schema authority; the PDF is a workflow/display reference.
+- BGM and Pain are repeating timestamped observations.
+- Labs are a generic coded collection rather than hard-coded schema properties.
+- IV/LDA, wounds, feeding tubes, and Foley use source LDA/device structures when available.
+- Drips separate administration from order intent.
+- Treatment/To Do is a projection of handoff/intervention/note data plus explicit report annotations.
+- Generic `Misc` is no longer a canonical clinical-data field.
+
+### What We Learned
+- Epic publicly exposes strong standard resource families for demographics, encounter diagnoses, allergies, code status, nutrition orders, medication administrations, labs, handoff documents, clinical notes, LDA-W, and nursing interventions.
+- Many bedside nursing flowsheet values remain customer/environment specific. Encoded flowsheet IDs and local value lists cannot be safely invented from public docs.
+- That customer-specific uncertainty belongs in the future source adapter, not in the core product model.
+
+### Project State
+- Conceptual source identification: complete.
+- Prototype field-to-source mapping: complete.
+- Customer-specific Epic binding: intentionally deferred.
+- Application code: not started.
+
+### Next Starting Point
+Define the canonical normalized ICU model from `13_EPIC_SOURCE_MAP.md`, then create realistic source-shaped mock fixtures and select the implementation stack.
+
+### Local Sync
+```text
+git pull
+```
