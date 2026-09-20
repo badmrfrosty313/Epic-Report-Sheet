@@ -30,19 +30,21 @@ function DisplayField({
   label: string;
   field: ReportField<unknown>;
 }) {
-  const value =
-    field.value === null
-      ? field.note ?? "Not documented"
-      : Array.isArray(field.value)
-        ? field.value.join("; ")
-        : String(field.value);
+  const displayValue =
+    field.value === null ? field.note ?? "Not documented" : field.value;
 
   return (
     <div className="field-row">
       <div className="field-label">{label}</div>
       <div className="field-content">
         <div className={field.value === null ? "field-value missing" : "field-value"}>
-          {value}
+          {Array.isArray(displayValue)
+            ? displayValue.map((item, index) => (
+                <div className="field-value-line" key={index}>
+                  {String(item)}
+                </div>
+              ))
+            : String(displayValue)}
         </div>
         <div className="field-meta">
           <span className={`badge badge-${field.provenance}`}>
