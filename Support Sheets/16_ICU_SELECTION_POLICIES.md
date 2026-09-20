@@ -40,9 +40,9 @@ Fixture report time: **2026-09-20 18:30 EDT**.
 | SEL-009 | Current LDAs | Include LDA records whose source status is active and whose effective period contains report time. | CVC, left forearm PIV, Foley, DHT, sacral wound. Exclude `lda-old-piv`. |
 | SEL-010 | Nutrition | Include active nutrition orders for encounter at report time. Keep completed orders as history only. | `nut-enteral-current`; exclude `nut-old-npo` from current display |
 | SEL-011 | Current drips | Include administration records with usable active/in-progress status whose effective period contains report time. Order alone does not prove active administration. | `med-admin-norepi-current` at 0.03 mcg/kg/min; exclude old norepi segment and stopped vasopressin |
-| SEL-012 | Lab selector | For each report lab code, choose most recent valid final result at/before report time in active encounter. Ignore entered-in-error. | K = 3.4 from `lab-k-current`, not 6.8 from `lab-k-error` |
-| SEL-013 | H/H display | Apply SEL-012 independently to Hgb and Hct, then generate one report-derived display value with both source IDs. | Hgb 9.1 / Hct 28.2 |
-| SEL-014 | Missing lab | If no usable source result exists, display missing/not documented, not zero/normal. | Magnesium = not documented |
+| SEL-012 | Available lab results | Group usable final lab Observations in the active encounter by source lab code and select the newest valid result for each code at/before report time. **No hard-coded lab allowlist.** Ignore entered-in-error. | All 23 available current mock labs render; K = 3.4 from `lab-k-current`, not 6.8 from `lab-k-error` |
+| SEL-013 | Lab display order | Preserve source records but present common ICU lab codes in a stable scan order; unfamiliar/additional valid labs follow rather than being discarded. | CBC/coags/chemistry/liver/mineral results appear in a predictable grid |
+| SEL-014 | Missing/unresulted lab | A lab that has no usable final source result is not fabricated into the available-results grid. Missing source records remain missing in history/issues. | Magnesium has no usable final result and therefore does not appear as a resulted lab tile |
 | SEL-015 | Current pain | Select most recent valid pain score in encounter at/before report time. Group same-time mapped location/quality observations for display. | score 3, right chest, aching at 17:45; exclude entered-in-error score 10 |
 | SEL-016 | BGM slot | For each configured fixture slot, select valid glucose observation within that slot window minimizing absolute time difference from target; tie => preserve conflict. | 08:00 -> 118 at 07:55; 12:00 -> 162 at 12:05; 16:00 -> 147 at 16:10 |
 | SEL-017 | Shift UOP | Sum valid UOP observations with effective_time >= shift_start and <= min(report_time, shift_end). Exclude pre-shift values and missing values. | 365 mL from 07:30, 09:30, 12:00, 15:00, 18:00 |
@@ -204,23 +204,41 @@ The newer `10/10` value at 18:05 is **not selected** because its source status i
 
 ## Labs
 
-Selected values:
+The report now renders **every usable lab result available for the active encounter**, newest valid result per distinct source lab code. The mock fixture currently produces 23 resulted lab tiles:
 
 ```text
-WBC: 15.2 10^3/uL
-H/H: 9.1 g/dL / 28.2%
-Platelets: 210 10^3/uL
-Na: 139 mmol/L
-K: 3.4 mmol/L
-Creatinine: 1.8 mg/dL
-Magnesium: NOT DOCUMENTED
+WBC                 15.2 10^3/uL   HIGH
+Red blood cells     3.15 10^6/uL   LOW
+Hemoglobin           9.1 g/dL      LOW
+Hematocrit          28.2 %         LOW
+Platelets           210 10^3/uL
+Prothrombin time     15.8 sec       HIGH
+INR                   1.3           HIGH
+aPTT                 32 sec
+
+Sodium              139 mmol/L
+Potassium             3.4 mmol/L    LOW
+Chloride             104 mmol/L
+CO2                   22 mmol/L
+Anion gap             13 mmol/L
+BUN                    34 mg/dL     HIGH
+Creatinine              1.8 mg/dL   HIGH
+eGFR                    42 mL/min/1.73m2 LOW
+Calcium                  8.1 mg/dL   LOW
+
+Albumin                  2.8 g/dL    LOW
+Total protein             5.9 g/dL   LOW
+ALT                        42 U/L
+AST                        51 U/L     HIGH
+Total bilirubin            0.9 mg/dL
+Phosphorus                 2.4 mg/dL  LOW
 ```
 
-The 17:55 potassium result of 6.8 mmol/L is rejected because it is `entered-in-error`.
+The newer potassium result of 6.8 mmol/L is preserved in source history but excluded because it is `entered-in-error`.
 
-H/H is a derived display composed from:
-- `lab-hgb-current`
-- `lab-hct-current`
+Magnesium remains intentionally not documented in the fixture and is **not fabricated into the available-results grid**.
+
+The full-width lab section is a presentation decision; the canonical model remains a generic repeating collection of lab Observations.
 
 ## Radiology
 
@@ -265,7 +283,6 @@ These must remain visually/provenance-distinct in the eventual UI.
 | `respiratory.rll_effective` | clear | obs-lung-right |
 | `respiratory.lul_effective` | diminished | obs-lung-left |
 | `respiratory.lll_effective` | crackles | obs-lung-lll |
-| `labs.hh_display` | 9.1 / 28.2 | lab-hgb-current, lab-hct-current |
 | `gu.shift_uop_ml` | 365 mL | obs-uop-0730, obs-uop-0930, obs-uop-1200, obs-uop-1500, obs-uop-1800 |
 | `bgm.slot_0800` | 118 mg/dL | obs-bgm-0755 |
 | `bgm.slot_1200` | 162 mg/dL | obs-bgm-1205 |
@@ -285,7 +302,8 @@ These must remain visually/provenance-distinct in the eventual UI.
 8. **Order vs administration:** norepinephrine order does not independently prove infusion state.
 9. **No row cap:** all active LDAs remain available regardless of the old four-row paper layout.
 10. **Narrative provenance remains distinct:** Epic/source handoff, structured nursing intervention, and manual report annotation cannot be merged without labels.
-11. **Radiology preserves source impressions:** multiple encounter studies remain available, newest first, while entered-in-error reports are excluded.
+11. **Labs are source-driven:** every usable current lab code can render without changing the schema or UI allowlist; missing/unresulted tests are not invented.
+12. **Radiology preserves source impressions:** multiple encounter studies remain available, newest first, while entered-in-error reports are excluded.
 
 ## Pass condition
 
