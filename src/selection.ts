@@ -32,6 +32,7 @@ import {
   selectLab,
   selectLocation,
   selectNutrition,
+  selectRadiologyReports,
   selectUrinaryDevice,
 } from "./supportSelectors";
 
@@ -146,6 +147,7 @@ export function buildReportState(fixture: IcuFixture): ReportState {
       Creatinine: selectLab(fixture, "CREAT"),
       Magnesium: selectLab(fixture, "MAG"),
     },
+    radiology: selectRadiologyReports(fixture),
     treatment: {
       handoff: fixture.handoff_fields
         .filter(
@@ -198,6 +200,9 @@ export function buildReportState(fixture: IcuFixture): ReportState {
           .map((item) => item.id),
         ...fixture.nutrition_orders
           .filter((item) => item.status !== "active")
+          .map((item) => item.id),
+        ...fixture.radiology_reports
+          .filter((item) => !usableStatus(item.status))
           .map((item) => item.id),
       ],
       derivedKeys: [
