@@ -1725,6 +1725,371 @@
         "state": "not_documented",
         "source_reason": "Fixture intentionally tests missing lab behavior."
       }
+    },
+    {
+      "id": "lab-rbc-current",
+      "source_ref": "src-lab-rbc-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "RBC",
+        "display": "Red blood cells"
+      },
+      "status": "final",
+      "value": {
+        "value": 3.15,
+        "unit": "10^6/uL"
+      },
+      "interpretation_codes": [
+        "low"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-pt-current",
+      "source_ref": "src-lab-pt-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "PT",
+        "display": "Prothrombin time"
+      },
+      "status": "final",
+      "value": {
+        "value": 15.8,
+        "unit": "sec"
+      },
+      "interpretation_codes": [
+        "high"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-inr-current",
+      "source_ref": "src-lab-inr-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "INR",
+        "display": "INR"
+      },
+      "status": "final",
+      "value": {
+        "value": 1.3
+      },
+      "interpretation_codes": [
+        "high"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-ptt-current",
+      "source_ref": "src-lab-ptt-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "PTT",
+        "display": "aPTT"
+      },
+      "status": "final",
+      "value": {
+        "value": 32,
+        "unit": "sec"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-cl-current",
+      "source_ref": "src-lab-cl-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "CL",
+        "display": "Chloride"
+      },
+      "status": "final",
+      "value": {
+        "value": 104,
+        "unit": "mmol/L"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-co2-current",
+      "source_ref": "src-lab-co2-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "CO2",
+        "display": "CO2"
+      },
+      "status": "final",
+      "value": {
+        "value": 22,
+        "unit": "mmol/L"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-agap-current",
+      "source_ref": "src-lab-agap-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "AGAP",
+        "display": "Anion gap"
+      },
+      "status": "final",
+      "value": {
+        "value": 13,
+        "unit": "mmol/L"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-bun-current",
+      "source_ref": "src-lab-bun-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "BUN",
+        "display": "BUN"
+      },
+      "status": "final",
+      "value": {
+        "value": 34,
+        "unit": "mg/dL"
+      },
+      "interpretation_codes": [
+        "high"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-egfr-current",
+      "source_ref": "src-lab-egfr-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "EGFR",
+        "display": "eGFR"
+      },
+      "status": "final",
+      "value": {
+        "value": 42,
+        "unit": "mL/min/1.73m2"
+      },
+      "interpretation_codes": [
+        "low"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-ca-current",
+      "source_ref": "src-lab-ca-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "CA",
+        "display": "Calcium"
+      },
+      "status": "final",
+      "value": {
+        "value": 8.1,
+        "unit": "mg/dL"
+      },
+      "interpretation_codes": [
+        "low"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-alb-current",
+      "source_ref": "src-lab-alb-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "ALB",
+        "display": "Albumin"
+      },
+      "status": "final",
+      "value": {
+        "value": 2.8,
+        "unit": "g/dL"
+      },
+      "interpretation_codes": [
+        "low"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-tp-current",
+      "source_ref": "src-lab-tp-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "TP",
+        "display": "Total protein"
+      },
+      "status": "final",
+      "value": {
+        "value": 5.9,
+        "unit": "g/dL"
+      },
+      "interpretation_codes": [
+        "low"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-alt-current",
+      "source_ref": "src-lab-alt-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "ALT",
+        "display": "ALT"
+      },
+      "status": "final",
+      "value": {
+        "value": 42,
+        "unit": "U/L"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-ast-current",
+      "source_ref": "src-lab-ast-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "AST",
+        "display": "AST"
+      },
+      "status": "final",
+      "value": {
+        "value": 51,
+        "unit": "U/L"
+      },
+      "interpretation_codes": [
+        "high"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-tbili-current",
+      "source_ref": "src-lab-tbili-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "TBILI",
+        "display": "Total bilirubin"
+      },
+      "status": "final",
+      "value": {
+        "value": 0.9,
+        "unit": "mg/dL"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-phos-current",
+      "source_ref": "src-lab-phos-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "PHOS",
+        "display": "Phosphorus"
+      },
+      "status": "final",
+      "value": {
+        "value": 2.4,
+        "unit": "mg/dL"
+      },
+      "interpretation_codes": [
+        "low"
+      ],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
     }
   ],
   "handoff_fields": [
@@ -1965,10 +2330,100 @@
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
+      "id": "src-lab-agap-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-agap-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-alb-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-alb-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-alt-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-alt-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-ast-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-ast-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-bun-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-bun-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-ca-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-ca-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-cl-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-cl-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-co2-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-co2-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
       "id": "src-lab-creatinine-current",
       "source_system": "mock-fixture",
       "source_resource_type": "Observation",
       "source_resource_id": "Observation/mock-lab-creatinine-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-egfr-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-egfr-current",
       "source_endpoint": "Observation (Labs)",
       "patient_ref": "patient-001",
       "encounter_ref": "enc-icu-001",
@@ -1999,6 +2454,16 @@
       "source_system": "mock-fixture",
       "source_resource_type": "Observation",
       "source_resource_id": "Observation/mock-lab-hgb-old",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-inr-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-inr-current",
       "source_endpoint": "Observation (Labs)",
       "patient_ref": "patient-001",
       "encounter_ref": "enc-icu-001",
@@ -2045,10 +2510,70 @@
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
+      "id": "src-lab-phos-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-phos-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
       "id": "src-lab-plt-current",
       "source_system": "mock-fixture",
       "source_resource_type": "Observation",
       "source_resource_id": "Observation/mock-lab-plt-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-pt-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-pt-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-ptt-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-ptt-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-rbc-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-rbc-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-tbili-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-tbili-current",
+      "source_endpoint": "Observation (Labs)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-lab-tp-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-lab-tp-current",
       "source_endpoint": "Observation (Labs)",
       "patient_ref": "patient-001",
       "encounter_ref": "enc-icu-001",
@@ -2790,15 +3315,31 @@
         "src-handoff-meds",
         "src-handoff-todo",
         "src-int-turn-001",
+        "src-lab-agap-current",
+        "src-lab-alb-current",
+        "src-lab-alt-current",
+        "src-lab-ast-current",
+        "src-lab-bun-current",
+        "src-lab-ca-current",
+        "src-lab-cl-current",
+        "src-lab-co2-current",
         "src-lab-creatinine-current",
+        "src-lab-egfr-current",
         "src-lab-hct-current",
         "src-lab-hgb-current",
         "src-lab-hgb-old",
+        "src-lab-inr-current",
         "src-lab-k-current",
         "src-lab-k-error",
         "src-lab-mag-missing",
         "src-lab-na-current",
+        "src-lab-phos-current",
         "src-lab-plt-current",
+        "src-lab-pt-current",
+        "src-lab-ptt-current",
+        "src-lab-rbc-current",
+        "src-lab-tbili-current",
+        "src-lab-tp-current",
         "src-lab-wbc-current",
         "src-loc-001",
         "src-loc-002",
