@@ -100,104 +100,108 @@ export default function App() {
         <strong>{report.header.codeStatus.value ?? "Code status unavailable"}</strong>
       </section>
 
-      <div className="report-grid">
-        <Section title="Header">
-          <DisplayField label="Diagnosis" field={report.header.diagnoses} />
-          <DisplayField label="PMH" field={report.header.pmh} />
-          <DisplayField label="Allergies" field={report.header.allergies} />
-        </Section>
+      <div className="report-columns">
+        <div className="report-column">
+          <Section title="Header">
+            <DisplayField label="Diagnosis" field={report.header.diagnoses} />
+            <DisplayField label="PMH" field={report.header.pmh} />
+            <DisplayField label="Allergies" field={report.header.allergies} />
+          </Section>
 
-        <Section title="Neuro">
-          <DisplayField label="A/O" field={report.neuro.orientation} />
-          <DisplayField label="Pupils" field={report.neuro.pupils} />
-          <DisplayField label="GCS" field={report.neuro.gcs} />
-          <DisplayField label="Strength" field={report.neuro.strength} />
-          <DisplayField label="NIHSS" field={report.neuro.nihss} />
-        </Section>
+          <Section title="Neuro">
+            <DisplayField label="A/O" field={report.neuro.orientation} />
+            <DisplayField label="Pupils" field={report.neuro.pupils} />
+            <DisplayField label="GCS" field={report.neuro.gcs} />
+            <DisplayField label="Strength" field={report.neuro.strength} />
+            <DisplayField label="NIHSS" field={report.neuro.nihss} />
+          </Section>
 
-        <Section title="Cardiac">
-          <DisplayField label="Rhythm" field={report.cardiac.rhythm} />
-          <DisplayField label="Radial" field={report.cardiac.radial} />
-          <DisplayField label="Pedal" field={report.cardiac.pedal} />
-          <DisplayField label="Edema" field={report.cardiac.edema} />
-        </Section>
+          <Section title="Cardiac">
+            <DisplayField label="Rhythm" field={report.cardiac.rhythm} />
+            <DisplayField label="Radial" field={report.cardiac.radial} />
+            <DisplayField label="Pedal" field={report.cardiac.pedal} />
+            <DisplayField label="Edema" field={report.cardiac.edema} />
+          </Section>
 
-        <Section title="Respiratory">
-          <DisplayField label="Oxygen" field={report.respiratory.oxygen} />
-          <div className="five-column">
-            <DisplayField label="RUL" field={report.respiratory.rul} />
-            <DisplayField label="RML" field={report.respiratory.rml} />
-            <DisplayField label="RLL" field={report.respiratory.rll} />
-            <DisplayField label="LUL" field={report.respiratory.lul} />
-            <DisplayField label="LLL" field={report.respiratory.lll} />
-          </div>
-          <DisplayField label="Vent" field={report.respiratory.vent} />
-        </Section>
+          <Section title="Respiratory">
+            <DisplayField label="Oxygen" field={report.respiratory.oxygen} />
+            <div className="five-column">
+              <DisplayField label="RUL" field={report.respiratory.rul} />
+              <DisplayField label="RML" field={report.respiratory.rml} />
+              <DisplayField label="RLL" field={report.respiratory.rll} />
+              <DisplayField label="LUL" field={report.respiratory.lul} />
+              <DisplayField label="LLL" field={report.respiratory.lll} />
+            </div>
+            <DisplayField label="Vent" field={report.respiratory.vent} />
+          </Section>
 
-        <Section title="GI / Nutrition">
-          <DisplayField label="Abdomen" field={report.gi.abdomen} />
-          <DisplayField label="Nutrition" field={report.gi.nutrition} />
-          <DisplayField label="Enteral access" field={report.gi.enteralAccess} />
-        </Section>
+          <Section title="Labs">
+            {Object.entries(report.labs).map(([name, value]) => (
+              <DisplayField key={name} label={name} field={value} />
+            ))}
+          </Section>
+        </div>
 
-        <Section title="GU">
-          <DisplayField label="Urine" field={report.gu.urine} />
-          <DisplayField label="Device" field={report.gu.device} />
-          <DisplayField label="Shift UOP" field={report.gu.shiftUop} />
-        </Section>
+        <div className="report-column">
+          <Section title="GI / Nutrition">
+            <DisplayField label="Abdomen" field={report.gi.abdomen} />
+            <DisplayField label="Nutrition" field={report.gi.nutrition} />
+            <DisplayField label="Enteral access" field={report.gi.enteralAccess} />
+          </Section>
 
-        <Section title="Lines / Devices / Wounds">
-          {report.ldas.map((item, index) => (
-            <DisplayField key={index} label={`LDA ${index + 1}`} field={item} />
-          ))}
-        </Section>
+          <Section title="GU">
+            <DisplayField label="Urine" field={report.gu.urine} />
+            <DisplayField label="Device" field={report.gu.device} />
+            <DisplayField label="Shift UOP" field={report.gu.shiftUop} />
+          </Section>
 
-        <Section title="IV Drips">
-          {report.drips.length ? (
-            report.drips.map((item, index) => (
-              <DisplayField key={index} label={`Drip ${index + 1}`} field={item} />
-            ))
-          ) : (
-            <p className="missing">No current drips</p>
-          )}
-        </Section>
+          <Section title="Lines / Devices / Wounds">
+            {report.ldas.map((item, index) => (
+              <DisplayField key={index} label={`LDA ${index + 1}`} field={item} />
+            ))}
+          </Section>
 
-        <Section title="BGM">
-          {Object.entries(report.bgm).map(([slot, value]) => (
-            <DisplayField key={slot} label={slot} field={value} />
-          ))}
-        </Section>
+          <Section title="IV Drips">
+            {report.drips.length ? (
+              report.drips.map((item, index) => (
+                <DisplayField key={index} label={`Drip ${index + 1}`} field={item} />
+              ))
+            ) : (
+              <p className="missing section-message">No current drips</p>
+            )}
+          </Section>
 
-        <Section title="Pain">
-          <DisplayField label="Current" field={report.pain} />
-        </Section>
+          <Section title="BGM">
+            {Object.entries(report.bgm).map(([slot, value]) => (
+              <DisplayField key={slot} label={slot} field={value} />
+            ))}
+          </Section>
 
-        <Section title="Labs">
-          {Object.entries(report.labs).map(([name, value]) => (
-            <DisplayField key={name} label={name} field={value} />
-          ))}
-        </Section>
+          <Section title="Pain">
+            <DisplayField label="Current" field={report.pain} />
+          </Section>
 
-        <Section title="Treatment / To Do">
-          <h3>Source-backed handoff</h3>
-          {report.treatment.handoff.map((item, index) => (
-            <DisplayField key={index} label={`Handoff ${index + 1}`} field={item} />
-          ))}
+          <Section title="Treatment / To Do">
+            <h3>Source-backed handoff</h3>
+            {report.treatment.handoff.map((item, index) => (
+              <DisplayField key={index} label={`Handoff ${index + 1}`} field={item} />
+            ))}
 
-          <h3>Nursing interventions</h3>
-          {report.treatment.interventions.map((item, index) => (
-            <DisplayField
-              key={index}
-              label={`Intervention ${index + 1}`}
-              field={item}
-            />
-          ))}
+            <h3>Nursing interventions</h3>
+            {report.treatment.interventions.map((item, index) => (
+              <DisplayField
+                key={index}
+                label={`Intervention ${index + 1}`}
+                field={item}
+              />
+            ))}
 
-          <h3>Report-only annotations</h3>
-          {report.treatment.annotations.map((item, index) => (
-            <DisplayField key={index} label={`Note ${index + 1}`} field={item} />
-          ))}
-        </Section>
+            <h3>Report-only annotations</h3>
+            {report.treatment.annotations.map((item, index) => (
+              <DisplayField key={index} label={`Note ${index + 1}`} field={item} />
+            ))}
+          </Section>
+        </div>
       </div>
 
       <footer className="audit-footer">
