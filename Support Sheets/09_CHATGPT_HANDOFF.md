@@ -9,13 +9,15 @@ Build a digital ICU nursing report system that ingests structured patient/encoun
 ## Current State — 2026-09-20
 - Repo: `badmrfrosty313/Epic-Report-Sheet`.
 - ICU is the first target workflow.
-- Application code has not started.
+- Application code has started and the first executable v0.1 vertical slice is implemented.
 - `Support Sheets/14_ICU_NORMALIZED_MODEL.md` is complete and is now the canonical model specification.
 - `15_MOCK_ICU_FIXTURE.json`, `16_ICU_SELECTION_POLICIES.md`, and `17_FIRST_REPORT_PROJECTION.md` now provide the first deterministic end-to-end mock vertical slice.
 - The two-page ICU PDF has been fully inventoried.
 - **All prototype fields have now been mapped conceptually to Epic/FHIR source domains.**
 - The comprehensive map is `Support Sheets/13_EPIC_SOURCE_MAP.md`.
 - The source map is based on Epic's public FHIR/API catalog and specifications; exact customer-specific flowsheet/LDA codes remain deployment configuration.
+- v0.1 stack is TypeScript + React + Vite + Vitest with plain CSS and browser-native print CSS.
+- Automated selector tests and the Vite production build pass in GitHub Actions CI (run #2 successful).
 - Live Epic access is not required for v0.1.
 - Mock/de-identified source-shaped fixtures only during prototype development.
 
@@ -86,15 +88,22 @@ Public Epic docs do not provide universal customer-independent mappings for many
 These are adapter configuration, not blockers for the mock prototype.
 
 ## Exact Next Step
-Choose the implementation stack and scaffold the local v0.1 application.
+Run the executable prototype locally and perform the first nurse-layout validation.
 
-The first executable milestone is not a polished UI. It is:
-1. load `15_MOCK_ICU_FIXTURE.json`
-2. validate the source-shaped model
-3. execute the policies in `16_ICU_SELECTION_POLICIES.md`
-4. emit a report-state object
-5. prove that object matches the expected selections in `17_FIRST_REPORT_PROJECTION.md`
-6. render that report state in the first ICU UI
+```text
+git pull
+npm install
+npm run test:run
+npm run dev
+```
+
+Then, in the browser:
+1. confirm the mock report is quickly scannable as an ICU handoff sheet,
+2. expand several Source IDs to verify provenance interaction feels useful rather than noisy,
+3. verify missing NIHSS/Magnesium are unmistakably missing rather than normal,
+4. verify repeated LDA/drip/treatment sections remain readable,
+5. use **Print / Save PDF** and inspect the print layout,
+6. record concrete layout/workflow changes before adding additional features.
 
 Do not add live Epic integration yet.
 ## Do Not Undo
