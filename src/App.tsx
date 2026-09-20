@@ -1,13 +1,19 @@
 import fixtureJson from "../Support Sheets/15_MOCK_ICU_FIXTURE.json";
+import stressFixtureJson from "../Support Sheets/18_STRESS_ICU_FIXTURE.json";
 import { buildReportState } from "./selection";
 import type {
   FieldProvenance,
   IcuFixture,
   ReportField,
+  TrendDirection,
 } from "./types";
 import "./styles.css";
 
-const fixture = fixtureJson as unknown as IcuFixture;
+const requestedFixture = new URLSearchParams(window.location.search).get("fixture");
+const fixtureKey = requestedFixture === "stress" ? "stress" : "standard";
+const fixture = (
+  fixtureKey === "stress" ? stressFixtureJson : fixtureJson
+) as unknown as IcuFixture;
 const report = buildReportState(fixture);
 
 type DisplayCase = "sentence" | "title" | "preserve";
@@ -17,6 +23,7 @@ const clinicalAcronyms = new Set([
   "BGM",
   "CVC",
   "DHT",
+  "ETT",
   "FiO2",
   "GCS",
   "H/H",
@@ -28,6 +35,7 @@ const clinicalAcronyms = new Set([
   "NIHSS",
   "NG",
   "OG",
+  "PICC",
   "PIV",
   "RUE",
   "LUE",
@@ -74,6 +82,16 @@ function formatDisplayText(value: string, mode: DisplayCase): string {
     .join("\n");
 }
 
+function formatClock(value?: string): string | null {
+  if (!value) return null;
+  return value.slice(11, 16);
+}
+
+function formatDateTime(value?: string): string | null {
+  if (!value) return null;
+  return `${value.slice(5, 10).replace("-", "/")} ${value.slice(11, 16)}`;
+}
+
 function provenanceLabel(provenance: FieldProvenance): string {
   switch (provenance) {
     case "source":
@@ -85,6 +103,30 @@ function provenanceLabel(provenance: FieldProvenance): string {
     case "missing":
       return "Missing";
   }
+}
+
+function trendSymbol(trend?: TrendDirection): string {
+  if (trend === "up") return "↑";
+  if (trend === "down") return "↓";
+  if (trend === "same") return "→";
+  return "";
+}
+
+function FieldMeta({ field }: { field: ReportField<unknown> }) {
+  const observed = formatClock(field.observedAt);
+
+  return (
+    <div className="field-meta">
+      <span className={`badge badge-${field.provenance}`}>
+        {provenanceLabel(field.provenance)}
+      </span>
+      {observed ? <span className="time-chip">@ {observed}</span> : null}
+      {field.freshness === "pre-shift" ? (
+        <span className="freshness-chip">Pre-shift</span>
+      ) : null}
+      {field.note ? <span>{field.note}</span> : null}
+    </div>
+  );
 }
 
 function DisplayField({
@@ -112,12 +154,7 @@ function DisplayField({
               ))
             : formatDisplayText(String(displayValue), valueCase)}
         </div>
-        <div className="field-meta">
-          <span className={`badge badge-${field.provenance}`}>
-            {provenanceLabel(field.provenance)}
-          </span>
-          {field.note ? <span>{field.note}</span> : null}
-        </div>
+        <FieldMeta field={field} />
         {field.sourceIds.length ? (
           <details className="source-detail">
             <summary>Source IDs</summary>
@@ -145,6 +182,12 @@ function LungCell({
           "sentence",
         )}
       </div>
+      {field.observedAt ? (
+        <div className="lung-cell-time">
+          {formatClock(field.observedAt)}
+          {field.freshness === "pre-shift" ? " · pre-shift" : ""}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -186,12 +229,12 @@ function LungAssessment() {
               <div className="lung-source-item" key={label}>
                 <strong>{label}</strong>
                 <span>{provenanceLabel(field.provenance)}</span>
-                {field.note ? <span>{field.note}</span> : null}
-                {field.sourceIds.length ? (
-                  <code>{field.sourceIds.join(", ")}</code>
-                ) : (
-                  <span>No source ID</span>
-                )}
+                {field.note ? <span>{field.note}</span> : <span />}
+                <code>
+                  {field.sourceIds.length
+                    ? field.sourceIds.join(", ")
+                    : "No source ID"}
+                </code>
               </div>
             ))}
           </div>
@@ -208,7 +251,10 @@ function LabCell({
   label: string;
   field: ReportField<string>;
 }) {
-  const flag = field.note?.toUpperCase();
+  const flag = field.flag?.toUpperCase();
+  const trend = trendSymbol(field.trend);
+  const observed = formatClock(field.observedAt);
+  const previousObserved = formatClock(field.previousObservedAt);
 
   return (
     <div className="lab-cell">
@@ -223,6 +269,21 @@ function LabCell({
           </span>
         ) : null}
       </div>
+
+      {field.previousValue && trend ? (
+        <div className="lab-trend">
+          <strong>{trend}</strong> from {field.previousValue}
+          {previousObserved ? ` @ ${previousObserved}` : ""}
+        </div>
+      ) : null}
+
+      {observed ? (
+        <div className="lab-time">
+          Current @ {observed}
+          {field.freshness === "pre-shift" ? " · pre-shift" : ""}
+        </div>
+      ) : null}
+
       {field.sourceIds.length ? (
         <details className="lab-source-detail">
           <summary>Source</summary>
@@ -233,15 +294,85 @@ function LabCell({
   );
 }
 
+function DripCard({
+  field,
+  index,
+}: {
+  field: ReportField<string>;
+  index: number;
+}) {
+  const lines = String(field.value ?? "Not documented").split("\n");
+  const medication = lines[0] ?? `Drip ${index + 1}`;
+  const details = lines.slice(1);
+
+  return (
+    <div className="drip-card">
+      <div className="drip-card-title">{titleCase(medication)}</div>
+      {details.map((line, lineIndex) => (
+        <div className="drip-card-line" key={lineIndex}>
+          {sentenceCase(line)}
+        </div>
+      ))}
+      <FieldMeta field={field} />
+    </div>
+  );
+}
+
+function IoSnapshot() {
+  const items = [
+    ["Intake", report.io.intake],
+    ["Output", report.io.output],
+    ["Net", report.io.net],
+  ] as const;
+
+  return (
+    <div className="io-grid">
+      {items.map(([label, field]) => (
+        <div className="io-cell" key={label}>
+          <div className="io-label">{label}</div>
+          <div className={field.value === null ? "io-value missing" : "io-value"}>
+            {field.value ?? "Not documented"}
+          </div>
+          {field.observedAt ? (
+            <div className="io-time">{formatClock(field.observedAt)}</div>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TodoZone() {
+  if (!report.treatment.todo.length) {
+    return <p className="missing section-message">No source To Do items</p>;
+  }
+
+  return (
+    <div className="todo-zone">
+      {report.treatment.todo.map((item, index) => (
+        <div className="todo-card" key={index}>
+          <div className="todo-marker">TO DO</div>
+          <div>
+            <div className="todo-text">{item.value}</div>
+            <FieldMeta field={item} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Section({
   title,
   children,
+  className = "",
 }: {
   title: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="report-section">
+    <section className={`report-section ${className}`.trim()}>
       <h2>{title}</h2>
       {children}
     </section>
@@ -253,15 +384,34 @@ export default function App() {
     <main className="page-shell">
       <header className="app-header">
         <div>
-          <p className="eyebrow">ICU V0.1 · FICTIONAL MOCK DATA</p>
+          <p className="eyebrow">
+            ICU V0.1 · FICTIONAL MOCK DATA · {fixtureKey.toUpperCase()} FIXTURE
+          </p>
           <h1>Epic Report Sheet</h1>
           <p className="subhead">
             Source-shaped history → deterministic selection → nurse report
           </p>
         </div>
-        <button className="print-button" onClick={() => window.print()}>
-          Print / Save PDF
-        </button>
+
+        <div className="header-actions">
+          <nav className="fixture-switcher" aria-label="Mock fixture">
+            <a
+              className={fixtureKey === "standard" ? "active" : ""}
+              href="?fixture=standard"
+            >
+              Standard
+            </a>
+            <a
+              className={fixtureKey === "stress" ? "active" : ""}
+              href="?fixture=stress"
+            >
+              Stress Test
+            </a>
+          </nav>
+          <button className="print-button" onClick={() => window.print()}>
+            Print / Save PDF
+          </button>
+        </div>
       </header>
 
       <section className="patient-banner">
@@ -301,7 +451,6 @@ export default function App() {
             <DisplayField label="Vent" field={report.respiratory.vent} />
           </Section>
 
-
           <Section title="Radiology">
             {report.radiology.length ? (
               report.radiology.map((item, index) => (
@@ -309,6 +458,7 @@ export default function App() {
                   key={index}
                   label={`Study ${index + 1}`}
                   field={item}
+                  valueCase="preserve"
                 />
               ))
             ) : (
@@ -338,6 +488,10 @@ export default function App() {
             <DisplayField label="Shift UOP" field={report.gu.shiftUop} />
           </Section>
 
+          <Section title="I/O Snapshot" className="io-section">
+            <IoSnapshot />
+          </Section>
+
           <Section title="Lines / Devices / Wounds">
             {report.ldas.map((item, index) => (
               <DisplayField
@@ -349,11 +503,13 @@ export default function App() {
             ))}
           </Section>
 
-          <Section title="IV Drips">
+          <Section title="IV Drips" className="drips-section">
             {report.drips.length ? (
-              report.drips.map((item, index) => (
-                <DisplayField key={index} label={`Drip ${index + 1}`} field={item} />
-              ))
+              <div className="drip-grid">
+                {report.drips.map((item, index) => (
+                  <DripCard key={index} field={item} index={index} />
+                ))}
+              </div>
             ) : (
               <p className="missing section-message">No current drips</p>
             )}
@@ -369,25 +525,53 @@ export default function App() {
             <DisplayField label="Current" field={report.pain} />
           </Section>
 
-          <Section title="Treatment / To Do">
-            <h3>Source-backed handoff</h3>
-            {report.treatment.handoff.map((item, index) => (
-              <DisplayField key={index} label={`Handoff ${index + 1}`} field={item} />
-            ))}
+          <Section title="Treatment / To Do" className="treatment-section">
+            <h3>Shift To Do</h3>
+            <TodoZone />
 
-            <h3>Nursing interventions</h3>
-            {report.treatment.interventions.map((item, index) => (
-              <DisplayField
-                key={index}
-                label={`Intervention ${index + 1}`}
-                field={item}
-              />
-            ))}
+            {report.treatment.annotations.length ? (
+              <>
+                <h3>Report Notes</h3>
+                {report.treatment.annotations.map((item, index) => (
+                  <DisplayField
+                    key={index}
+                    label={`Note ${index + 1}`}
+                    field={item}
+                  />
+                ))}
+              </>
+            ) : null}
 
-            <h3>Report-only annotations</h3>
-            {report.treatment.annotations.map((item, index) => (
-              <DisplayField key={index} label={`Note ${index + 1}`} field={item} />
-            ))}
+            {(report.treatment.handoff.length ||
+              report.treatment.interventions.length) ? (
+              <details className="secondary-treatment">
+                <summary>Other source context</summary>
+                {report.treatment.handoff.length ? (
+                  <>
+                    <h3>Other Handoff</h3>
+                    {report.treatment.handoff.map((item, index) => (
+                      <DisplayField
+                        key={index}
+                        label={`Handoff ${index + 1}`}
+                        field={item}
+                      />
+                    ))}
+                  </>
+                ) : null}
+                {report.treatment.interventions.length ? (
+                  <>
+                    <h3>Nursing Interventions</h3>
+                    {report.treatment.interventions.map((item, index) => (
+                      <DisplayField
+                        key={index}
+                        label={`Intervention ${index + 1}`}
+                        field={item}
+                      />
+                    ))}
+                  </>
+                ) : null}
+              </details>
+            ) : null}
           </Section>
         </div>
       </div>
@@ -404,6 +588,12 @@ export default function App() {
       <footer className="audit-footer">
         <details>
           <summary>Selection audit</summary>
+          <p>
+            <strong>Fixture:</strong> {fixture.fixture_name}
+          </p>
+          <p>
+            <strong>Report time:</strong> {formatDateTime(report.reportTime)}
+          </p>
           <p>
             <strong>Excluded historical/invalid IDs:</strong>{" "}
             {report.audit.excludedIds.join(", ")}
