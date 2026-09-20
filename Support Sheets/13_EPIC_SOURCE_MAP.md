@@ -39,6 +39,7 @@ The normalized model should be organized around source domains rather than paper
 - `medication_administrations[]` — MedicationAdministration
 - `medication_orders[]` — MedicationRequest / Medication Order where needed to distinguish ordered intent from administered state
 - `lab_results[]` — Observation (Labs), with DiagnosticReport for grouping/context when useful
+- `radiology_reports[]` — DiagnosticReport (Results), preserving study identity/status/timing/impression and references to imaging/media where available
 - `handoff_fields[]` — DocumentReference (Handoff) + Binary
 - `clinical_notes[]` — DocumentReference (Clinical Notes) + Binary
 - `nursing_interventions[]` — Procedure (Nursing Intervention)
@@ -255,6 +256,27 @@ The following are **template selectors**, not canonical schema fields:
 
 Special rule:
 - `H/H` is a **presentation combination** of hemoglobin and hematocrit source results. Do not create a fake source result called H/H unless Epic itself returns one.
+
+## Radiology / Imaging Results
+
+Canonical model: repeating **DiagnosticReport** records for radiology, not a single free-text imaging box.
+
+Primary source:
+- DiagnosticReport.Search / Read (Results) (R4).
+- Epic's public R4 documentation states DiagnosticReport Results supports radiology and can return text-based radiology content such as narratives or impressions.
+- Preserve source report status, code/study name, clinically relevant time, issued time, impression/conclusion text, full findings text when returned, and referenced imaging/media/study identifiers when available.
+
+Report behavior:
+- Show encounter-scoped usable radiology reports newest-first.
+- Do not use a global "latest radiology replaces all older radiology" rule; multiple studies can remain relevant.
+- Lead with **study + time + status + impression** for nurse scanability.
+- Preserve fuller findings underneath for source detail.
+- Exclude source records marked entered-in-error/cancelled/invalid by source semantics.
+- Do not generate or summarize a radiology impression beyond what the source report states.
+
+Official Epic public specification:
+- DiagnosticReport.Search (Results) (R4): https://fhir.epic.com/Specifications?api=989
+- DiagnosticReport.Read (Results) (R4): https://fhir.epic.com/Specifications?api=988
 
 ## Misc Fields
 
