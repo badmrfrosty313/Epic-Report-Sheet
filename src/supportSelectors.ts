@@ -265,3 +265,108 @@ export function selectRadiologyReports(
       );
     });
 }
+
+
+export function selectAllLabs(
+  fixture: IcuFixture,
+): Record<string, ReportField<string>> {
+  const preferredOrder = [
+    "WBC",
+    "RBC",
+    "HGB",
+    "HCT",
+    "PLT",
+    "PT",
+    "INR",
+    "PTT",
+    "NA",
+    "K",
+    "CL",
+    "CO2",
+    "AGAP",
+    "BUN",
+    "CREAT",
+    "EGFR",
+    "CA",
+    "ALB",
+    "TP",
+    "ALT",
+    "AST",
+    "TBILI",
+    "PHOS",
+    "MAG",
+  ];
+
+  const orderIndex = new Map(
+    preferredOrder.map((code, index) => [code, index]),
+  );
+
+  const latestByCode = new Map<string, (typeof fixture.lab_results)[number]>();
+
+  for (const lab of fixture.lab_results) {
+    if (
+      lab.encounter_ref !== fixture.encounter.id ||
+      lab.status !== "final" ||
+      !usableStatus(lab.status) ||
+      !present(lab.availability) ||
+      time(lab.effective_time) > time(fixture.report_config.report_time)
+    ) {
+      continue;
+    }
+
+    const sourceKey = [
+      lab.code.system ?? "",
+      lab.code.code ?? lab.code.display ?? lab.id,
+    ].join("|");
+
+    const existing = latestByCode.get(sourceKey);
+    if (
+      !existing ||
+      time(lab.effective_time) > time(existing.effective_time)
+    ) {
+      latestByCode.set(sourceKey, lab);
+    }
+  }
+
+  const selected = [...latestByCode.values()].sort((a, b) => {
+    const aCode = a.code.code ?? "";
+    const bCode = b.code.code ?? "";
+    const aOrder = orderIndex.get(aCode) ?? Number.MAX_SAFE_INTEGER;
+    const bOrder = orderIndex.get(bCode) ?? Number.MAX_SAFE_INTEGER;
+
+    if (aOrder !== bOrder) return aOrder - bOrder;
+
+    const aLabel = a.code.display ?? aCode ?? a.id;
+    const bLabel = b.code.display ?? bCode ?? b.id;
+    return aLabel.localeCompare(bLabel);
+  });
+
+  const entries: Array<[string, ReportField<string>]> = [];
+  const usedLabels = new Set<string>();
+
+  for (const lab of selected) {
+    const baseLabel = lab.code.display ?? lab.code.code ?? lab.id;
+    let label = baseLabel;
+
+    if (usedLabels.has(label)) {
+      label = `${baseLabel} (${lab.code.code ?? lab.id})`;
+    }
+    usedLabels.add(label);
+
+    const interpretation = lab.interpretation_codes?.length
+      ? lab.interpretation_codes.join(", ").toUpperCase()
+      : undefined;
+
+    entries.push([
+      label,
+      field(
+        valueText(lab.value),
+        "source",
+        [lab.id],
+        interpretation,
+      ),
+    ]);
+  }
+
+  return Object.fromEntries(entries);
+}
