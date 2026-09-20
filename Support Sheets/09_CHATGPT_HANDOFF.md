@@ -11,6 +11,7 @@ Build a digital ICU nursing report system that ingests structured patient/encoun
 - ICU is the first target workflow.
 - Application code has not started.
 - `Support Sheets/14_ICU_NORMALIZED_MODEL.md` is complete and is now the canonical model specification.
+- `15_MOCK_ICU_FIXTURE.json`, `16_ICU_SELECTION_POLICIES.md`, and `17_FIRST_REPORT_PROJECTION.md` now provide the first deterministic end-to-end mock vertical slice.
 - The two-page ICU PDF has been fully inventoried.
 - **All prototype fields have now been mapped conceptually to Epic/FHIR source domains.**
 - The comprehensive map is `Support Sheets/13_EPIC_SOURCE_MAP.md`.
@@ -85,23 +86,17 @@ Public Epic docs do not provide universal customer-independent mappings for many
 These are adapter configuration, not blockers for the mock prototype.
 
 ## Exact Next Step
-Build the **first realistic source-shaped mock ICU fixture** from `14_ICU_NORMALIZED_MODEL.md`, then define the explicit selection-policy table that produces the deterministic nurse-report snapshot.
+Choose the implementation stack and scaffold the local v0.1 application.
 
-The fixture must include:
-1. patient + encounter context
-2. code status / PMH / diagnoses / allergies
-3. timestamped bedside observations
-4. at least one LDA/device
-5. nutrition order
-6. medication order + administration/drip
-7. lab results
-8. handoff / intervention / note references
-9. manual report annotation
-10. source/provenance IDs
-11. at least one missing datum
-12. at least one stale/conflicting value so selection logic is tested
+The first executable milestone is not a polished UI. It is:
+1. load `15_MOCK_ICU_FIXTURE.json`
+2. validate the source-shaped model
+3. execute the policies in `16_ICU_SELECTION_POLICIES.md`
+4. emit a report-state object
+5. prove that object matches the expected selections in `17_FIRST_REPORT_PROJECTION.md`
+6. render that report state in the first ICU UI
 
-Then choose the implementation stack and build the first report projection.
+Do not add live Epic integration yet.
 ## Do Not Undo
 - Do not rebuild the model field-for-field from the PDF.
 - Do not invent universal Epic flowsheet IDs.
