@@ -27,7 +27,7 @@ Report time: **2026-09-20 18:30 EDT**
 **Pupils:** R 3 mm brisk | L 3 mm brisk  
 **GCS:** 14 (E4 V4 M6)  
 **Strength:** RUE 5 | LUE 5 | RLE 4 | LLE 4  
-**NIHSS:** Not documented
+**NIHSS:** 2
 
 ---
 
@@ -42,7 +42,7 @@ Report time: **2026-09-20 18:30 EDT**
 
 ## Respiratory
 
-**Oxygen:** High-flow nasal cannula, 40 L/min, FiO2 50%
+**Oxygen:** Mechanical ventilator, FiO2 50%
 
 **Lung display**
 - RUL: Clear
@@ -53,7 +53,7 @@ Report time: **2026-09-20 18:30 EDT**
 
 Source note: RUL/RML/RLL are display derivations from one right-lung `clear` observation. LUL derives from a left-lung `diminished` observation. LLL is source-direct.
 
-**Vent settings:** Not documented / not applicable in this fixture
+**Vent settings:** AC/VC; tidal volume 450 mL; PEEP 8 cmH2O; rate 18 breaths/min
 
 ---
 
@@ -83,6 +83,7 @@ The 06:30 200 mL measurement is preserved in source history but excluded because
 - Left forearm PIV
 - Foley catheter
 - Dobhoff tube, left nare
+- Endotracheal tube, oral
 - Sacral pressure injury, Stage 2
 
 Historical/not current:
