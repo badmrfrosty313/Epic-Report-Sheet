@@ -247,41 +247,124 @@ select {
   overflow-wrap: anywhere;
 }
 
-.five-column {
+.lung-assessment {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: minmax(118px, 0.28fr) minmax(0, 1fr);
   border-bottom: 1px solid #dce2e9;
+  background: white;
 }
 
-.five-column .field-row {
-  grid-template-columns: 1fr;
+.lung-assessment-label {
+  padding: 10px 11px;
+  border-right: 1px solid #dfe5ec;
+  background: #f8fafc;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #435066;
+}
+
+.lung-assessment-content {
+  min-width: 0;
+  padding: 10px 12px 11px;
+}
+
+.lung-side + .lung-side {
+  margin-top: 10px;
+}
+
+.lung-side-title {
+  margin-bottom: 5px;
+  font-size: 0.67rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #697587;
+}
+
+.lung-lobes {
+  display: grid;
+  gap: 6px;
+}
+
+.lung-lobes-right {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lung-lobes-left {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lung-cell {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #d8dfe7;
+  border-radius: 6px;
+  background: #fbfcfd;
+  text-align: center;
+}
+
+.lung-cell-label {
+  padding: 5px 6px 4px;
+  border-bottom: 1px solid #e3e8ee;
+  background: #f3f6f9;
+  font-size: 0.68rem;
+  font-weight: 850;
+  color: #526076;
+}
+
+.lung-cell-value {
+  padding: 8px 6px 9px;
+  font-size: 0.92rem;
+  font-weight: 750;
+  line-height: 1.15;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.lung-cell-missing .lung-cell-value {
+  font-style: italic;
+  font-weight: 500;
+  color: #707b8b;
+}
+
+.lung-source-detail {
+  margin-top: 9px;
+  font-size: 0.68rem;
+  color: #7a8492;
+}
+
+.lung-source-detail summary {
+  cursor: pointer;
+  width: fit-content;
+}
+
+.lung-source-list {
+  margin-top: 7px;
+  border: 1px solid #e1e6ec;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.lung-source-item {
+  display: grid;
+  grid-template-columns: 34px 58px minmax(0, 1fr);
+  gap: 6px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #e5e9ee;
+  align-items: start;
+}
+
+.lung-source-item:last-child {
   border-bottom: 0;
-  border-right: 1px solid #dce2e9;
 }
 
-.five-column .field-row:last-child {
-  border-right: 0;
-}
-
-.five-column .field-label {
-  padding: 7px 8px 6px;
-  border-right: 0;
-  border-bottom: 1px solid #e2e7ed;
-  text-align: center;
-  font-size: 0.72rem;
-}
-
-.five-column .field-content {
-  padding: 8px;
-  text-align: center;
-}
-
-.five-column .field-meta {
-  justify-content: center;
-}
-
-.five-column .source-detail summary {
-  margin-inline: auto;
+.lung-source-item code {
+  grid-column: 3;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .audit-footer {
@@ -312,29 +395,10 @@ select {
     grid-template-columns: 1fr;
   }
 
-  .five-column {
-    grid-template-columns: 1fr;
+  .lung-assessment {
+    grid-template-columns: 105px minmax(0, 1fr);
   }
 
-  .five-column .field-row {
-    grid-template-columns: 110px 1fr;
-    border-right: 0;
-    border-bottom: 1px solid #dce2e9;
-  }
-
-  .five-column .field-label {
-    border-right: 1px solid #dfe5ec;
-    border-bottom: 0;
-    text-align: left;
-  }
-
-  .five-column .field-content {
-    text-align: left;
-  }
-
-  .five-column .field-meta {
-    justify-content: flex-start;
-  }
 }
 
 @media print {
@@ -397,8 +461,31 @@ select {
   }
 
   .field-label,
-  .field-content {
+  .field-content,
+  .lung-assessment-label,
+  .lung-assessment-content {
     padding: 5px 7px;
+  }
+
+  .lung-side + .lung-side {
+    margin-top: 5px;
+  }
+
+  .lung-lobes {
+    gap: 3px;
+  }
+
+  .lung-cell-label {
+    padding: 3px 4px;
+  }
+
+  .lung-cell-value {
+    padding: 4px;
+    font-size: 0.82rem;
+  }
+
+  .lung-source-detail {
+    display: none;
   }
 
   .field-value-line + .field-value-line {
