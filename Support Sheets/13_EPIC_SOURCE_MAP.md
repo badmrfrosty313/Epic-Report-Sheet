@@ -226,7 +226,13 @@ Preserve, when returned:
 - specimen/effective/result times
 - provenance/performer context where available
 
-### Prototype Lab Display Selectors
+### Current v0.1 Lab Presentation
+
+Current v0.1 presentation rule: render **all usable available lab results for the active encounter**, newest valid result per distinct source lab code. The UI does not use a hard-coded allowlist. Common ICU labs may be presented in a stable scan order, while additional source labs remain eligible to render automatically.
+
+Missing/unresulted labs are not fabricated into the available-results grid. Source records that explicitly represent missing/unavailable states remain preserved in the normalized history/issues layer.
+
+### Original Prototype Lab Display Selectors
 
 The following are **template selectors**, not canonical schema fields:
 
