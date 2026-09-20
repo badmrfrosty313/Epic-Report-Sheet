@@ -31,11 +31,15 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Later: nurses on additional units, unit educators, charge nurses, or organizations that want standardized report-sheet templates.
 
 ## Current Status
-- Stage: **Paused checkpoint / ICU model definition in progress**
-- Last updated: 2026-09-17
-- Pause reason: Two additional WGU classes became available, so school work temporarily takes priority.
-- Completed before pause: ICU selected, prototype captured, full visible-field inventory created, and several field-behavior/model decisions locked.
-- Exact resume point: **Cardiac section**, beginning with source-preserving rhythm/pulse/edema modeling. The next unresolved decision is bilateral radial/pedal pulse structure and repeating edema findings.
+- Stage: **Epic-first source mapping complete / normalized model definition next**
+- Last updated: 2026-09-20
+- ICU remains the first target workflow.
+- Full visible-field inventory is complete.
+- Field behavior/source-family classification is complete at the public Epic/FHIR conceptual level.
+- Every prototype field is mapped in `13_EPIC_SOURCE_MAP.md` to a source domain, a presentation derivation, or an explicit manual report annotation.
+- Header, Neuro, Cardiac, and Respiratory field-level decisions already made remain preserved unless customer-specific Epic evidence requires a change.
+- Exact customer-specific FLO IDs, LDA codes, local value lists, security/scopes, and organization configuration remain a later deployment-adapter task.
+- Current focus: define the canonical normalized ICU model and vertical-slice rules from the completed source map.
 - Repository: badmrfrosty313/Epic-Report-Sheet
 
 ## Constraints
@@ -51,8 +55,8 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - [x] Existing ICU report-sheet prototype added to the repository.
 - [ ] ICU report purpose/workflow is explicitly defined.
 - [x] Prototype fields are inventoried and documented.
-- [ ] Field behavior/classification is completed for every section.
-- [ ] Required report fields are mapped to conceptual EHR/Epic source data.
+- [x] Field behavior/source-family classification is completed for every section.
+- [x] Required report fields are mapped to conceptual EHR/Epic source data.
 - [ ] Application accepts mock patient data and produces the first usable ICU report sheet.
 - [ ] Report is validated against a realistic ICU nursing handoff scenario.
 - [ ] Print/export behavior is usable.
