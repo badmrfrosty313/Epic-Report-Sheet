@@ -63,6 +63,7 @@ IcuReportContext
   medication_orders[]
   medication_administrations[]
   lab_results[]
+  radiology_reports[]
 
   handoff_fields[]
   clinical_notes[]
@@ -879,7 +880,36 @@ These selectors match approved source codes/display mappings. They are not schem
 
 ---
 
-# 18. Handoff Fields
+# 18. Radiology Reports
+
+Source family: **DiagnosticReport (Results) (R4)**.
+
+```text
+RadiologyReportRecord
+  id
+  source_ref
+  patient_ref
+  encounter_ref?
+  status?
+  category_codes[]
+  code
+  effective_time?
+  issued_time?
+  impression?
+  findings?
+  study_refs[]
+  availability
+```
+
+Rules:
+- Preserve every usable encounter radiology report as its own source record.
+- Preserve source report status, study/procedure code/display, effective/issued times, impression/conclusion, full findings text when available, and imaging/media/study references when returned.
+- The report layer may show a compact **study + time + status + impression** view.
+- Do not replace the source impression with an AI-generated or locally inferred interpretation.
+- Do not discard older encounter imaging merely because a newer study exists.
+- Entered-in-error/cancelled/invalid reports remain source history but are excluded from the active report projection according to source status semantics.
+
+# 19. Handoff Fields
 
 Source family: **DocumentReference (Handoff) + Binary**.
 
@@ -910,7 +940,7 @@ Do not merge all handoff fields into one untraceable “Treatment” string.
 
 ---
 
-# 19. Clinical Notes
+# 20. Clinical Notes
 
 Source family: **DocumentReference (Clinical Notes) + Binary**.
 
@@ -936,7 +966,7 @@ Only explicitly selected source-backed note content belongs in the report projec
 
 ---
 
-# 20. Nursing Interventions
+# 21. Nursing Interventions
 
 Source family: **Procedure (Nursing Intervention)** where exposed by the target workflow.
 
@@ -961,7 +991,7 @@ These remain separate from handoff narrative and manual report notes.
 
 ---
 
-# 21. Manual Report Annotations
+# 22. Manual Report Annotations
 
 Manual report notes are intentionally **not chart facts**.
 
@@ -986,7 +1016,7 @@ This replaces generic canonical `Misc` fields.
 
 ---
 
-# 22. BGM
+# 23. BGM
 
 Canonical model:
 - repeating timestamped glucose observations in `observations[]` or `lab_results[]`, depending on approved source mapping.
@@ -1005,7 +1035,7 @@ Do not create canonical properties named `8a`, `12p`, or `16p`.
 
 ---
 
-# 23. Pain
+# 24. Pain
 
 Pain is a repeating timestamped assessment.
 
@@ -1023,7 +1053,7 @@ A report-facing “current pain” display is derived from explicit selection/gr
 
 ---
 
-# 24. GU / UOP
+# 25. GU / UOP
 
 Urinary assessment and output remain time-based ObservationRecords.
 
@@ -1048,7 +1078,7 @@ Never turn missing UOP documentation into zero output.
 
 ---
 
-# 25. Treatment / To Do Projection
+# 26. Treatment / To Do Projection
 
 The report's old Treatment area becomes a projection over:
 
@@ -1066,7 +1096,7 @@ The UI must visually distinguish:
 
 ---
 
-# 26. Current-Value Selection Framework
+# 27. Current-Value Selection Framework
 
 The canonical model stores history. A separate selection layer produces the report snapshot.
 
@@ -1117,7 +1147,7 @@ Each gets its own policy.
 
 ---
 
-# 27. Minimum v0.1 Selection Policies
+# 28. Minimum v0.1 Selection Policies
 
 The implementation must define explicit policies for:
 
@@ -1140,7 +1170,7 @@ No fixed recency duration is locked in this document unless workflow validation 
 
 ---
 
-# 28. Normalization Issues
+# 29. Normalization Issues
 
 ```text
 NormalizationIssue
@@ -1165,7 +1195,7 @@ The system should surface issues rather than silently inventing a value.
 
 ---
 
-# 29. Mock Fixture Contract
+# 30. Mock Fixture Contract
 
 Mock fixtures should mimic the **normalized source-shaped model**, not the old paper form.
 
@@ -1203,7 +1233,7 @@ Fixture rules:
 
 ---
 
-# 30. Example Source-Shaped Mock Skeleton
+# 31. Example Source-Shaped Mock Skeleton
 
 ```text
 IcuReportContext
@@ -1293,7 +1323,7 @@ This is illustrative, not a final storage format.
 
 ---
 
-# 31. Report Projection Boundary
+# 32. Report Projection Boundary
 
 The report template consumes the canonical model through selectors/derivations.
 
@@ -1336,7 +1366,7 @@ The UI/template must never reach directly into Epic-specific raw payloads.
 
 ---
 
-# 32. Adapter Boundary
+# 33. Adapter Boundary
 
 A future Epic adapter is responsible for:
 
@@ -1357,7 +1387,7 @@ The adapter must **not**:
 
 ---
 
-# 33. Persistence Boundary
+# 34. Persistence Boundary
 
 v0.1 does not require a database.
 
@@ -1375,7 +1405,7 @@ Storage technology must not become the domain model.
 
 ---
 
-# 34. Security / Privacy Boundary
+# 35. Security / Privacy Boundary
 
 Prototype:
 - mock/de-identified data only
@@ -1397,7 +1427,7 @@ Those production requirements are outside v0.1 but must not be architecturally b
 
 ---
 
-# 35. Public Epic Basis
+# 36. Public Epic Basis
 
 This model is grounded in the Epic source map and Epic's public R4 API catalog.
 
@@ -1417,6 +1447,7 @@ Key public interfaces used as architectural anchors:
 - MedicationRequest (Signed Medication Order) (R4)
 - MedicationAdministration (R4 catalog surface)
 - Observation.Search (Labs) (R4)
+- DiagnosticReport.Read/Search (Results) (R4) for radiology and other resulted diagnostic reports
 - DocumentReference.Search (Handoff) (R4)
 - DocumentReference.Search (Clinical Notes) (R4)
 - Procedure (Nursing Intervention) (R4 catalog surface)
@@ -1456,7 +1487,7 @@ Those belong to the deployment adapter for a real Epic customer.
 
 ---
 
-# 36. v0.1 Vertical Slice Contract
+# 37. v0.1 Vertical Slice Contract
 
 A v0.1 implementation is complete at the model layer when it can:
 
