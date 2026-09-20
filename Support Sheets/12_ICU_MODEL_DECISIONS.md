@@ -299,3 +299,21 @@ Respiratory is resolved for the current classification pass. Continue with **GI*
 
 Rationale:
 The product's value comes from removing manual report reconstruction. Modeling around legacy handwritten boxes would reintroduce that constraint into software. Source-first modeling lets the report adapt to the EHR rather than making the EHR pretend to be paper.
+
+### All-Fields Epic-First Pass Complete
+The field-by-field questioning pass is complete. `13_EPIC_SOURCE_MAP.md` is now the authoritative conceptual map for the entire ICU prototype.
+
+Decisions locked by this pass:
+- The canonical model is organized by Epic/source domains rather than by paper boxes.
+- Bedside nursing assessment concepts remain timestamped observations/history; exact FLO/assessment codes are customer-specific.
+- GI abdominal findings and GU urine findings are not single canonical blobs.
+- UOP, BGM, Pain, and other repeated assessments remain time-based source collections.
+- LDA-W devices/assessments drive IV access, Foley, feeding tubes, airways, and wounds where the target Epic build represents them that way.
+- NutritionOrder drives diet/enteral nutrition where exposed.
+- MedicationAdministration represents administered infusion state; medication orders remain a separate intent/source collection.
+- Lab results are generic coded Observation records; the report chooses which labs to display.
+- Treatment/To Do is a presentation surface over handoff/intervention/note sources plus clearly marked manual annotations, not one untraceable clinical text field.
+- Generic Misc is removed from the canonical clinical model.
+- Customer-specific mapping is an adapter/deployment concern and does not block mock/source-shaped v0.1 development.
+
+The next design artifact should be the canonical normalized ICU model/schema.
