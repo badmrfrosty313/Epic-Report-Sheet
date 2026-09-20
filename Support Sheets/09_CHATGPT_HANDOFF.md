@@ -37,6 +37,9 @@ Build a digital nursing report-sheet system that takes structured patient data a
 ## Governing Source-Preservation Rule
 If clinically relevant data can legitimately be pulled directly from an approved Epic/EHR source, preserve the original source facts and useful provenance when practical: values, codes, units, timestamps, statuses, labels, components, etc. Normalization may reorganize those facts but must not silently reinterpret them. Derived summaries, flags, calculations, comparisons, and display shorthand remain separate and never overwrite source data. Missing source data remain missing rather than becoming invented normal/default values.
 
+## Epic-First Modeling Rule
+From 2026-09-20 forward, **model the remaining system according to how Epic/EHR actually represents and exposes the data, even if that requires changing the old ICU report layout**. The PDF remains a workflow reference, not the schema authority. Research/verify the source representation first, preserve its semantics and cardinality, then design the normalized model and nurse-facing projection around it. Do not force Epic data into old paper boxes.
+
 ## EXACT RESUME POINT
 Cardiac modeling is resolved for the current v0.1 pass:
 - Rhythm remains source-preserved.
@@ -54,7 +57,7 @@ Then continue GI, GU, IV access, Skin, IV drips, BGM, Pain, Treatment, and Labs.
 - Mock/de-identified data only during prototype development.
 - Keep source ingestion separate from normalized patient data and report presentation.
 - ICU is the first target unit.
-- Use the existing ICU prototype as the v0.1 design anchor rather than inventing a new report from scratch.
+- Use the existing ICU prototype as the workflow/display anchor, but allow its field layout to change when Epic's actual data organization requires it.
 - Store rich source data underneath while rendering concise nurse-friendly output.
 - Interactive UI may expose expandable detail where the paper sheet only has a compact summary.
 - Do not choose technology merely to create motion; choose it after interface/workflow requirements are known.
