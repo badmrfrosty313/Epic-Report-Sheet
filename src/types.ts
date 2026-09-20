@@ -53,6 +53,22 @@ export interface LabResultRecord {
   availability?: Availability;
 }
 
+export interface RadiologyReportRecord {
+  id: string;
+  source_ref: string;
+  patient_ref: string;
+  encounter_ref?: string;
+  status?: string;
+  category_codes?: ClinicalCode[];
+  code: ClinicalCode;
+  effective_time?: string | null;
+  issued_time?: string | null;
+  impression?: string;
+  findings?: string;
+  study_refs?: string[];
+  availability?: Availability;
+}
+
 export interface LdaRecord {
   id: string;
   source_refs: string[];
@@ -221,6 +237,7 @@ export interface IcuFixture {
   nutrition_orders: NutritionOrderRecord[];
   medication_administrations: MedicationAdministrationRecord[];
   lab_results: LabResultRecord[];
+  radiology_reports: RadiologyReportRecord[];
   handoff_fields: HandoffFieldRecord[];
   nursing_interventions: NursingInterventionRecord[];
   manual_report_annotations: ManualReportAnnotation[];
@@ -284,6 +301,7 @@ export interface ReportState {
   bgm: Record<string, ReportField<string>>;
   pain: ReportField<string>;
   labs: Record<string, ReportField<string>>;
+  radiology: ReportField<string>[];
   treatment: {
     handoff: ReportField<string>[];
     interventions: ReportField<string>[];
