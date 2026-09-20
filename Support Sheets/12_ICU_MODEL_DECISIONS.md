@@ -289,3 +289,13 @@ If a source-direct RLL value later exists, the effective RLL display uses that l
 
 ### New Exact Resume Point
 Respiratory is resolved for the current classification pass. Continue with **GI**, starting with the `Abdomen` field structure.
+### Epic-First Model Authority
+- Moving forward, build each remaining domain according to **how Epic/EHR actually represents the data**, even if that requires changing the old ICU report-sheet structure.
+- The paper/PDF prototype remains valuable for identifying what nurses need to see and how quickly they need to scan it, but it is no longer the canonical data schema.
+- Do not flatten, rename, split, merge, or duplicate Epic/source facts merely to fit legacy paper boxes unless that transformation is explicitly a presentation-layer derivation.
+- Prefer a faithful source adapter plus a normalized model that preserves Epic semantics/cardinality, then let the ICU report template decide how to compress, group, or expand those facts.
+- When Epic's public documentation does not expose a universal field or row because the data are customer-specific, record that uncertainty rather than inventing a universal Epic structure.
+- Clinical questions should now be used mainly to resolve workflow/presentation choices or customer-specific ambiguity, not to recreate data structures that can be learned from Epic/source documentation.
+
+Rationale:
+The product's value comes from removing manual report reconstruction. Modeling around legacy handwritten boxes would reintroduce that constraint into software. Source-first modeling lets the report adapt to the EHR rather than making the EHR pretend to be paper.
