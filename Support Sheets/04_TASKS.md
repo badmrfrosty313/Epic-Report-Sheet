@@ -25,6 +25,7 @@
 - [x] Build the first working ICU report from mock source-shaped data.
 - [x] Add expandable source-detail views with source/derived/report-only/missing provenance.
 - [x] Add browser-native print/export behavior with print CSS.
+- [x] Add radiology to the ICU report using source DiagnosticReport records, compact impression display, and entered-in-error exclusion.
 - [ ] Run local nurse-workflow / visual validation of the interactive report.
 - [ ] Validate Print / Save PDF output and refine layout if needed.
 
