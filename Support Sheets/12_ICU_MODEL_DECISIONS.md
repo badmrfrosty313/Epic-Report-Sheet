@@ -201,3 +201,42 @@ Do not treat the sketch above as a final schema. It is a resume marker showing e
 - The source-preservation rule.
 
 Unless new evidence changes one of those assumptions, continue forward rather than re-litigating settled fields.
+## 2026-09-20
+
+### Cardiac: Rhythm, Pulses, and Edema
+- Preserve **rhythm** as source data, including source value/display/code and useful timestamp/status/provenance when available.
+- Store **pulse findings as repeating structured source observations** with site and laterality. This preserves right/left radial findings and more specific lower-extremity pulse sites if the EHR source distinguishes them.
+- The ICU report template may group richer pulse findings into the paper sheet's compact `Radial` and `Pedal` display rows.
+- Store **edema as repeating structured findings** rather than one text blob. Preserve source-provided location/laterality, grade, pitting/non-pitting/type, documented value/display text, timestamp, and useful provenance when available.
+- Missing findings remain missing and are never defaulted to normal.
+
+Conceptual shape:
+```text
+cardiac:
+  rhythms:
+    - value: <source value>
+      code: <source code if available>
+      observed_at: <source timestamp if available>
+  pulses:
+    - site: "radial"
+      laterality: "right"
+      value: <source-documented value/grade>
+      observed_at: <source timestamp if available>
+    - site: <source-specific lower-extremity pulse site>
+      laterality: "left"
+      value: <source-documented value/grade>
+  edema:
+    - location: <source location>
+      laterality: <source laterality if available>
+      grade: <source grade if available>
+      type: <source type if available>
+      observed_at: <source timestamp if available>
+```
+
+Exact field names above are conceptual, not a final implementation schema. Source-coded values and identifiers remain available rather than being replaced by display shorthand.
+
+### Epic Source Feasibility Note
+Public Epic FHIR documentation indicates that Observation APIs can retrieve vital-sign data and certain other flowsheet data using customer/environment-specific encoded flowsheet IDs, and Epic also exposes R4 Observation (Assessments). Exact rows, codes, permissions, and customer configuration remain a later source-mapping task.
+
+### New Exact Resume Point
+Continue with **Respiratory**: confirm the prototype's `Oxygen`, `LPM`, and `Percentage` semantics, preserve device/settings source detail, then model lobe-specific lung findings.
