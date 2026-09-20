@@ -1470,6 +1470,11 @@ A v0.1 implementation is complete at the model layer when it can:
 8. print/export the report without changing the canonical data,
 9. run without live Epic access.
 
-## Next artifact
+## Completed validation artifacts
 
-Create a **realistic source-shaped mock ICU fixture** plus the explicit selection-policy table needed to transform it into the first report projection.
+The model is now exercised by:
+- `15_MOCK_ICU_FIXTURE.json`
+- `16_ICU_SELECTION_POLICIES.md`
+- `17_FIRST_REPORT_PROJECTION.md`
+
+The fixture/policy audit passes deterministically. Next: implement the model and selection engine in executable code.
