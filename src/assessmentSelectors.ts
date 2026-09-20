@@ -84,6 +84,28 @@ export function selectGcs(fixture: IcuFixture): ReportField<string> {
   );
 }
 
+export function selectNihss(fixture: IcuFixture): ReportField<string> {
+  const total = oneObservation(fixture, "neuro.nihss.total");
+  if (!total) return missing("NIHSS not documented");
+
+  const panelItems = fixture.observations.filter(
+    (obs) =>
+      obs.panel_parent_id === total.panel_parent_id &&
+      obs.id !== total.id &&
+      obs.encounter_ref === fixture.encounter.id &&
+      obs.status === "final",
+  );
+
+  return field(
+    valueText(total.value),
+    "source",
+    [total.id, ...panelItems.map((item) => item.id)],
+    panelItems.length
+      ? `${panelItems.length} source assessment items preserved`
+      : undefined,
+  );
+}
+
 export function selectStrength(fixture: IcuFixture): ReportField<string> {
   const limbs = ["RUE", "LUE", "RLE", "LLE"];
   const values = limbs.map((limb) =>
@@ -167,6 +189,37 @@ export function selectOxygen(fixture: IcuFixture): ReportField<string> {
       .join("\n"),
     "derived",
     [device, flow, fio2].filter(Boolean).map((item) => item!.id),
+  );
+}
+
+export function selectVent(fixture: IcuFixture): ReportField<string> {
+  const mode = oneObservation(fixture, "respiratory.vent.mode");
+  const tidalVolume = oneObservation(
+    fixture,
+    "respiratory.vent.tidal_volume",
+  );
+  const peep = oneObservation(fixture, "respiratory.vent.peep");
+  const rate = oneObservation(fixture, "respiratory.vent.rate");
+
+  if (!mode && !tidalVolume && !peep && !rate) {
+    return missing("Vent settings not documented");
+  }
+
+  return field(
+    [
+      mode ? `Mode: ${valueText(mode.value)}` : null,
+      tidalVolume
+        ? `Tidal volume: ${valueText(tidalVolume.value)}`
+        : null,
+      peep ? `PEEP: ${valueText(peep.value)}` : null,
+      rate ? `Rate: ${valueText(rate.value)}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n"),
+    "derived",
+    [mode, tidalVolume, peep, rate]
+      .filter(Boolean)
+      .map((item) => item!.id),
   );
 }
 
