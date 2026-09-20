@@ -324,3 +324,28 @@ npm run dev
 ```
 
 Then review the report as an ICU nurse would: scanability, information grouping, provenance expansion, missing-data visibility, and print/PDF layout.
+
+
+---
+
+## 2026-09-20 - Radiology Vertical Slice
+
+### What We Worked On
+- Added radiology as a complete source-first report domain rather than a free-text box.
+- Verified Epic's public R4 DiagnosticReport Results API supports radiology and text-based radiology content such as narratives/impressions.
+- Added normalized radiology records, mock results, selection logic, UI, tests, source map, and report-projection documentation.
+
+### What Changed
+- Canonical source: DiagnosticReport (Results) (R4).
+- Report display: study + clinically relevant time + status + source impression.
+- Full source findings remain preserved underneath the compact nurse view.
+- Multiple usable encounter studies remain available newest-first.
+- Entered-in-error radiology remains source history but is excluded from the active report projection.
+- Mock fixture now contains two usable radiology reports and one entered-in-error report.
+
+### Epic Public References
+- DiagnosticReport.Search (Results) (R4): https://fhir.epic.com/Specifications?api=989
+- DiagnosticReport.Read (Results) (R4): https://fhir.epic.com/Specifications?api=988
+
+### Next Starting Point
+Continue local nurse-layout validation with Radiology now included. Do not add local interpretation or AI-generated radiology summaries; display the source impression.
