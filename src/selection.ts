@@ -12,6 +12,7 @@ import {
   selectEdema,
   selectGcs,
   selectLung,
+  selectNihss,
   selectOrientation,
   selectOxygen,
   selectPain,
@@ -19,6 +20,7 @@ import {
   selectPupils,
   selectShiftUop,
   selectStrength,
+  selectVent,
 } from "./assessmentSelectors";
 import {
   activeLdas,
@@ -88,7 +90,7 @@ export function buildReportState(fixture: IcuFixture): ReportState {
       pupils: selectPupils(fixture),
       gcs: selectGcs(fixture),
       strength: selectStrength(fixture),
-      nihss: missing("NIHSS not documented in fixture"),
+      nihss: selectNihss(fixture),
     },
     cardiac: {
       rhythm: rhythm
@@ -114,7 +116,7 @@ export function buildReportState(fixture: IcuFixture): ReportState {
       rll: selectLung(fixture, "RLL"),
       lul: selectLung(fixture, "LUL"),
       lll: selectLung(fixture, "LLL"),
-      vent: missing("Vent settings not documented in fixture"),
+      vent: selectVent(fixture),
     },
     gi: {
       abdomen: selectAbdomen(fixture),
