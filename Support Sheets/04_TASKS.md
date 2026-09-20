@@ -21,10 +21,12 @@
 - [x] Define the explicit current-value / recency / encounter-selection policy table in `16_ICU_SELECTION_POLICIES.md`.
 - [x] Prove the deterministic nurse-report projection in `17_FIRST_REPORT_PROJECTION.md`.
 - [x] Finalize the first ICU vertical-slice behavior using the normalized model, fixture, and selection policies.
-- [ ] Choose the implementation stack based on the now-known model and UI requirements.
-- [ ] Build the first working ICU report from mock source-shaped data.
-- [ ] Add expandable source-detail views where useful.
-- [ ] Add print/export behavior.
+- [x] Choose the implementation stack: TypeScript + React + Vite + Vitest.
+- [x] Build the first working ICU report from mock source-shaped data.
+- [x] Add expandable source-detail views with source/derived/report-only/missing provenance.
+- [x] Add browser-native print/export behavior with print CSS.
+- [ ] Run local nurse-workflow / visual validation of the interactive report.
+- [ ] Validate Print / Save PDF output and refine layout if needed.
 
 ## Later / Deployment Adapter
 - [ ] Validate customer-specific Epic mappings with a target organization:
@@ -44,15 +46,15 @@
 - [ ] Decide whether the project should progress from prototype to deployable clinical software.
 
 ## Testing
-- [ ] Test missing/optional/repeating data.
-- [ ] Test source-vs-derived separation and provenance.
-- [ ] Test encounter/time selection logic.
-- [ ] Test conflicting/superseded source values.
-- [ ] Test LDA/device lifecycle data.
-- [ ] Test timestamped BGM, UOP, pain, and assessment history.
-- [ ] Test lab code/value/unit/range/flag handling.
-- [ ] Test realistic long values and expandable detail.
-- [ ] Test print/PDF output.
+- [x] Test missing/optional/repeating data in the deterministic fixture.
+- [x] Test source-vs-derived separation and provenance.
+- [x] Test encounter/time selection logic.
+- [x] Test conflicting/entered-in-error source values.
+- [x] Test active vs historical LDA/device lifecycle behavior.
+- [x] Test timestamped BGM, UOP, pain, and assessment selection.
+- [x] Test selected lab values, H/H derivation, missing lab behavior, and entered-in-error exclusion.
+- [ ] Test realistic long values and visual overflow handling.
+- [ ] Test Print / Save PDF output manually.
 - [ ] Run a manual ICU nursing-workflow validation.
 
 ## Completed Artifacts
@@ -75,4 +77,4 @@
 A realistic source-shaped mock ICU patient/encounter goes in and a useful, readable, printable nurse report comes out. The report preserves source provenance and makes derived/report-only values distinguishable. No live Epic connection is required.
 
 ## Next Starting Point
-Choose the implementation stack, scaffold the local app, and implement the normalization/selection engine against `15_MOCK_ICU_FIXTURE.json` until it reproduces `17_FIRST_REPORT_PROJECTION.md`.
+Pull the remote implementation locally, run the tests and dev server, then perform the first nurse-layout review: `git pull`, `npm install`, `npm run test:run`, `npm run dev`. Compare the browser report and Print / Save PDF output against the intended ICU handoff workflow before adding more features.
