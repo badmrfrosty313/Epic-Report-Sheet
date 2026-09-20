@@ -262,3 +262,65 @@ Choose the implementation stack and make executable code reproduce `17_FIRST_REP
 ```text
 git pull
 ```
+
+
+---
+
+## 2026-09-20 - Executable v0.1 Selection Engine + React UI
+
+### What We Worked On
+- Locked the smallest v0.1 implementation stack.
+- Turned the deterministic source-shaped fixture and selection policies into executable TypeScript.
+- Built the first React ICU report UI directly from typed `ReportState`.
+- Added automated tests and GitHub Actions CI.
+
+### Stack Locked
+- TypeScript 5.6.3
+- React 18.3.1 / ReactDOM 18.3.1
+- Vite 5.4.10
+- Vitest 2.1.4
+- Plain CSS + browser-native print CSS
+- npm / Node 20+
+- No backend, database, CSS framework, or live Epic dependency
+
+### What Changed
+- Added `package.json`, TypeScript/Vite configuration, app entry files, and root README.
+- Added typed normalized/report-state interfaces in `src/types.ts`.
+- Added reusable selector utilities in `src/selectionUtils.ts`.
+- Added bedside assessment selectors in `src/assessmentSelectors.ts`.
+- Added support-domain selectors for location/code status/LDA/nutrition/drips/BGM/labs/allergies in `src/supportSelectors.ts`.
+- Added the orchestrating report-state builder in `src/selection.ts`.
+- Added `src/App.tsx` and `src/styles.css` with responsive report layout, provenance badges, expandable source IDs, and Print / Save PDF behavior.
+- Added `tests/selection.test.ts`.
+- Added `.github/workflows/ci.yml` to install, test, and production-build on push / pull request.
+- Updated `06_TECH_STACK.md`.
+
+### Automated Validation
+The selector test suite covers:
+- header/location/code status/weight/age
+- neuro and cardiac selections
+- side-level lung inheritance plus lobe-specific override
+- shift UOP window calculation
+- administration state vs medication order intent
+- active vs completed LDAs
+- BGM time-slot projection
+- entered-in-error pain exclusion
+- entered-in-error potassium exclusion
+- H/H derivation with separate source IDs
+- missing magnesium and NIHSS remaining missing
+- report-only annotations remaining distinct from source-backed handoff
+
+GitHub Actions CI run #2 completed successfully: tests passed and the Vite production build completed.
+
+### Project State
+The first executable vertical slice now exists remotely. It has not yet been visually validated in the user's local browser or through Print / Save PDF.
+
+### Next Starting Point
+```text
+git pull
+npm install
+npm run test:run
+npm run dev
+```
+
+Then review the report as an ICU nurse would: scanability, information grouping, provenance expansion, missing-data visibility, and print/PDF layout.
