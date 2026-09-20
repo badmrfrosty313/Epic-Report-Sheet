@@ -47,6 +47,7 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Stack is locked to TypeScript + React + Vite + Vitest with plain CSS and browser-native print CSS.
 - Executable selector modules now load the deterministic mock fixture and produce a typed `ReportState`; the React UI renders the first interactive ICU report with expandable provenance and missing/source/derived/report-only distinctions.
 - Automated tests cover the core deterministic selection cases, and GitHub Actions CI run #2 completed successfully with tests + production build.
+- Radiology is now a first-class source domain using Epic/FHIR DiagnosticReport Results; the compact report shows study/time/status/source impression while preserving full source findings underneath.
 - Current focus: run the app locally and perform nurse-workflow / visual / print validation before polishing the layout.
 - Repository: badmrfrosty313/Epic-Report-Sheet
 
