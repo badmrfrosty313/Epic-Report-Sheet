@@ -25,8 +25,8 @@ select {
 }
 
 .page-shell {
-  width: min(1480px, calc(100% - 32px));
-  margin: 24px auto 48px;
+  width: min(1480px, calc(100% - 36px));
+  margin: 22px auto 48px;
 }
 
 .app-header {
@@ -34,95 +34,118 @@ select {
   align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .app-header h1 {
   margin: 0;
   font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1;
 }
 
 .eyebrow {
-  margin: 0 0 4px;
-  font-size: 0.78rem;
+  margin: 0 0 5px;
+  font-size: 0.74rem;
   font-weight: 800;
   letter-spacing: 0.12em;
 }
 
 .subhead {
   margin: 8px 0 0;
-  color: #596579;
+  color: #667286;
+  font-size: 0.92rem;
 }
 
 .print-button {
   border: 1px solid #aab4c3;
-  border-radius: 10px;
+  border-radius: 8px;
   background: white;
-  padding: 10px 14px;
+  padding: 9px 13px;
   cursor: pointer;
 }
 
 .patient-banner {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 18px;
+  gap: 0;
   align-items: center;
-  padding: 14px 16px;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   border: 1px solid #aeb9c8;
-  border-radius: 12px;
+  border-radius: 9px;
   background: white;
-  font-size: 1.02rem;
+  box-shadow: 0 1px 2px rgb(24 33 47 / 5%);
+  overflow: hidden;
+  font-size: 1rem;
+}
+
+.patient-banner > * {
+  padding: 11px 15px;
+  border-right: 1px solid #dbe1e8;
+}
+
+.patient-banner > *:last-child {
+  border-right: 0;
 }
 
 .report-columns {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 14px;
+  gap: 18px;
   align-items: start;
 }
 
 .report-column {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
   min-width: 0;
 }
 
 .report-section {
   break-inside: avoid;
-  border: 1px solid #b8c1ce;
-  border-radius: 12px;
+  border: 1px solid #aeb9c8;
+  border-radius: 9px;
   background: white;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgb(24 33 47 / 6%);
 }
 
 .report-section h2 {
   margin: 0;
-  padding: 9px 12px;
-  border-bottom: 1px solid #cbd2dc;
-  font-size: 1.03rem;
+  padding: 9px 12px 8px;
+  border-bottom: 2px solid #bac5d2;
+  background: #edf2f7;
+  font-size: 0.98rem;
+  font-weight: 850;
+  letter-spacing: 0.015em;
 }
 
 .report-section h3 {
-  margin: 12px 12px 4px;
-  font-size: 0.86rem;
+  margin: 0;
+  padding: 9px 12px 7px;
+  border-top: 1px solid #d9e0e8;
+  border-bottom: 1px solid #e4e9ef;
+  background: #f7f9fb;
+  font-size: 0.76rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #586579;
+  letter-spacing: 0.075em;
+  color: #5b687a;
+}
+
+.report-section h2 + h3 {
+  border-top: 0;
 }
 
 .section-message {
   margin: 0;
-  padding: 10px 12px;
+  padding: 11px 12px;
 }
 
 .field-row {
   display: grid;
-  grid-template-columns: minmax(110px, 0.28fr) 1fr;
-  gap: 10px;
-  padding: 8px 12px;
-  border-bottom: 1px solid #e1e6ec;
+  grid-template-columns: minmax(118px, 0.28fr) minmax(0, 1fr);
+  border-bottom: 1px solid #dce2e9;
+  background: white;
 }
 
 .field-row:last-child {
@@ -130,51 +153,64 @@ select {
 }
 
 .field-label {
-  font-size: 0.82rem;
+  padding: 10px 11px;
+  border-right: 1px solid #dfe5ec;
+  background: #f8fafc;
+  font-size: 0.78rem;
   font-weight: 800;
-  color: #4b596d;
+  line-height: 1.25;
+  color: #435066;
 }
 
 .field-content {
   min-width: 0;
+  padding: 9px 12px 10px;
 }
 
 .field-value {
   font-weight: 650;
-  line-height: 1.35;
+  line-height: 1.38;
   overflow-wrap: anywhere;
   white-space: pre-line;
 }
 
+.field-value-line {
+  padding: 1px 0 4px;
+}
+
 .field-value-line + .field-value-line {
   margin-top: 3px;
+  padding-top: 6px;
+  border-top: 1px solid #edf0f4;
 }
 
 .field-value.missing,
 .missing {
   font-style: italic;
   font-weight: 500;
-  color: #6a7484;
+  color: #707b8b;
 }
 
 .field-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  font-size: 0.73rem;
-  color: #6b7685;
+  gap: 5px;
+  margin-top: 7px;
+  font-size: 0.68rem;
+  color: #7a8492;
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
-  border: 1px solid #bac3d0;
+  border: 1px solid #ccd3dc;
   border-radius: 999px;
   padding: 1px 6px;
-  font-size: 0.68rem;
-  font-weight: 800;
+  font-size: 0.63rem;
+  font-weight: 750;
+  color: #667284;
+  background: #fafbfc;
 }
 
 .badge-derived {
@@ -191,17 +227,22 @@ select {
 
 .source-detail {
   margin-top: 5px;
-  font-size: 0.72rem;
-  color: #697486;
+  font-size: 0.68rem;
+  color: #7a8492;
 }
 
 .source-detail summary {
   cursor: pointer;
+  width: fit-content;
 }
 
 .source-detail code {
   display: block;
-  margin-top: 4px;
+  margin-top: 5px;
+  padding: 6px 8px;
+  border: 1px solid #e0e5eb;
+  border-radius: 5px;
+  background: #f8fafc;
   white-space: normal;
   overflow-wrap: anywhere;
 }
@@ -209,29 +250,64 @@ select {
 .five-column {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-bottom: 1px solid #dce2e9;
 }
 
 .five-column .field-row {
   grid-template-columns: 1fr;
-  border-right: 1px solid #e1e6ec;
+  border-bottom: 0;
+  border-right: 1px solid #dce2e9;
+}
+
+.five-column .field-row:last-child {
+  border-right: 0;
+}
+
+.five-column .field-label {
+  padding: 7px 8px 6px;
+  border-right: 0;
+  border-bottom: 1px solid #e2e7ed;
+  text-align: center;
+  font-size: 0.72rem;
+}
+
+.five-column .field-content {
+  padding: 8px;
+  text-align: center;
+}
+
+.five-column .field-meta {
+  justify-content: center;
+}
+
+.five-column .source-detail summary {
+  margin-inline: auto;
 }
 
 .audit-footer {
-  margin-top: 14px;
-  padding: 12px 14px;
-  border: 1px solid #bac3cf;
-  border-radius: 10px;
-  background: white;
-  color: #586579;
-  font-size: 0.82rem;
+  margin-top: 18px;
+  padding: 10px 12px;
+  border: 1px solid #c8d0da;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #697587;
+  font-size: 0.76rem;
 }
 
 .audit-footer summary {
   cursor: pointer;
-  font-weight: 800;
+  font-weight: 750;
 }
 
 @media (max-width: 720px) {
+  .page-shell {
+    width: min(100% - 20px, 1480px);
+  }
+
+  .patient-banner > * {
+    border-bottom: 1px solid #e2e7ed;
+  }
+
   .report-columns {
     grid-template-columns: 1fr;
   }
@@ -242,6 +318,22 @@ select {
 
   .five-column .field-row {
     grid-template-columns: 110px 1fr;
+    border-right: 0;
+    border-bottom: 1px solid #dce2e9;
+  }
+
+  .five-column .field-label {
+    border-right: 1px solid #dfe5ec;
+    border-bottom: 0;
+    text-align: left;
+  }
+
+  .five-column .field-content {
+    text-align: left;
+  }
+
+  .five-column .field-meta {
+    justify-content: flex-start;
   }
 }
 
@@ -264,11 +356,11 @@ select {
   }
 
   .app-header {
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
 
   .app-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .subhead {
@@ -276,8 +368,13 @@ select {
   }
 
   .patient-banner {
-    padding: 8px;
+    margin-bottom: 7px;
     border-radius: 0;
+    box-shadow: none;
+  }
+
+  .patient-banner > * {
+    padding: 6px 8px;
   }
 
   .report-columns {
@@ -292,9 +389,20 @@ select {
 
   .report-section {
     border-radius: 0;
+    box-shadow: none;
   }
 
-  .field-row {
-    padding: 5px 8px;
+  .report-section h2 {
+    padding: 5px 7px;
+  }
+
+  .field-label,
+  .field-content {
+    padding: 5px 7px;
+  }
+
+  .field-value-line + .field-value-line {
+    margin-top: 1px;
+    padding-top: 2px;
   }
 }
