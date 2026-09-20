@@ -12,6 +12,7 @@ import {
   observations,
   present,
   time,
+  trendDirection,
   usableStatus,
   valueText,
 } from "./selectionUtils";
@@ -132,6 +133,13 @@ export function selectUrinaryDevice(fixture: IcuFixture): ReportField<string> {
 }
 
 export function dripFields(fixture: IcuFixture): ReportField<string>[] {
+  const ldaById = new Map(
+    fixture.ldas.map((lda) => [
+      lda.id,
+      lda.display ?? lda.type_code.display ?? lda.type_code.code ?? lda.id,
+    ]),
+  );
+
   return fixture.medication_administrations
     .filter(
       (item) =>
@@ -140,20 +148,99 @@ export function dripFields(fixture: IcuFixture): ReportField<string>[] {
         present(item.availability) &&
         inPeriod(item.effective_period, fixture.report_config.report_time),
     )
-    .map((item) =>
-      field(
-        `${item.medication_code?.display ?? item.medication_code?.code ?? "Medication"}: ${
-          item.rate
-            ? `${item.rate.value}${item.rate.unit ? ` ${item.rate.unit}` : ""}`
-            : "rate not documented"
-        }`,
+    .sort(
+      (a, b) =>
+        time(a.effective_period?.start ?? a.effective_time) -
+        time(b.effective_period?.start ?? b.effective_time),
+    )
+    .map((item) => {
+      const medication =
+        item.medication_code?.display ??
+        item.medication_code?.code ??
+        "Medication";
+      const access = item.device_refs
+        ?.map((id) => ldaById.get(id) ?? id)
+        .join(", ");
+
+      return field(
+        [
+          medication,
+          `Rate: ${
+            item.rate
+              ? `${item.rate.value}${item.rate.unit ? ` ${item.rate.unit}` : ""}`
+              : "not documented"
+          }`,
+          access ? `Via: ${access}` : null,
+        ]
+          .filter(Boolean)
+          .join("\n"),
         "source",
         [item.id],
-        item.device_refs?.length
-          ? `Via ${item.device_refs.join(", ")}`
-          : undefined,
-      ),
-    );
+      );
+    });
+}
+
+export function selectShiftIo(fixture: IcuFixture): {
+  intake: ReportField<string>;
+  output: ReportField<string>;
+  net: ReportField<string>;
+} {
+  const start = time(fixture.report_config.shift_start);
+  const end = Math.min(
+    time(fixture.report_config.shift_end),
+    time(fixture.report_config.report_time),
+  );
+
+  const withinShift = (code: string) =>
+    observations(fixture, code).filter((obs) => {
+      const observed = time(obs.effective_time);
+      return observed >= start && observed <= end;
+    });
+
+  const intakeRecords = withinShift("io.intake");
+  const outputRecords = withinShift("io.output");
+
+  const sum = (records: ReturnType<typeof withinShift>) =>
+    records.reduce((total, obs) => {
+      const value = obs.value as { value?: number; unit?: string };
+      return total + (typeof value?.value === "number" ? value.value : 0);
+    }, 0);
+
+  const intakeTotal = intakeRecords.length ? sum(intakeRecords) : null;
+  const outputTotal = outputRecords.length ? sum(outputRecords) : null;
+
+  const intake = intakeTotal === null
+    ? missing<string>("No documented intake in shift window")
+    : field(
+        `${intakeTotal} mL`,
+        "derived",
+        intakeRecords.map((obs) => obs.id),
+        "Shift total from documented intake observations",
+      );
+
+  const output = outputTotal === null
+    ? missing<string>("No documented total output in shift window")
+    : field(
+        `${outputTotal} mL`,
+        "derived",
+        outputRecords.map((obs) => obs.id),
+        "Shift total from documented output observations",
+      );
+
+  const net =
+    intakeTotal === null || outputTotal === null
+      ? missing<string>("Net requires both documented intake and output")
+      : field(
+          `${intakeTotal - outputTotal >= 0 ? "+" : ""}${intakeTotal - outputTotal} mL`,
+          "derived",
+          [
+            ...intakeRecords.map((obs) => obs.id),
+            ...outputRecords.map((obs) => obs.id),
+          ],
+          "Intake minus documented output for the configured shift window",
+        );
+
+  return { intake, output, net };
 }
 
 export function selectBgmSlot(
@@ -301,7 +388,10 @@ export function selectAllLabs(
     preferredOrder.map((code, index) => [code, index]),
   );
 
-  const latestByCode = new Map<string, (typeof fixture.lab_results)[number]>();
+  const grouped = new Map<
+    string,
+    Array<(typeof fixture.lab_results)[number]>
+  >();
 
   for (const lab of fixture.lab_results) {
     if (
@@ -319,51 +409,69 @@ export function selectAllLabs(
       lab.code.code ?? lab.code.display ?? lab.id,
     ].join("|");
 
-    const existing = latestByCode.get(sourceKey);
-    if (
-      !existing ||
-      time(lab.effective_time) > time(existing.effective_time)
-    ) {
-      latestByCode.set(sourceKey, lab);
-    }
+    const list = grouped.get(sourceKey) ?? [];
+    list.push(lab);
+    grouped.set(sourceKey, list);
   }
 
-  const selected = [...latestByCode.values()].sort((a, b) => {
-    const aCode = a.code.code ?? "";
-    const bCode = b.code.code ?? "";
-    const aOrder = orderIndex.get(aCode) ?? Number.MAX_SAFE_INTEGER;
-    const bOrder = orderIndex.get(bCode) ?? Number.MAX_SAFE_INTEGER;
+  const selected = [...grouped.entries()]
+    .map(([sourceKey, labs]) => ({
+      sourceKey,
+      labs: [...labs].sort(
+        (a, b) => time(b.effective_time) - time(a.effective_time),
+      ),
+    }))
+    .sort((a, b) => {
+      const aLab = a.labs[0];
+      const bLab = b.labs[0];
+      const aCode = aLab.code.code ?? "";
+      const bCode = bLab.code.code ?? "";
+      const aOrder = orderIndex.get(aCode) ?? Number.MAX_SAFE_INTEGER;
+      const bOrder = orderIndex.get(bCode) ?? Number.MAX_SAFE_INTEGER;
 
-    if (aOrder !== bOrder) return aOrder - bOrder;
+      if (aOrder !== bOrder) return aOrder - bOrder;
 
-    const aLabel = a.code.display ?? aCode ?? a.id;
-    const bLabel = b.code.display ?? bCode ?? b.id;
-    return aLabel.localeCompare(bLabel);
-  });
+      const aLabel = aLab.code.display ?? aCode ?? aLab.id;
+      const bLabel = bLab.code.display ?? bCode ?? bLab.id;
+      return aLabel.localeCompare(bLabel);
+    });
 
   const entries: Array<[string, ReportField<string>]> = [];
   const usedLabels = new Set<string>();
 
-  for (const lab of selected) {
-    const baseLabel = lab.code.display ?? lab.code.code ?? lab.id;
+  for (const group of selected) {
+    const current = group.labs[0];
+    const previous = group.labs[1];
+    const baseLabel =
+      current.code.display ?? current.code.code ?? current.id;
     let label = baseLabel;
 
     if (usedLabels.has(label)) {
-      label = `${baseLabel} (${lab.code.code ?? lab.id})`;
+      label = `${baseLabel} (${current.code.code ?? current.id})`;
     }
     usedLabels.add(label);
 
-    const interpretation = lab.interpretation_codes?.length
-      ? lab.interpretation_codes.join(", ").toUpperCase()
+    const flag = current.interpretation_codes?.length
+      ? current.interpretation_codes.join(", ").toUpperCase()
       : undefined;
 
     entries.push([
       label,
       field(
-        valueText(lab.value),
+        valueText(current.value),
         "source",
-        [lab.id],
-        interpretation,
+        [current.id],
+        undefined,
+        {
+          flag,
+          observedAt: current.effective_time ?? current.issued_time ?? undefined,
+          previousValue: previous ? valueText(previous.value) : undefined,
+          previousObservedAt:
+            previous?.effective_time ?? previous?.issued_time ?? undefined,
+          trend: previous
+            ? trendDirection(current.value, previous.value)
+            : undefined,
+        },
       ),
     ]);
   }
