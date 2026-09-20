@@ -22,6 +22,9 @@ This file separates what can be inferred safely from the prototype's layout from
 ## Governing Rule
 Preserve clinically relevant source values and useful provenance that can legitimately be pulled from the approved Epic/EHR source. Normalization may reorganize those facts but must not silently reinterpret them. Derived values/display shorthand remain separate. Missing source data remain missing rather than being defaulted to normal.
 
+### Epic-First Modeling Priority
+For all remaining sections, **Epic/source reality takes precedence over the legacy PDF field layout**. Determine the real source structure first, then classify/model the data accordingly. The ICU PDF may be regrouped or redesigned if needed. It is a workflow/display reference, not a canonical schema.
+
 ## Patient / Header
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
 |---|---|---|---|---|
