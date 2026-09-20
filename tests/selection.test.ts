@@ -73,23 +73,26 @@ describe("ICU selection engine", () => {
     expect(report.pain.sourceIds).not.toContain("obs-pain-error");
   });
 
+  it("renders every available current lab instead of a hard-coded subset", () => {
+    expect(Object.keys(report.labs)).toHaveLength(23);
+    expect(report.labs["Red blood cells"].value).toBe("3.15 10^6/uL");
+    expect(report.labs["Hemoglobin"].value).toBe("9.1 g/dL");
+    expect(report.labs["Hematocrit"].value).toBe("28.2 %");
+    expect(report.labs["Phosphorus"].value).toBe("2.4 mg/dL");
+    expect(report.labs["Magnesium"]).toBeUndefined();
+  });
+
   it("rejects a newer entered-in-error potassium result", () => {
-    expect(report.labs.K.value).toBe("3.4 mmol/L");
-    expect(report.labs.K.sourceIds).toEqual(["lab-k-current"]);
+    expect(report.labs["Potassium"].value).toBe("3.4 mmol/L");
+    expect(report.labs["Potassium"].sourceIds).toEqual(["lab-k-current"]);
   });
 
-  it("derives H/H while preserving separate source IDs", () => {
-    expect(report.labs["H/H"].value).toBe("9.1 g/dL / 28.2 %");
-    expect(report.labs["H/H"].provenance).toBe("derived");
-    expect(report.labs["H/H"].sourceIds).toEqual([
-      "lab-hgb-current",
-      "lab-hct-current",
-    ]);
+  it("keeps source lab interpretation available for the UI", () => {
+    expect(report.labs["Potassium"].note).toBe("LOW");
+    expect(report.labs["WBC"].note).toBe("HIGH");
   });
 
-  it("does not turn missing magnesium or NIHSS into normal values", () => {
-    expect(report.labs.Magnesium.value).toBeNull();
-    expect(report.labs.Magnesium.provenance).toBe("missing");
+  it("does not turn missing NIHSS into a normal value", () => {
     expect(report.neuro.nihss.value).toBeNull();
     expect(report.neuro.nihss.provenance).toBe("missing");
   });
