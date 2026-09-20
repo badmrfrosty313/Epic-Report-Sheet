@@ -10,6 +10,7 @@ Build a digital ICU nursing report system that ingests structured patient/encoun
 - Repo: `badmrfrosty313/Epic-Report-Sheet`.
 - ICU is the first target workflow.
 - Application code has not started.
+- `Support Sheets/14_ICU_NORMALIZED_MODEL.md` is complete and is now the canonical model specification.
 - The two-page ICU PDF has been fully inventoried.
 - **All prototype fields have now been mapped conceptually to Epic/FHIR source domains.**
 - The comprehensive map is `Support Sheets/13_EPIC_SOURCE_MAP.md`.
@@ -84,20 +85,23 @@ Public Epic docs do not provide universal customer-independent mappings for many
 These are adapter configuration, not blockers for the mock prototype.
 
 ## Exact Next Step
-Define the **canonical normalized ICU model** from `13_EPIC_SOURCE_MAP.md`, including:
-1. encounter scoping and provenance
-2. generic observation/history representation
-3. devices/LDA-W
-4. nutrition orders
-5. medication administrations/orders
-6. labs
-7. handoff/intervention/note references
-8. manual report annotations
-9. derived report values with `derived_from` references
-10. explicit time/current-value selection rules
+Build the **first realistic source-shaped mock ICU fixture** from `14_ICU_NORMALIZED_MODEL.md`, then define the explicit selection-policy table that produces the deterministic nurse-report snapshot.
 
-Then create source-shaped mock fixtures and choose the implementation stack.
+The fixture must include:
+1. patient + encounter context
+2. code status / PMH / diagnoses / allergies
+3. timestamped bedside observations
+4. at least one LDA/device
+5. nutrition order
+6. medication order + administration/drip
+7. lab results
+8. handoff / intervention / note references
+9. manual report annotation
+10. source/provenance IDs
+11. at least one missing datum
+12. at least one stale/conflicting value so selection logic is tested
 
+Then choose the implementation stack and build the first report projection.
 ## Do Not Undo
 - Do not rebuild the model field-for-field from the PDF.
 - Do not invent universal Epic flowsheet IDs.
