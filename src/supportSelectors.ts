@@ -12,6 +12,7 @@ import {
   observations,
   present,
   time,
+  usableStatus,
   valueText,
 } from "./selectionUtils";
 
@@ -221,4 +222,46 @@ export function selectAllergies(fixture: IcuFixture): ReportField<string[]> {
         current.map((item) => item.id),
       )
     : missing("Allergies not documented");
+}
+
+
+export function selectRadiologyReports(
+  fixture: IcuFixture,
+): ReportField<string>[] {
+  return fixture.radiology_reports
+    .filter(
+      (report) =>
+        report.encounter_ref === fixture.encounter.id &&
+        usableStatus(report.status) &&
+        present(report.availability) &&
+        time(report.effective_time ?? report.issued_time) <=
+          time(fixture.report_config.report_time),
+    )
+    .sort(
+      (a, b) =>
+        time(b.effective_time ?? b.issued_time) -
+        time(a.effective_time ?? a.issued_time),
+    )
+    .map((report) => {
+      const sourceTime = report.effective_time ?? report.issued_time;
+      const displayTime = sourceTime
+        ? `${sourceTime.slice(5, 10).replace("-", "/")} ${sourceTime.slice(11, 16)}`
+        : "time not documented";
+
+      const lines = [
+        `Study: ${report.code.display ?? report.code.code ?? "Radiology study"}`,
+        `Time: ${displayTime}`,
+        report.status ? `Status: ${report.status.toUpperCase()}` : null,
+        report.impression ? `Impression: ${report.impression}` : "Impression: not documented",
+      ].filter(Boolean);
+
+      return field(
+        lines.join("\n"),
+        "source",
+        [report.id],
+        report.findings
+          ? "Full findings are preserved in the normalized radiology source record."
+          : undefined,
+      );
+    });
 }
