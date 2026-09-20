@@ -61,12 +61,12 @@ export function selectNutrition(fixture: IcuFixture): ReportField<string> {
   return field(
     enteral
       ? [
-          enteral.base_formula,
-          enteral.route ? `via ${enteral.route}` : null,
+          enteral.base_formula ? `Formula: ${enteral.base_formula}` : null,
+          enteral.route ? `Route: ${enteral.route}` : null,
           ...(enteral.administration_instructions ?? []),
         ]
           .filter(Boolean)
-          .join(", ")
+          .join("\n")
       : "Active nutrition order",
     "source",
     [order.id],
@@ -95,7 +95,7 @@ export function ldaFields(fixture: IcuFixture): ReportField<string>[] {
         stage ? String(stage.value) : null,
       ]
         .filter(Boolean)
-        .join(", "),
+        .join("\n"),
       "source",
       [item.id],
     );
@@ -109,7 +109,12 @@ export function selectEnteralAccess(fixture: IcuFixture): ReportField<string> {
 
   return item
     ? field(
-        [item.display, item.site].filter(Boolean).join(", "),
+        [
+          item.display,
+          item.site ? `Site: ${item.site}` : null,
+        ]
+          .filter(Boolean)
+          .join("\n"),
         "source",
         [item.id],
       )
