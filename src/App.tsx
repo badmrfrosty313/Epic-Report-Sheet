@@ -10,6 +10,70 @@ import "./styles.css";
 const fixture = fixtureJson as unknown as IcuFixture;
 const report = buildReportState(fixture);
 
+type DisplayCase = "sentence" | "title" | "preserve";
+
+const clinicalAcronyms = new Set([
+  "A/O",
+  "BGM",
+  "CVC",
+  "DHT",
+  "FiO2",
+  "GCS",
+  "H/H",
+  "HFNC",
+  "ICU",
+  "IJ",
+  "IV",
+  "LDA",
+  "NIHSS",
+  "NG",
+  "OG",
+  "PIV",
+  "RUE",
+  "LUE",
+  "RLE",
+  "LLE",
+  "UOP",
+]);
+
+function sentenceCase(value: string): string {
+  return value.replace(/[A-Za-z]/, (letter) => letter.toUpperCase());
+}
+
+function titleCase(value: string): string {
+  return value
+    .split(/(\s+|\/|—|-)/)
+    .map((part) => {
+      if (!part.trim() || ["/", "—", "-"].includes(part)) return part;
+
+      const bare = part.replace(/^[^A-Za-z0-9]+|[^A-Za-z0-9:+.%]+$/g, "");
+      if (!bare) return part;
+
+      if (
+        clinicalAcronyms.has(bare) ||
+        /^[A-Z0-9][A-Z0-9.+%]*$/.test(bare) ||
+        /^\d/.test(bare)
+      ) {
+        return part;
+      }
+
+      const index = part.indexOf(bare);
+      const formatted = bare.charAt(0).toUpperCase() + bare.slice(1);
+      return part.slice(0, index) + formatted + part.slice(index + bare.length);
+    })
+    .join("");
+}
+
+function formatDisplayText(value: string, mode: DisplayCase): string {
+  if (mode === "preserve") return value;
+
+  const formatter = mode === "title" ? titleCase : sentenceCase;
+  return value
+    .split("\n")
+    .map((line) => formatter(line))
+    .join("\n");
+}
+
 function provenanceLabel(provenance: FieldProvenance): string {
   switch (provenance) {
     case "source":
@@ -26,9 +90,11 @@ function provenanceLabel(provenance: FieldProvenance): string {
 function DisplayField({
   label,
   field,
+  valueCase = "sentence",
 }: {
   label: string;
   field: ReportField<unknown>;
+  valueCase?: DisplayCase;
 }) {
   const displayValue =
     field.value === null ? field.note ?? "Not documented" : field.value;
@@ -41,10 +107,10 @@ function DisplayField({
           {Array.isArray(displayValue)
             ? displayValue.map((item, index) => (
                 <div className="field-value-line" key={index}>
-                  {String(item)}
+                  {formatDisplayText(String(item), valueCase)}
                 </div>
               ))
-            : String(displayValue)}
+            : formatDisplayText(String(displayValue), valueCase)}
         </div>
         <div className="field-meta">
           <span className={`badge badge-${field.provenance}`}>
@@ -74,7 +140,10 @@ function LungCell({
     <div className={`lung-cell ${field.value === null ? "lung-cell-missing" : ""}`}>
       <div className="lung-cell-label">{label}</div>
       <div className="lung-cell-value">
-        {field.value ?? field.note ?? "Not documented"}
+        {formatDisplayText(
+          field.value ?? field.note ?? "Not documented",
+          "sentence",
+        )}
       </div>
     </div>
   );
@@ -252,18 +321,31 @@ export default function App() {
           <Section title="GI / Nutrition">
             <DisplayField label="Abdomen" field={report.gi.abdomen} />
             <DisplayField label="Nutrition" field={report.gi.nutrition} />
-            <DisplayField label="Enteral access" field={report.gi.enteralAccess} />
+            <DisplayField
+              label="Enteral access"
+              field={report.gi.enteralAccess}
+              valueCase="title"
+            />
           </Section>
 
           <Section title="GU">
             <DisplayField label="Urine" field={report.gu.urine} />
-            <DisplayField label="Device" field={report.gu.device} />
+            <DisplayField
+              label="Device"
+              field={report.gu.device}
+              valueCase="title"
+            />
             <DisplayField label="Shift UOP" field={report.gu.shiftUop} />
           </Section>
 
           <Section title="Lines / Devices / Wounds">
             {report.ldas.map((item, index) => (
-              <DisplayField key={index} label={`LDA ${index + 1}`} field={item} />
+              <DisplayField
+                key={index}
+                label={`LDA ${index + 1}`}
+                field={item}
+                valueCase="title"
+              />
             ))}
           </Section>
 
