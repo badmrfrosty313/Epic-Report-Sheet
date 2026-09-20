@@ -65,16 +65,22 @@ Exact Epic API/resource fields, authorization, customer configuration, and which
 - NIHSS shows total by default in the primary report; the interactive UI may expand to the full item-level assessment.
 - Extremity strength remains side-specific and limb-specific. Missing strength grades are not assumed normal.
 
-## Cardiac — RESUME HERE
-| Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
+## Cardiac
+| Field | Behavior | Data Shape | Cardinality | Required Status |
 |---|---|---|---|---|
-| Rhythm | Scalar/composite source-preserved | coded/text source value + available metadata/detail | single/current | TBD |
-| Pulses - Radial | Composite structured | **TBD: bilateral right/left pulse detail** | TBD | TBD |
-| Pulses - Pedal | Composite structured | **TBD: bilateral right/left pulse detail** | TBD | TBD |
-| Edema | Repeating structured candidate | **TBD: location/laterality/grade/type/source detail** | zero or more | TBD |
+| Rhythm | Source-preserved structured observation | source value/display/code plus available timestamp/status/provenance | current display from one or more source observations | TBD |
+| Pulses - Radial | Repeating structured pulse findings | site + laterality + source-documented quality/grade/value + available metadata | zero or more | TBD |
+| Pulses - Pedal | Repeating structured pulse findings | site + laterality + source-documented quality/grade/value + available metadata | zero or more | TBD |
+| Edema | Repeating structured findings | location + laterality + source grade/type/value + available metadata | zero or more | TBD |
 | Misc | Narrative | text | single | Optional |
 
-Immediate next decision when project resumes: confirm bilateral radial/pedal pulse structure and repeating edema findings while preserving everything useful from source.
+### Cardiac Modeling Decision
+- Preserve the source-documented rhythm and any clinically relevant source metadata rather than reducing it to a hand-entered label.
+- Model pulses as **repeating site-specific findings**, not only four hard-coded software fields. This preserves right/left radial findings while allowing more specific pedal sites if the approved EHR source provides them.
+- The ICU template can still render compact `Radial` and `Pedal` rows by grouping the richer source findings.
+- Model edema as a repeating structured collection. Preserve source-provided location/laterality, grade, pitting/non-pitting/type, value/display text, timestamp, and useful provenance when available.
+- Missing pulse or edema findings remain missing; no normal values are inferred.
+- Interactive detail may expose richer source values while the primary report remains compact.
 
 ## Respiratory
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
@@ -224,8 +230,8 @@ Fields:
 16. Source facts are preserved; derived values remain separate; missing data are never defaulted to normal.
 
 ## Clinical / Workflow Decisions Still Needed
-1. Cardiac pulses and edema structure.
-2. Exact representation of lung findings, abdomen, and urine.
+1. Exact representation of respiratory oxygen/FiO2 and lung findings.
+2. Exact representation of abdomen and urine.
 3. Which fields are mandatory for every ICU report vs conditional/optional.
 4. Whether BGM should be stored as timestamped readings beneath fixed display slots.
 5. Whether Pain is one current assessment or a repeating/time-based set.
@@ -233,4 +239,4 @@ Fields:
 7. Which Epic diagnosis category should populate the report's `Diagnosis` list for the ICU workflow.
 
 ## Resume Pin
-**Next action: Cardiac -> bilateral radial/pedal pulses + repeating edema structure.** Do not restart the Header or Neuro pass.
+**Next action: Respiratory -> confirm Oxygen/LPM/Percentage semantics and model lung findings while preserving source detail.** Cardiac is resolved for the current v0.1 classification pass.
