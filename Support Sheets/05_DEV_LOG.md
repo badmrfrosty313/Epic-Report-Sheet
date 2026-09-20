@@ -184,3 +184,38 @@ Define the canonical normalized ICU model from `13_EPIC_SOURCE_MAP.md`, then cre
 ```text
 git pull
 ```
+
+
+---
+
+## 2026-09-20 - Canonical ICU Normalized Model
+
+### What We Worked On
+- Parallelized the model design across shared primitives, encounter/provenance, observations/assessments, LDA-W devices, nutrition, medications, labs, handoff/notes/interventions, derived values, and selection policy.
+- Consolidated those workstreams into one coherent source-shaped ICU model.
+
+### What Changed
+- Created `14_ICU_NORMALIZED_MODEL.md`.
+- Defined the top-level `IcuReportContext`.
+- Defined shared source/provenance/code/quantity/availability/derived-value primitives.
+- Defined canonical collections for patient, encounter, code status, conditions, allergies, observations, LDA-W, nutrition orders, medication orders/administrations, labs, handoff fields, clinical notes, nursing interventions, manual annotations, provenance, and normalization issues.
+- Defined the adapter boundary and report-projection boundary.
+- Defined explicit selection-policy architecture instead of a global “latest wins” rule.
+- Defined v0.1 model acceptance criteria and the mock-fixture contract.
+
+### Public Epic Verification
+- Re-verified Epic public R4 surfaces for Patient, Encounter, Encounter Diagnosis, AllergyIntolerance, Assessments, NutritionOrder, Labs, Handoff, Clinical Notes, LDA-W, MedicationRequest, and the broader public catalog.
+- Kept customer-specific FLO IDs/value lists/LDA codes outside the canonical model.
+
+### Project State
+- Epic conceptual source map: complete.
+- Canonical normalized ICU model: complete.
+- Application code: not started.
+
+### Next Starting Point
+Create the first realistic source-shaped ICU fixture and the selection-policy table that turns it into a deterministic report snapshot.
+
+### Local Sync
+```text
+git pull
+```
