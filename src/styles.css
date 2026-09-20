@@ -1,0 +1,276 @@
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #18212f;
+  background: #eef2f6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.page-shell {
+  width: min(1480px, calc(100% - 32px));
+  margin: 24px auto 48px;
+}
+
+.app-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.subhead {
+  margin: 8px 0 0;
+  color: #596579;
+}
+
+.print-button {
+  border: 1px solid #aab4c3;
+  border-radius: 10px;
+  background: white;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.patient-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border: 1px solid #aeb9c8;
+  border-radius: 12px;
+  background: white;
+  font-size: 1.02rem;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.report-section {
+  break-inside: avoid;
+  border: 1px solid #b8c1ce;
+  border-radius: 12px;
+  background: white;
+  overflow: hidden;
+}
+
+.report-section h2 {
+  margin: 0;
+  padding: 9px 12px;
+  border-bottom: 1px solid #cbd2dc;
+  font-size: 1.03rem;
+}
+
+.report-section h3 {
+  margin: 12px 12px 4px;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #586579;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.28fr) 1fr;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e1e6ec;
+}
+
+.field-row:last-child {
+  border-bottom: 0;
+}
+
+.field-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #4b596d;
+}
+
+.field-content {
+  min-width: 0;
+}
+
+.field-value {
+  font-weight: 650;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.field-value.missing,
+.missing {
+  font-style: italic;
+  font-weight: 500;
+  color: #6a7484;
+}
+
+.field-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 0.73rem;
+  color: #6b7685;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #bac3d0;
+  border-radius: 999px;
+  padding: 1px 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.badge-derived {
+  border-style: dashed;
+}
+
+.badge-report-only {
+  border-style: dotted;
+}
+
+.badge-missing {
+  opacity: 0.72;
+}
+
+.source-detail {
+  margin-top: 5px;
+  font-size: 0.72rem;
+  color: #697486;
+}
+
+.source-detail summary {
+  cursor: pointer;
+}
+
+.source-detail code {
+  display: block;
+  margin-top: 4px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.five-column {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.five-column .field-row {
+  grid-template-columns: 1fr;
+  border-right: 1px solid #e1e6ec;
+}
+
+.audit-footer {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid #bac3cf;
+  border-radius: 10px;
+  background: white;
+  color: #586579;
+  font-size: 0.82rem;
+}
+
+.audit-footer summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .five-column {
+    grid-template-columns: 1fr;
+  }
+
+  .five-column .field-row {
+    grid-template-columns: 110px 1fr;
+  }
+}
+
+@media print {
+  :root,
+  body {
+    background: white;
+  }
+
+  .page-shell {
+    width: 100%;
+    margin: 0;
+  }
+
+  .print-button,
+  .field-meta,
+  .source-detail,
+  .audit-footer {
+    display: none !important;
+  }
+
+  .app-header {
+    margin-bottom: 8px;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .subhead {
+    display: none;
+  }
+
+  .patient-banner {
+    padding: 8px;
+    border-radius: 0;
+  }
+
+  .report-grid {
+    gap: 6px;
+  }
+
+  .report-section {
+    border-radius: 0;
+  }
+
+  .field-row {
+    padding: 5px 8px;
+  }
+}
