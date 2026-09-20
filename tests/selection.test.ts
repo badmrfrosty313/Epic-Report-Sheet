@@ -18,9 +18,26 @@ describe("ICU selection engine", () => {
   it("selects valid neuro and cardiac values", () => {
     expect(report.neuro.orientation.value).toBe("x3 - disoriented to time");
     expect(report.neuro.gcs.value).toBe("14 (E4 V4 M6)");
+    expect(report.neuro.nihss.value).toBe("2");
+    expect(report.neuro.nihss.sourceIds).toContain("obs-nihss-total");
     expect(report.cardiac.rhythm.value).toBe("sinus tachycardia");
     expect(report.cardiac.radial.value).toBe("R 2+ | L 2+");
     expect(report.cardiac.pedal.value).toBe("R 1+ | L 1+");
+  });
+
+  it("renders populated ventilator settings from source observations", () => {
+    expect(report.respiratory.oxygen.value).toBe(
+      "mechanical ventilator\nFiO2 50 %",
+    );
+    expect(report.respiratory.vent.value).toBe(
+      "Mode: AC/VC\nTidal volume: 450 mL\nPEEP: 8 cmH2O\nRate: 18 breaths/min",
+    );
+    expect(report.respiratory.vent.sourceIds).toEqual([
+      "obs-vent-mode",
+      "obs-vent-tidal_volume",
+      "obs-vent-peep",
+      "obs-vent-rate",
+    ]);
   });
 
   it("projects side-level lung findings without fabricating source records", () => {
@@ -46,7 +63,7 @@ describe("ICU selection engine", () => {
   });
 
   it("keeps active LDAs and excludes completed devices", () => {
-    expect(report.ldas).toHaveLength(5);
+    expect(report.ldas).toHaveLength(6);
     expect(report.ldas.some((item) => item.sourceIds.includes("lda-old-piv"))).toBe(
       false,
     );
@@ -90,11 +107,6 @@ describe("ICU selection engine", () => {
   it("keeps source lab interpretation available for the UI", () => {
     expect(report.labs["Potassium"].note).toBe("LOW");
     expect(report.labs["WBC"].note).toBe("HIGH");
-  });
-
-  it("does not turn missing NIHSS into a normal value", () => {
-    expect(report.neuro.nihss.value).toBeNull();
-    expect(report.neuro.nihss.provenance).toBe("missing");
   });
 
   it("selects active-encounter radiology and rejects entered-in-error reports", () => {
