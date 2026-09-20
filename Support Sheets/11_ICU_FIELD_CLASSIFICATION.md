@@ -85,9 +85,9 @@ Exact Epic API/resource fields, authorization, customer configuration, and which
 ## Respiratory
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
 |---|---|---|---|---|
-| Oxygen | Scalar structured | text/device | single | Conditional/TBD |
-| LPM | Scalar structured | decimal/number | single | Conditional |
-| Percentage | Scalar structured | decimal/number | single | Conditional |
+| Oxygen | Source-preserved structured | oxygen delivery device/method + source metadata | single/current | Conditional/TBD |
+| LPM | Scalar structured | source flow rate + unit | single/current | Conditional |
+| Percentage | Scalar structured | FiO2 percentage / oxygen concentration | single/current | Conditional |
 | Vent - Mode | Scalar structured | coded/text value | single | Conditional |
 | Vent - Tidal Volume | Scalar structured | decimal/number + unit | single | Conditional |
 | Vent - PEEP | Scalar structured | decimal/number + unit | single | Conditional |
@@ -98,6 +98,14 @@ Exact Epic API/resource fields, authorization, customer configuration, and which
 | Lungs - RLL | Scalar structured | categorical/text | single | TBD |
 | Lungs - LLL | Scalar structured | categorical/text | single | TBD |
 | Misc | Narrative | text | single | Optional |
+
+### Respiratory Oxygen / FiO2 Decision
+- `Percentage` is the **FiO2 / oxygen concentration percentage** field and is primarily intended to accompany ventilator settings in the ICU workflow.
+- Preserve the source-provided FiO2 value and units/metadata when available rather than treating it as a manually entered display-only number.
+- `Oxygen` represents the source-documented oxygen delivery method/device.
+- `LPM` represents source flow rate when applicable to the oxygen device/method.
+- Conditional logic should allow these fields to coexist when the source documents both device/flow and FiO2; the model should not force one mutually exclusive respiratory mode.
+- Display can remain compact while richer device/settings detail stays available underneath.
 
 ## GI
 | Field | Proposed Behavior | Proposed Data Type | Cardinality | Required Status |
@@ -230,7 +238,7 @@ Fields:
 16. Source facts are preserved; derived values remain separate; missing data are never defaulted to normal.
 
 ## Clinical / Workflow Decisions Still Needed
-1. Exact representation of respiratory oxygen/FiO2 and lung findings.
+1. Exact representation of lung findings by lobe/site.
 2. Exact representation of abdomen and urine.
 3. Which fields are mandatory for every ICU report vs conditional/optional.
 4. Whether BGM should be stored as timestamped readings beneath fixed display slots.
@@ -239,4 +247,4 @@ Fields:
 7. Which Epic diagnosis category should populate the report's `Diagnosis` list for the ICU workflow.
 
 ## Resume Pin
-**Next action: Respiratory -> confirm Oxygen/LPM/Percentage semantics and model lung findings while preserving source detail.** Cardiac is resolved for the current v0.1 classification pass.
+**Next action: Respiratory -> model lobe-specific lung findings while preserving richer source detail.** Oxygen/LPM/FiO2 semantics are now resolved.
