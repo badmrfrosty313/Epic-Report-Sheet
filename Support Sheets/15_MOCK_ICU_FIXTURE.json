@@ -1,0 +1,1831 @@
+{
+  "schema_version": "0.1",
+  "fixture_id": "icu-mock-001",
+  "fixture_name": "Sepsis recovery with source conflicts",
+  "generated_at": "2026-09-20T18:30:00-04:00",
+  "report_config": {
+    "report_time": "2026-09-20T18:30:00-04:00",
+    "shift_start": "2026-09-20T07:00:00-04:00",
+    "shift_end": "2026-09-20T19:00:00-04:00",
+    "bgm_slots": [
+      {
+        "key": "0800",
+        "target_time": "2026-09-20T08:00:00-04:00",
+        "window_start": "2026-09-20T06:30:00-04:00",
+        "window_end": "2026-09-20T09:30:00-04:00"
+      },
+      {
+        "key": "1200",
+        "target_time": "2026-09-20T12:00:00-04:00",
+        "window_start": "2026-09-20T10:30:00-04:00",
+        "window_end": "2026-09-20T13:30:00-04:00"
+      },
+      {
+        "key": "1600",
+        "target_time": "2026-09-20T16:00:00-04:00",
+        "window_start": "2026-09-20T14:30:00-04:00",
+        "window_end": "2026-09-20T17:30:00-04:00"
+      }
+    ],
+    "notes": "BGM windows are deterministic fixture/test parameters, not clinical standards."
+  },
+  "patient": {
+    "id": "patient-001",
+    "source_ref": "src-patient-001",
+    "identifiers": [
+      {
+        "system": "mock-mrn",
+        "value": "MOCK-0001"
+      }
+    ],
+    "names": [
+      {
+        "use": "official",
+        "given": ["Jordan"],
+        "family": "Example"
+      }
+    ],
+    "display_name": "Jordan Example",
+    "birth_date": "1978-04-11",
+    "sex_or_gender_source_values": [
+      {
+        "system": "mock",
+        "code": "female",
+        "display": "Female"
+      }
+    ],
+    "availability": {
+      "state": "present"
+    }
+  },
+  "encounter": {
+    "id": "enc-icu-001",
+    "source_ref": "src-enc-001",
+    "status": "in-progress",
+    "class": "inpatient",
+    "type_codes": [
+      {
+        "system": "mock",
+        "code": "ICU",
+        "display": "Intensive Care"
+      }
+    ],
+    "period": {
+      "start": "2026-09-18T14:22:00-04:00",
+      "end": null
+    },
+    "admission_time": "2026-09-18T14:22:00-04:00",
+    "location_history": [
+      {
+        "source_ref": "src-loc-001",
+        "display": "ED 07",
+        "period": {
+          "start": "2026-09-18T14:22:00-04:00",
+          "end": "2026-09-18T18:05:00-04:00"
+        },
+        "status": "completed"
+      },
+      {
+        "source_ref": "src-loc-002",
+        "display": "ICU 12",
+        "period": {
+          "start": "2026-09-18T18:05:00-04:00",
+          "end": null
+        },
+        "status": "active"
+      }
+    ],
+    "current_location": {
+      "source_ref": "src-loc-002",
+      "display": "ICU 12",
+      "status": "active"
+    },
+    "availability": {
+      "state": "present"
+    }
+  },
+  "code_status": [
+    {
+      "id": "code-001",
+      "source_ref": "src-code-001",
+      "status": "inactive",
+      "display": "Full Code",
+      "effective_period": {
+        "start": "2026-09-18T14:22:00-04:00",
+        "end": "2026-09-19T15:10:00-04:00"
+      },
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "code-002",
+      "source_ref": "src-code-002",
+      "status": "active",
+      "display": "DNR / DNI",
+      "effective_period": {
+        "start": "2026-09-19T15:10:00-04:00",
+        "end": null
+      },
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "medical_history": [
+    {
+      "id": "mh-001",
+      "source_ref": "src-mh-001",
+      "domain": "medical_history",
+      "code": {
+        "system": "mock",
+        "code": "HTN",
+        "display": "Hypertension"
+      },
+      "clinical_status": "active",
+      "recorded_date": "2024-02-13",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "mh-002",
+      "source_ref": "src-mh-002",
+      "domain": "medical_history",
+      "code": {
+        "system": "mock",
+        "code": "DM2",
+        "display": "Type 2 diabetes mellitus"
+      },
+      "clinical_status": "active",
+      "recorded_date": "2023-08-21",
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "encounter_diagnoses": [
+    {
+      "id": "dx-001",
+      "source_ref": "src-dx-001",
+      "domain": "encounter_diagnosis",
+      "code": {
+        "system": "mock",
+        "code": "SEPSIS",
+        "display": "Sepsis due to pneumonia"
+      },
+      "clinical_status": "active",
+      "encounter_ref": "enc-icu-001",
+      "recorded_date": "2026-09-18T14:40:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "dx-002",
+      "source_ref": "src-dx-002",
+      "domain": "encounter_diagnosis",
+      "code": {
+        "system": "mock",
+        "code": "AKI",
+        "display": "Acute kidney injury"
+      },
+      "clinical_status": "active",
+      "encounter_ref": "enc-icu-001",
+      "recorded_date": "2026-09-18T15:05:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "allergies": [
+    {
+      "id": "alg-001",
+      "source_ref": "src-alg-001",
+      "clinical_status": "active",
+      "verification_status": "confirmed",
+      "criticality": "high",
+      "substance": {
+        "system": "mock",
+        "code": "PEN",
+        "display": "Penicillin"
+      },
+      "reactions": [
+        {
+          "manifestations": [
+            {
+              "system": "mock",
+              "code": "HIVES",
+              "display": "Hives"
+            }
+          ],
+          "severity": "moderate"
+        }
+      ],
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "id": "obs-weight-old",
+      "source_ref": "src-obs-weight-old",
+      "domain": "vital",
+      "code": {
+        "system": "mock",
+        "code": "WEIGHT",
+        "display": "Weight"
+      },
+      "status": "final",
+      "value": {
+        "value": 81.7,
+        "unit": "kg"
+      },
+      "effective_time": "2026-09-19T06:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-weight-current",
+      "source_ref": "src-obs-weight-current",
+      "domain": "vital",
+      "code": {
+        "system": "mock",
+        "code": "WEIGHT",
+        "display": "Weight"
+      },
+      "status": "final",
+      "value": {
+        "value": 82.4,
+        "unit": "kg"
+      },
+      "effective_time": "2026-09-20T05:55:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-orientation",
+      "source_ref": "src-obs-orientation",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.orientation",
+        "display": "Orientation"
+      },
+      "status": "final",
+      "value": {
+        "level": 3,
+        "deficits": ["time"]
+      },
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pupil-r-size",
+      "source_ref": "src-obs-pupil-r-size",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.pupil.size",
+        "display": "Pupil size"
+      },
+      "status": "final",
+      "value": {
+        "value": 3,
+        "unit": "mm"
+      },
+      "body_site": "right_eye",
+      "laterality": "right",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pupil-l-size",
+      "source_ref": "src-obs-pupil-l-size",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.pupil.size",
+        "display": "Pupil size"
+      },
+      "status": "final",
+      "value": {
+        "value": 3,
+        "unit": "mm"
+      },
+      "body_site": "left_eye",
+      "laterality": "left",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pupil-r-reaction",
+      "source_ref": "src-obs-pupil-r-reaction",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.pupil.reaction",
+        "display": "Pupil reaction"
+      },
+      "status": "final",
+      "value": "brisk",
+      "body_site": "right_eye",
+      "laterality": "right",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pupil-l-reaction",
+      "source_ref": "src-obs-pupil-l-reaction",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.pupil.reaction",
+        "display": "Pupil reaction"
+      },
+      "status": "final",
+      "value": "brisk",
+      "body_site": "left_eye",
+      "laterality": "left",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-gcs-eye",
+      "source_ref": "src-obs-gcs-eye",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.gcs.eye",
+        "display": "GCS Eye"
+      },
+      "status": "final",
+      "value": 4,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-gcs-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-gcs-verbal",
+      "source_ref": "src-obs-gcs-verbal",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.gcs.verbal",
+        "display": "GCS Verbal"
+      },
+      "status": "final",
+      "value": 4,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-gcs-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-gcs-motor",
+      "source_ref": "src-obs-gcs-motor",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.gcs.motor",
+        "display": "GCS Motor"
+      },
+      "status": "final",
+      "value": 6,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-gcs-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-gcs-total",
+      "source_ref": "src-obs-gcs-total",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.gcs.total",
+        "display": "GCS Total"
+      },
+      "status": "final",
+      "value": 14,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-gcs-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-strength-rue",
+      "source_ref": "src-obs-strength-rue",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.strength",
+        "display": "Strength"
+      },
+      "status": "final",
+      "value": 5,
+      "scope": "RUE",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-strength-lue",
+      "source_ref": "src-obs-strength-lue",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.strength",
+        "display": "Strength"
+      },
+      "status": "final",
+      "value": 5,
+      "scope": "LUE",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-strength-rle",
+      "source_ref": "src-obs-strength-rle",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.strength",
+        "display": "Strength"
+      },
+      "status": "final",
+      "value": 4,
+      "scope": "RLE",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-strength-lle",
+      "source_ref": "src-obs-strength-lle",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.strength",
+        "display": "Strength"
+      },
+      "status": "final",
+      "value": 4,
+      "scope": "LLE",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-rhythm-old",
+      "source_ref": "src-obs-rhythm-old",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.rhythm",
+        "display": "Cardiac rhythm"
+      },
+      "status": "final",
+      "value": "sinus rhythm",
+      "effective_time": "2026-09-20T12:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-rhythm-current",
+      "source_ref": "src-obs-rhythm-current",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.rhythm",
+        "display": "Cardiac rhythm"
+      },
+      "status": "final",
+      "value": "sinus tachycardia",
+      "effective_time": "2026-09-20T17:45:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pulse-r-radial",
+      "source_ref": "src-obs-pulse-r-radial",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.pulse",
+        "display": "Pulse quality"
+      },
+      "status": "final",
+      "value": "2+",
+      "body_site": "radial",
+      "laterality": "right",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pulse-l-radial",
+      "source_ref": "src-obs-pulse-l-radial",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.pulse",
+        "display": "Pulse quality"
+      },
+      "status": "final",
+      "value": "2+",
+      "body_site": "radial",
+      "laterality": "left",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pulse-r-dp",
+      "source_ref": "src-obs-pulse-r-dp",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.pulse",
+        "display": "Pulse quality"
+      },
+      "status": "final",
+      "value": "1+",
+      "body_site": "dorsalis_pedis",
+      "laterality": "right",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pulse-l-dp",
+      "source_ref": "src-obs-pulse-l-dp",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.pulse",
+        "display": "Pulse quality"
+      },
+      "status": "final",
+      "value": "1+",
+      "body_site": "dorsalis_pedis",
+      "laterality": "left",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-edema-rle",
+      "source_ref": "src-obs-edema-rle",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.edema",
+        "display": "Edema"
+      },
+      "status": "final",
+      "value": {
+        "grade": "2+",
+        "type": "pitting"
+      },
+      "scope": "RLE",
+      "laterality": "right",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-edema-lle",
+      "source_ref": "src-obs-edema-lle",
+      "domain": "cardiac",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "cardiac.edema",
+        "display": "Edema"
+      },
+      "status": "final",
+      "value": {
+        "grade": "1+",
+        "type": "pitting"
+      },
+      "scope": "LLE",
+      "laterality": "left",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-o2-device",
+      "source_ref": "src-obs-o2-device",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.oxygen_device",
+        "display": "Oxygen delivery device"
+      },
+      "status": "final",
+      "value": "high-flow nasal cannula",
+      "effective_time": "2026-09-20T17:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-o2-flow",
+      "source_ref": "src-obs-o2-flow",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.flow",
+        "display": "Oxygen flow"
+      },
+      "status": "final",
+      "value": {
+        "value": 40,
+        "unit": "L/min"
+      },
+      "effective_time": "2026-09-20T17:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-fio2",
+      "source_ref": "src-obs-fio2",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.fio2",
+        "display": "FiO2"
+      },
+      "status": "final",
+      "value": {
+        "value": 50,
+        "unit": "%"
+      },
+      "effective_time": "2026-09-20T17:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-lung-right",
+      "source_ref": "src-obs-lung-right",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.lung_sound",
+        "display": "Lung sound"
+      },
+      "status": "final",
+      "value": "clear",
+      "scope": "right_lung",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-lung-left",
+      "source_ref": "src-obs-lung-left",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.lung_sound",
+        "display": "Lung sound"
+      },
+      "status": "final",
+      "value": "diminished",
+      "scope": "left_lung",
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-lung-lll",
+      "source_ref": "src-obs-lung-lll",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.lung_sound",
+        "display": "Lung sound"
+      },
+      "status": "final",
+      "value": "crackles",
+      "scope": "LLL",
+      "effective_time": "2026-09-20T16:05:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-abdomen-soft",
+      "source_ref": "src-obs-abdomen-soft",
+      "domain": "gi",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gi.assessment.consistency",
+        "display": "Abdomen consistency"
+      },
+      "status": "final",
+      "value": "soft",
+      "effective_time": "2026-09-20T16:10:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-abdomen-tenderness",
+      "source_ref": "src-obs-abdomen-tenderness",
+      "domain": "gi",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gi.assessment.tenderness",
+        "display": "Abdominal tenderness"
+      },
+      "status": "final",
+      "value": "non-tender",
+      "effective_time": "2026-09-20T16:10:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-bowel-sounds",
+      "source_ref": "src-obs-bowel-sounds",
+      "domain": "gi",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gi.assessment.bowel_sounds",
+        "display": "Bowel sounds"
+      },
+      "status": "final",
+      "value": "hypoactive",
+      "scope": "all_quadrants",
+      "effective_time": "2026-09-20T16:10:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-urine-character",
+      "source_ref": "src-obs-urine-character",
+      "domain": "gu",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gu.assessment.urine_character",
+        "display": "Urine character"
+      },
+      "status": "final",
+      "value": "clear yellow",
+      "effective_time": "2026-09-20T16:15:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-uop-pre-shift",
+      "source_ref": "src-obs-uop-pre-shift",
+      "domain": "gu",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gu.output",
+        "display": "Urine output"
+      },
+      "status": "final",
+      "value": {
+        "value": 200,
+        "unit": "mL"
+      },
+      "effective_time": "2026-09-20T06:30:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-uop-0730",
+      "source_ref": "src-obs-uop-0730",
+      "domain": "gu",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gu.output",
+        "display": "Urine output"
+      },
+      "status": "final",
+      "value": {
+        "value": 100,
+        "unit": "mL"
+      },
+      "effective_time": "2026-09-20T07:30:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-uop-0930",
+      "source_ref": "src-obs-uop-0930",
+      "domain": "gu",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gu.output",
+        "display": "Urine output"
+      },
+      "status": "final",
+      "value": {
+        "value": 75,
+        "unit": "mL"
+      },
+      "effective_time": "2026-09-20T09:30:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-uop-1200",
+      "source_ref": "src-obs-uop-1200",
+      "domain": "gu",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gu.output",
+        "display": "Urine output"
+      },
+      "status": "final",
+      "value": {
+        "value": 60,
+        "unit": "mL"
+      },
+      "effective_time": "2026-09-20T12:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-uop-1500",
+      "source_ref": "src-obs-uop-1500",
+      "domain": "gu",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gu.output",
+        "display": "Urine output"
+      },
+      "status": "final",
+      "value": {
+        "value": 80,
+        "unit": "mL"
+      },
+      "effective_time": "2026-09-20T15:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-uop-1800",
+      "source_ref": "src-obs-uop-1800",
+      "domain": "gu",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "gu.output",
+        "display": "Urine output"
+      },
+      "status": "final",
+      "value": {
+        "value": 50,
+        "unit": "mL"
+      },
+      "effective_time": "2026-09-20T18:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-bgm-0600",
+      "source_ref": "src-obs-bgm-0600",
+      "domain": "bgm",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "bgm.glucose",
+        "display": "Point-of-care glucose"
+      },
+      "status": "final",
+      "value": {
+        "value": 105,
+        "unit": "mg/dL"
+      },
+      "effective_time": "2026-09-20T06:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-bgm-0755",
+      "source_ref": "src-obs-bgm-0755",
+      "domain": "bgm",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "bgm.glucose",
+        "display": "Point-of-care glucose"
+      },
+      "status": "final",
+      "value": {
+        "value": 118,
+        "unit": "mg/dL"
+      },
+      "effective_time": "2026-09-20T07:55:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-bgm-1205",
+      "source_ref": "src-obs-bgm-1205",
+      "domain": "bgm",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "bgm.glucose",
+        "display": "Point-of-care glucose"
+      },
+      "status": "final",
+      "value": {
+        "value": 162,
+        "unit": "mg/dL"
+      },
+      "effective_time": "2026-09-20T12:05:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-bgm-1610",
+      "source_ref": "src-obs-bgm-1610",
+      "domain": "bgm",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "bgm.glucose",
+        "display": "Point-of-care glucose"
+      },
+      "status": "final",
+      "value": {
+        "value": 147,
+        "unit": "mg/dL"
+      },
+      "effective_time": "2026-09-20T16:10:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pain-old",
+      "source_ref": "src-obs-pain-old",
+      "domain": "pain",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "pain.score",
+        "display": "Pain score"
+      },
+      "status": "final",
+      "value": 7,
+      "effective_time": "2026-09-20T14:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pain-current",
+      "source_ref": "src-obs-pain-current",
+      "domain": "pain",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "pain.score",
+        "display": "Pain score"
+      },
+      "status": "final",
+      "value": 3,
+      "effective_time": "2026-09-20T17:45:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pain-error",
+      "source_ref": "src-obs-pain-error",
+      "domain": "pain",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "pain.score",
+        "display": "Pain score"
+      },
+      "status": "entered-in-error",
+      "value": 10,
+      "effective_time": "2026-09-20T18:05:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pain-location",
+      "source_ref": "src-obs-pain-location",
+      "domain": "pain",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "pain.location",
+        "display": "Pain location"
+      },
+      "status": "final",
+      "value": "right chest",
+      "effective_time": "2026-09-20T17:45:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-pain-quality",
+      "source_ref": "src-obs-pain-quality",
+      "domain": "pain",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "pain.quality",
+        "display": "Pain quality"
+      },
+      "status": "final",
+      "value": "aching",
+      "effective_time": "2026-09-20T17:45:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "ldas": [
+    {
+      "id": "lda-cvc-001",
+      "source_refs": ["src-dev-cvc-001", "src-use-cvc-001"],
+      "type_code": {
+        "system": "mock",
+        "code": "CVC",
+        "display": "Central venous catheter"
+      },
+      "display": "Right IJ triple lumen CVC",
+      "status": "active",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "site": "right internal jugular",
+      "laterality": "right",
+      "placement_time": "2026-09-18T19:10:00-04:00",
+      "effective_period": {
+        "start": "2026-09-18T19:10:00-04:00",
+        "end": null
+      },
+      "assessment_observation_ids": ["obs-cvc-blood-return"],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lda-piv-001",
+      "source_refs": ["src-dev-piv-001", "src-use-piv-001"],
+      "type_code": {
+        "system": "mock",
+        "code": "PIV",
+        "display": "Peripheral IV"
+      },
+      "display": "Left forearm PIV",
+      "status": "active",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "site": "left forearm",
+      "laterality": "left",
+      "placement_time": "2026-09-19T09:20:00-04:00",
+      "effective_period": {
+        "start": "2026-09-19T09:20:00-04:00",
+        "end": null
+      },
+      "assessment_observation_ids": [],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lda-foley-001",
+      "source_refs": ["src-dev-foley-001", "src-use-foley-001"],
+      "type_code": {
+        "system": "mock",
+        "code": "FOLEY",
+        "display": "Indwelling urinary catheter"
+      },
+      "display": "Foley catheter",
+      "status": "active",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "site": "urinary",
+      "placement_time": "2026-09-18T16:00:00-04:00",
+      "effective_period": {
+        "start": "2026-09-18T16:00:00-04:00",
+        "end": null
+      },
+      "assessment_observation_ids": [],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lda-dht-001",
+      "source_refs": ["src-dev-dht-001", "src-use-dht-001"],
+      "type_code": {
+        "system": "mock",
+        "code": "DHT",
+        "display": "Small-bore enteral feeding tube"
+      },
+      "display": "Dobhoff tube",
+      "status": "active",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "site": "left nare",
+      "laterality": "left",
+      "placement_time": "2026-09-19T11:05:00-04:00",
+      "effective_period": {
+        "start": "2026-09-19T11:05:00-04:00",
+        "end": null
+      },
+      "assessment_observation_ids": [],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lda-wound-001",
+      "source_refs": ["src-dev-wound-001", "src-use-wound-001"],
+      "type_code": {
+        "system": "mock",
+        "code": "WOUND",
+        "display": "Pressure injury"
+      },
+      "display": "Sacral pressure injury",
+      "status": "active",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "site": "sacrum",
+      "placement_time": "2026-09-18T20:00:00-04:00",
+      "effective_period": {
+        "start": "2026-09-18T20:00:00-04:00",
+        "end": null
+      },
+      "properties": [
+        {
+          "code": {
+            "system": "mock",
+            "code": "STAGE",
+            "display": "Wound stage"
+          },
+          "value": "Stage 2",
+          "source_ref": "src-wound-stage-001"
+        }
+      ],
+      "assessment_observation_ids": [],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lda-old-piv",
+      "source_refs": ["src-dev-piv-old", "src-use-piv-old"],
+      "type_code": {
+        "system": "mock",
+        "code": "PIV",
+        "display": "Peripheral IV"
+      },
+      "display": "Right hand PIV",
+      "status": "completed",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "site": "right hand",
+      "laterality": "right",
+      "placement_time": "2026-09-18T14:30:00-04:00",
+      "effective_period": {
+        "start": "2026-09-18T14:30:00-04:00",
+        "end": "2026-09-19T08:45:00-04:00"
+      },
+      "assessment_observation_ids": [],
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "nutrition_orders": [
+    {
+      "id": "nut-old-npo",
+      "source_ref": "src-nut-old-npo",
+      "status": "completed",
+      "intent": "order",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "ordered_at": "2026-09-18T15:00:00-04:00",
+      "oral_diet": {
+        "types": ["NPO"]
+      },
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "nut-enteral-current",
+      "source_ref": "src-nut-enteral-current",
+      "status": "active",
+      "intent": "order",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "ordered_at": "2026-09-19T12:00:00-04:00",
+      "enteral_feeding": {
+        "base_formula": "Mock Standard 1.5",
+        "route": "enteral tube",
+        "administration_instructions": [
+          "45 mL/hr continuous",
+          "150 mL free-water flush every 4 hours"
+        ],
+        "schedule": "continuous"
+      },
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "medication_orders": [
+    {
+      "id": "med-order-norepi",
+      "source_ref": "src-med-order-norepi",
+      "status": "active",
+      "intent": "order",
+      "medication_code": {
+        "system": "mock",
+        "code": "NOREPI",
+        "display": "Norepinephrine infusion"
+      },
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "authored_on": "2026-09-18T18:20:00-04:00",
+      "dosage_instructions": [
+        "Titrate per mock protocol"
+      ],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "med-order-vaso",
+      "source_ref": "src-med-order-vaso",
+      "status": "completed",
+      "intent": "order",
+      "medication_code": {
+        "system": "mock",
+        "code": "VASO",
+        "display": "Vasopressin infusion"
+      },
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "authored_on": "2026-09-18T18:30:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "medication_administrations": [
+    {
+      "id": "med-admin-norepi-old",
+      "source_ref": "src-med-admin-norepi-old",
+      "status": "completed",
+      "medication_code": {
+        "system": "mock",
+        "code": "NOREPI",
+        "display": "Norepinephrine infusion"
+      },
+      "order_ref": "med-order-norepi",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "effective_period": {
+        "start": "2026-09-20T14:00:00-04:00",
+        "end": "2026-09-20T17:10:00-04:00"
+      },
+      "route": "IV",
+      "rate": {
+        "value": 0.05,
+        "unit": "mcg/kg/min"
+      },
+      "device_refs": ["lda-cvc-001"],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "med-admin-norepi-current",
+      "source_ref": "src-med-admin-norepi-current",
+      "status": "in-progress",
+      "medication_code": {
+        "system": "mock",
+        "code": "NOREPI",
+        "display": "Norepinephrine infusion"
+      },
+      "order_ref": "med-order-norepi",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "effective_period": {
+        "start": "2026-09-20T17:10:00-04:00",
+        "end": null
+      },
+      "route": "IV",
+      "rate": {
+        "value": 0.03,
+        "unit": "mcg/kg/min"
+      },
+      "device_refs": ["lda-cvc-001"],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "med-admin-vaso-stopped",
+      "source_ref": "src-med-admin-vaso-stopped",
+      "status": "completed",
+      "medication_code": {
+        "system": "mock",
+        "code": "VASO",
+        "display": "Vasopressin infusion"
+      },
+      "order_ref": "med-order-vaso",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "effective_period": {
+        "start": "2026-09-19T02:00:00-04:00",
+        "end": "2026-09-20T10:15:00-04:00"
+      },
+      "route": "IV",
+      "rate": {
+        "value": 0.03,
+        "unit": "units/min"
+      },
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "lab_results": [
+    {
+      "id": "lab-hgb-old",
+      "source_ref": "src-lab-hgb-old",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "HGB",
+        "display": "Hemoglobin"
+      },
+      "status": "final",
+      "value": {
+        "value": 9.4,
+        "unit": "g/dL"
+      },
+      "reference_ranges": [
+        {
+          "low": 12,
+          "high": 16,
+          "text": "mock reference range"
+        }
+      ],
+      "interpretation_codes": ["low"],
+      "effective_time": "2026-09-20T12:00:00-04:00",
+      "issued_time": "2026-09-20T12:20:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-hgb-current",
+      "source_ref": "src-lab-hgb-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "HGB",
+        "display": "Hemoglobin"
+      },
+      "status": "final",
+      "value": {
+        "value": 9.1,
+        "unit": "g/dL"
+      },
+      "reference_ranges": [
+        {
+          "low": 12,
+          "high": 16,
+          "text": "mock reference range"
+        }
+      ],
+      "interpretation_codes": ["low"],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-hct-current",
+      "source_ref": "src-lab-hct-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "HCT",
+        "display": "Hematocrit"
+      },
+      "status": "final",
+      "value": {
+        "value": 28.2,
+        "unit": "%"
+      },
+      "reference_ranges": [
+        {
+          "low": 36,
+          "high": 46,
+          "text": "mock reference range"
+        }
+      ],
+      "interpretation_codes": ["low"],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-wbc-current",
+      "source_ref": "src-lab-wbc-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "WBC",
+        "display": "WBC"
+      },
+      "status": "final",
+      "value": {
+        "value": 15.2,
+        "unit": "10^3/uL"
+      },
+      "interpretation_codes": ["high"],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-plt-current",
+      "source_ref": "src-lab-plt-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "PLT",
+        "display": "Platelets"
+      },
+      "status": "final",
+      "value": {
+        "value": 210,
+        "unit": "10^3/uL"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-na-current",
+      "source_ref": "src-lab-na-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "NA",
+        "display": "Sodium"
+      },
+      "status": "final",
+      "value": {
+        "value": 139,
+        "unit": "mmol/L"
+      },
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-k-current",
+      "source_ref": "src-lab-k-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "K",
+        "display": "Potassium"
+      },
+      "status": "final",
+      "value": {
+        "value": 3.4,
+        "unit": "mmol/L"
+      },
+      "interpretation_codes": ["low"],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-k-error",
+      "source_ref": "src-lab-k-error",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "K",
+        "display": "Potassium"
+      },
+      "status": "entered-in-error",
+      "value": {
+        "value": 6.8,
+        "unit": "mmol/L"
+      },
+      "interpretation_codes": ["high"],
+      "effective_time": "2026-09-20T17:55:00-04:00",
+      "issued_time": "2026-09-20T18:00:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-creatinine-current",
+      "source_ref": "src-lab-creatinine-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "CREAT",
+        "display": "Creatinine"
+      },
+      "status": "final",
+      "value": {
+        "value": 1.8,
+        "unit": "mg/dL"
+      },
+      "interpretation_codes": ["high"],
+      "effective_time": "2026-09-20T17:10:00-04:00",
+      "issued_time": "2026-09-20T17:25:00-04:00",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lab-mag-missing",
+      "source_ref": "src-lab-mag-missing",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "code": {
+        "system": "mock-loinc",
+        "code": "MAG",
+        "display": "Magnesium"
+      },
+      "status": "unknown",
+      "value": null,
+      "effective_time": null,
+      "issued_time": null,
+      "availability": {
+        "state": "not_documented",
+        "source_reason": "Fixture intentionally tests missing lab behavior."
+      }
+    }
+  ],
+  "handoff_fields": [
+    {
+      "id": "handoff-todo",
+      "source_ref": "src-handoff-todo",
+      "encounter_ref": "enc-icu-001",
+      "patient_ref": "patient-001",
+      "specialty": "ICU",
+      "purpose": "To Do",
+      "title": "ICU To Do",
+      "status": "current",
+      "authored_at": "2026-09-20T18:00:00-04:00",
+      "content_text": "Mock source-backed handoff: recheck potassium after replacement; continue oxygen wean as tolerated.",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "handoff-meds",
+      "source_ref": "src-handoff-meds",
+      "encounter_ref": "enc-icu-001",
+      "patient_ref": "patient-001",
+      "specialty": "ICU",
+      "purpose": "Medications",
+      "title": "ICU Medications",
+      "status": "current",
+      "authored_at": "2026-09-20T18:00:00-04:00",
+      "content_text": "Mock source-backed handoff: norepinephrine infusion remains active.",
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "clinical_notes": [
+    {
+      "id": "note-ref-001",
+      "source_ref": "src-note-ref-001",
+      "encounter_ref": "enc-icu-001",
+      "patient_ref": "patient-001",
+      "category_codes": [
+        {
+          "system": "mock",
+          "code": "NURSING",
+          "display": "Nursing note"
+        }
+      ],
+      "status": "current",
+      "authored_at": "2026-09-20T15:30:00-04:00",
+      "content_ref": "binary/mock-note-001",
+      "selected_excerpt": null,
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "nursing_interventions": [
+    {
+      "id": "int-turn-001",
+      "source_ref": "src-int-turn-001",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "status": "completed",
+      "code": {
+        "system": "mock",
+        "code": "TURN",
+        "display": "Repositioned patient"
+      },
+      "performed_time": "2026-09-20T17:00:00-04:00",
+      "body_sites": ["sacrum"],
+      "availability": {
+        "state": "present"
+      }
+    }
+  ],
+  "manual_report_annotations": [
+    {
+      "id": "manual-001",
+      "report_context_id": "icu-mock-001",
+      "section_key": "treatment",
+      "text": "Mock report-only reminder: family plans to visit after 19:00.",
+      "created_at": "2026-09-20T18:20:00-04:00",
+      "created_by_local_user": "mock-user",
+      "source_label": "report-only",
+      "linked_normalized_record_ids": []
+    }
+  ],
+  "derived_values": [],
+  "source_records": [
+    {
+      "id": "src-patient-001",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Patient",
+      "source_resource_id": "Patient/mock-001",
+      "patient_ref": "patient-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-enc-001",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Encounter",
+      "source_resource_id": "Encounter/mock-icu-001",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    }
+  ],
+  "provenance": [
+    {
+      "id": "prov-fixture-001",
+      "target_source_record_ids": [
+        "src-patient-001",
+        "src-enc-001"
+      ],
+      "recorded_at": "2026-09-20T18:30:00-04:00",
+      "author_or_agent_display": "Deterministic mock fixture generator"
+    }
+  ],
+  "normalization_issues": [
+    {
+      "id": "issue-mag-missing",
+      "severity": "info",
+      "code": "MISSING_OPTIONAL_LAB",
+      "message": "Magnesium is intentionally not documented in this fixture.",
+      "source_record_ids": ["src-lab-mag-missing"],
+      "normalized_record_ids": ["lab-mag-missing"],
+      "created_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "issue-pain-error",
+      "severity": "warning",
+      "code": "ENTERED_IN_ERROR_OBSERVATION",
+      "message": "A newer pain score exists but is entered-in-error and must not become current.",
+      "source_record_ids": ["src-obs-pain-error"],
+      "normalized_record_ids": ["obs-pain-error"],
+      "created_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "issue-k-error",
+      "severity": "warning",
+      "code": "ENTERED_IN_ERROR_LAB",
+      "message": "A newer potassium result exists but is entered-in-error and must be excluded.",
+      "source_record_ids": ["src-lab-k-error"],
+      "normalized_record_ids": ["lab-k-error"],
+      "created_at": "2026-09-20T18:30:00-04:00"
+    }
+  ]
+}
