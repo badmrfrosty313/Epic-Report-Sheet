@@ -63,6 +63,75 @@ function DisplayField({
   );
 }
 
+function LungCell({
+  label,
+  field,
+}: {
+  label: string;
+  field: ReportField<string>;
+}) {
+  return (
+    <div className={`lung-cell ${field.value === null ? "lung-cell-missing" : ""}`}>
+      <div className="lung-cell-label">{label}</div>
+      <div className="lung-cell-value">
+        {field.value ?? field.note ?? "Not documented"}
+      </div>
+    </div>
+  );
+}
+
+function LungAssessment() {
+  const lungs = [
+    ["RUL", report.respiratory.rul],
+    ["RML", report.respiratory.rml],
+    ["RLL", report.respiratory.rll],
+    ["LUL", report.respiratory.lul],
+    ["LLL", report.respiratory.lll],
+  ] as const;
+
+  return (
+    <div className="lung-assessment">
+      <div className="lung-assessment-label">Lung sounds</div>
+      <div className="lung-assessment-content">
+        <div className="lung-side">
+          <div className="lung-side-title">Right lung</div>
+          <div className="lung-lobes lung-lobes-right">
+            <LungCell label="RUL" field={report.respiratory.rul} />
+            <LungCell label="RML" field={report.respiratory.rml} />
+            <LungCell label="RLL" field={report.respiratory.rll} />
+          </div>
+        </div>
+
+        <div className="lung-side">
+          <div className="lung-side-title">Left lung</div>
+          <div className="lung-lobes lung-lobes-left">
+            <LungCell label="LUL" field={report.respiratory.lul} />
+            <LungCell label="LLL" field={report.respiratory.lll} />
+          </div>
+        </div>
+
+        <details className="lung-source-detail">
+          <summary>Lung source details</summary>
+          <div className="lung-source-list">
+            {lungs.map(([label, field]) => (
+              <div className="lung-source-item" key={label}>
+                <strong>{label}</strong>
+                <span>{provenanceLabel(field.provenance)}</span>
+                {field.note ? <span>{field.note}</span> : null}
+                {field.sourceIds.length ? (
+                  <code>{field.sourceIds.join(", ")}</code>
+                ) : (
+                  <span>No source ID</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </details>
+      </div>
+    </div>
+  );
+}
+
 function Section({
   title,
   children,
@@ -127,13 +196,7 @@ export default function App() {
 
           <Section title="Respiratory">
             <DisplayField label="Oxygen" field={report.respiratory.oxygen} />
-            <div className="five-column">
-              <DisplayField label="RUL" field={report.respiratory.rul} />
-              <DisplayField label="RML" field={report.respiratory.rml} />
-              <DisplayField label="RLL" field={report.respiratory.rll} />
-              <DisplayField label="LUL" field={report.respiratory.lul} />
-              <DisplayField label="LLL" field={report.respiratory.lll} />
-            </div>
+            <LungAssessment />
             <DisplayField label="Vent" field={report.respiratory.vent} />
           </Section>
 
