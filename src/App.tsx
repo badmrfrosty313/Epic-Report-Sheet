@@ -132,6 +132,38 @@ function LungAssessment() {
   );
 }
 
+function LabCell({
+  label,
+  field,
+}: {
+  label: string;
+  field: ReportField<string>;
+}) {
+  const flag = field.note?.toUpperCase();
+
+  return (
+    <div className="lab-cell">
+      <div className="lab-cell-label">{label}</div>
+      <div className="lab-cell-reading">
+        <span className="lab-cell-value">
+          {field.value ?? field.note ?? "Not documented"}
+        </span>
+        {field.value !== null && flag ? (
+          <span className={`lab-cell-flag lab-cell-flag-${flag.toLowerCase()}`}>
+            {flag}
+          </span>
+        ) : null}
+      </div>
+      {field.sourceIds.length ? (
+        <details className="lab-source-detail">
+          <summary>Source</summary>
+          <code>{field.sourceIds.join(", ")}</code>
+        </details>
+      ) : null}
+    </div>
+  );
+}
+
 function Section({
   title,
   children,
@@ -200,11 +232,6 @@ export default function App() {
             <DisplayField label="Vent" field={report.respiratory.vent} />
           </Section>
 
-          <Section title="Labs">
-            {Object.entries(report.labs).map(([name, value]) => (
-              <DisplayField key={name} label={name} field={value} />
-            ))}
-          </Section>
 
           <Section title="Radiology">
             {report.radiology.length ? (
@@ -282,6 +309,15 @@ export default function App() {
           </Section>
         </div>
       </div>
+
+      <section className="report-section labs-section">
+        <h2>Labs</h2>
+        <div className="lab-grid">
+          {Object.entries(report.labs).map(([name, value]) => (
+            <LabCell key={name} label={name} field={value} />
+          ))}
+        </div>
+      </section>
 
       <footer className="audit-footer">
         <details>
