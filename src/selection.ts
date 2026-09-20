@@ -28,8 +28,7 @@ import {
   selectBgmSlot,
   selectCodeStatus,
   selectEnteralAccess,
-  selectHh,
-  selectLab,
+  selectAllLabs,
   selectLocation,
   selectNutrition,
   selectRadiologyReports,
@@ -138,15 +137,7 @@ export function buildReportState(fixture: IcuFixture): ReportState {
       ]),
     ),
     pain: selectPain(fixture),
-    labs: {
-      WBC: selectLab(fixture, "WBC"),
-      "H/H": selectHh(fixture),
-      Platelets: selectLab(fixture, "PLT"),
-      Na: selectLab(fixture, "NA"),
-      K: selectLab(fixture, "K"),
-      Creatinine: selectLab(fixture, "CREAT"),
-      Magnesium: selectLab(fixture, "MAG"),
-    },
+    labs: selectAllLabs(fixture),
     radiology: selectRadiologyReports(fixture),
     treatment: {
       handoff: fixture.handoff_fields
@@ -221,7 +212,6 @@ export function buildReportState(fixture: IcuFixture): ReportState {
         "respiratory.lul_effective",
         "gi.abdomen_summary",
         "gu.shift_uop_ml",
-        "labs.hh_display",
         "pain.current_display",
         ...fixture.report_config.bgm_slots.map(
           (slot) => `bgm.slot_${slot.key}`,
