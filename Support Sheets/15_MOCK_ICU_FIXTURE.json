@@ -682,27 +682,7 @@
         "display": "Oxygen delivery device"
       },
       "status": "final",
-      "value": "high-flow nasal cannula",
-      "effective_time": "2026-09-20T17:00:00-04:00",
-      "encounter_ref": "enc-icu-001",
-      "availability": {
-        "state": "present"
-      }
-    },
-    {
-      "id": "obs-o2-flow",
-      "source_ref": "src-obs-o2-flow",
-      "domain": "respiratory",
-      "code": {
-        "system": "mock-app-concept",
-        "code": "respiratory.flow",
-        "display": "Oxygen flow"
-      },
-      "status": "final",
-      "value": {
-        "value": 40,
-        "unit": "L/min"
-      },
+      "value": "mechanical ventilator",
       "effective_time": "2026-09-20T17:00:00-04:00",
       "encounter_ref": "enc-icu-001",
       "availability": {
@@ -1136,6 +1116,371 @@
       "availability": {
         "state": "present"
       }
+    },
+    {
+      "id": "obs-nihss-1a",
+      "source_ref": "src-obs-nihss-1a",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.1a",
+        "display": "Level of consciousness"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-1b",
+      "source_ref": "src-obs-nihss-1b",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.1b",
+        "display": "LOC questions"
+      },
+      "status": "final",
+      "value": 1,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-1c",
+      "source_ref": "src-obs-nihss-1c",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.1c",
+        "display": "LOC commands"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-2",
+      "source_ref": "src-obs-nihss-2",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.2",
+        "display": "Best gaze"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-3",
+      "source_ref": "src-obs-nihss-3",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.3",
+        "display": "Visual fields"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-4",
+      "source_ref": "src-obs-nihss-4",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.4",
+        "display": "Facial palsy"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-5a",
+      "source_ref": "src-obs-nihss-5a",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.5a",
+        "display": "Left arm motor"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-5b",
+      "source_ref": "src-obs-nihss-5b",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.5b",
+        "display": "Right arm motor"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-6a",
+      "source_ref": "src-obs-nihss-6a",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.6a",
+        "display": "Left leg motor"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-6b",
+      "source_ref": "src-obs-nihss-6b",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.6b",
+        "display": "Right leg motor"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-7",
+      "source_ref": "src-obs-nihss-7",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.7",
+        "display": "Limb ataxia"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-8",
+      "source_ref": "src-obs-nihss-8",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.8",
+        "display": "Sensory"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-9",
+      "source_ref": "src-obs-nihss-9",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.9",
+        "display": "Best language"
+      },
+      "status": "final",
+      "value": 1,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-10",
+      "source_ref": "src-obs-nihss-10",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.10",
+        "display": "Dysarthria"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-11",
+      "source_ref": "src-obs-nihss-11",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.11",
+        "display": "Extinction/inattention"
+      },
+      "status": "final",
+      "value": 0,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-nihss-total",
+      "source_ref": "src-obs-nihss-total",
+      "domain": "neuro",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "neuro.nihss.total",
+        "display": "NIHSS Total"
+      },
+      "status": "final",
+      "value": 2,
+      "effective_time": "2026-09-20T16:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "panel_parent_id": "panel-nihss-1600",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-vent-mode",
+      "source_ref": "src-obs-vent-mode",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.vent.mode",
+        "display": "Ventilator mode"
+      },
+      "status": "final",
+      "value": "AC/VC",
+      "effective_time": "2026-09-20T17:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-vent-tidal_volume",
+      "source_ref": "src-obs-vent-tidal_volume",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.vent.tidal_volume",
+        "display": "Tidal volume"
+      },
+      "status": "final",
+      "value": {
+        "value": 450,
+        "unit": "mL"
+      },
+      "effective_time": "2026-09-20T17:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-vent-peep",
+      "source_ref": "src-obs-vent-peep",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.vent.peep",
+        "display": "PEEP"
+      },
+      "status": "final",
+      "value": {
+        "value": 8,
+        "unit": "cmH2O"
+      },
+      "effective_time": "2026-09-20T17:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "obs-vent-rate",
+      "source_ref": "src-obs-vent-rate",
+      "domain": "respiratory",
+      "code": {
+        "system": "mock-app-concept",
+        "code": "respiratory.vent.rate",
+        "display": "Ventilator rate"
+      },
+      "status": "final",
+      "value": {
+        "value": 18,
+        "unit": "breaths/min"
+      },
+      "effective_time": "2026-09-20T17:00:00-04:00",
+      "encounter_ref": "enc-icu-001",
+      "availability": {
+        "state": "present"
+      }
     }
   ],
   "ldas": [
@@ -1306,6 +1651,32 @@
       "effective_period": {
         "start": "2026-09-18T14:30:00-04:00",
         "end": "2026-09-19T08:45:00-04:00"
+      },
+      "assessment_observation_ids": [],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "lda-ett-001",
+      "source_refs": [
+        "src-dev-ett-001",
+        "src-use-ett-001"
+      ],
+      "type_code": {
+        "system": "mock",
+        "code": "ETT",
+        "display": "Endotracheal tube"
+      },
+      "display": "Endotracheal tube",
+      "status": "active",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "site": "oral",
+      "placement_time": "2026-09-18T18:35:00-04:00",
+      "effective_period": {
+        "start": "2026-09-18T18:35:00-04:00",
+        "end": null
       },
       "assessment_observation_ids": [],
       "availability": {
@@ -2231,6 +2602,16 @@
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
+      "id": "src-dev-ett-001",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Device",
+      "source_resource_id": "Device/mock-ett-001",
+      "source_endpoint": "Lines, Drains, Airways / LDA-W",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
       "id": "src-dev-foley-001",
       "source_system": "mock-fixture",
       "source_resource_type": "Device",
@@ -2878,20 +3259,170 @@
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
-      "id": "src-obs-o2-device",
+      "id": "src-obs-nihss-10",
       "source_system": "mock-fixture",
       "source_resource_type": "Observation",
-      "source_resource_id": "Observation/mock-obs-o2-device",
+      "source_resource_id": "Observation/mock-obs-nihss-10",
       "source_endpoint": "Observation (Assessments/Flowsheet)",
       "patient_ref": "patient-001",
       "encounter_ref": "enc-icu-001",
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
-      "id": "src-obs-o2-flow",
+      "id": "src-obs-nihss-11",
       "source_system": "mock-fixture",
       "source_resource_type": "Observation",
-      "source_resource_id": "Observation/mock-obs-o2-flow",
+      "source_resource_id": "Observation/mock-obs-nihss-11",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-1a",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-1a",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-1b",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-1b",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-1c",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-1c",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-2",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-2",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-3",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-3",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-4",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-4",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-5a",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-5a",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-5b",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-5b",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-6a",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-6a",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-6b",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-6b",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-7",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-7",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-8",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-8",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-9",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-9",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-nihss-total",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-nihss-total",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-o2-device",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-o2-device",
       "source_endpoint": "Observation (Assessments/Flowsheet)",
       "patient_ref": "patient-001",
       "encounter_ref": "enc-icu-001",
@@ -3168,6 +3699,46 @@
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
+      "id": "src-obs-vent-mode",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-vent-mode",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-vent-peep",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-vent-peep",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-vent-rate",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-vent-rate",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-obs-vent-tidal_volume",
+      "source_system": "mock-fixture",
+      "source_resource_type": "Observation",
+      "source_resource_id": "Observation/mock-obs-vent-tidal_volume",
+      "source_endpoint": "Observation (Assessments/Flowsheet)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
       "id": "src-obs-weight-current",
       "source_system": "mock-fixture",
       "source_resource_type": "Observation",
@@ -3246,6 +3817,16 @@
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
+      "id": "src-use-ett-001",
+      "source_system": "mock-fixture",
+      "source_resource_type": "DeviceUseStatement",
+      "source_resource_id": "DeviceUseStatement/mock-use-ett-001",
+      "source_endpoint": "Lines, Drains, Airways / LDA-W",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
       "id": "src-use-foley-001",
       "source_system": "mock-fixture",
       "source_resource_type": "DeviceUseStatement",
@@ -3305,6 +3886,7 @@
         "src-code-002",
         "src-dev-cvc-001",
         "src-dev-dht-001",
+        "src-dev-ett-001",
         "src-dev-foley-001",
         "src-dev-piv-001",
         "src-dev-piv-old",
@@ -3370,8 +3952,23 @@
         "src-obs-lung-left",
         "src-obs-lung-lll",
         "src-obs-lung-right",
+        "src-obs-nihss-10",
+        "src-obs-nihss-11",
+        "src-obs-nihss-1a",
+        "src-obs-nihss-1b",
+        "src-obs-nihss-1c",
+        "src-obs-nihss-2",
+        "src-obs-nihss-3",
+        "src-obs-nihss-4",
+        "src-obs-nihss-5a",
+        "src-obs-nihss-5b",
+        "src-obs-nihss-6a",
+        "src-obs-nihss-6b",
+        "src-obs-nihss-7",
+        "src-obs-nihss-8",
+        "src-obs-nihss-9",
+        "src-obs-nihss-total",
         "src-obs-o2-device",
-        "src-obs-o2-flow",
         "src-obs-orientation",
         "src-obs-pain-current",
         "src-obs-pain-error",
@@ -3399,6 +3996,10 @@
         "src-obs-uop-1800",
         "src-obs-uop-pre-shift",
         "src-obs-urine-character",
+        "src-obs-vent-mode",
+        "src-obs-vent-peep",
+        "src-obs-vent-rate",
+        "src-obs-vent-tidal_volume",
         "src-obs-weight-current",
         "src-obs-weight-old",
         "src-patient-001",
@@ -3407,6 +4008,7 @@
         "src-rad-cxr-error",
         "src-use-cvc-001",
         "src-use-dht-001",
+        "src-use-ett-001",
         "src-use-foley-001",
         "src-use-piv-001",
         "src-use-piv-old",
