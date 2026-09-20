@@ -244,12 +244,20 @@ export interface IcuFixture {
 }
 
 export type FieldProvenance = "source" | "derived" | "missing" | "report-only";
+export type FreshnessState = "this-shift" | "pre-shift" | "unknown";
+export type TrendDirection = "up" | "down" | "same";
 
 export interface ReportField<T> {
   value: T | null;
   provenance: FieldProvenance;
   sourceIds: string[];
   note?: string;
+  flag?: string;
+  observedAt?: string;
+  freshness?: FreshnessState;
+  previousValue?: string;
+  previousObservedAt?: string;
+  trend?: TrendDirection;
 }
 
 export interface ReportState {
@@ -296,6 +304,11 @@ export interface ReportState {
     device: ReportField<string>;
     shiftUop: ReportField<string>;
   };
+  io: {
+    intake: ReportField<string>;
+    output: ReportField<string>;
+    net: ReportField<string>;
+  };
   ldas: ReportField<string>[];
   drips: ReportField<string>[];
   bgm: Record<string, ReportField<string>>;
@@ -303,6 +316,7 @@ export interface ReportState {
   labs: Record<string, ReportField<string>>;
   radiology: ReportField<string>[];
   treatment: {
+    todo: ReportField<string>[];
     handoff: ReportField<string>[];
     interventions: ReportField<string>[];
     annotations: ReportField<string>[];
