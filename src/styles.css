@@ -75,10 +75,18 @@ select {
   font-size: 1.02rem;
 }
 
-.report-grid {
+.report-columns {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px;
+  align-items: start;
+}
+
+.report-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
 }
 
 .report-section {
@@ -102,6 +110,11 @@ select {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #586579;
+}
+
+.section-message {
+  margin: 0;
+  padding: 10px 12px;
 }
 
 .field-row {
@@ -213,8 +226,8 @@ select {
   font-weight: 800;
 }
 
-@media (max-width: 900px) {
-  .report-grid {
+@media (max-width: 720px) {
+  .report-columns {
     grid-template-columns: 1fr;
   }
 
@@ -262,7 +275,13 @@ select {
     border-radius: 0;
   }
 
-  .report-grid {
+  .report-columns {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+    align-items: start;
+  }
+
+  .report-column {
     gap: 6px;
   }
 
