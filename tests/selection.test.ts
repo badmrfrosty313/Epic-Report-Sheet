@@ -52,6 +52,15 @@ describe("ICU selection engine", () => {
     );
   });
 
+  it("renders composite nutrition values as separate scan lines", () => {
+    expect(report.gi.nutrition.value).toBe(
+      "Formula: Mock Standard 1.5\nRoute: enteral tube\n45 mL/hr continuous\n150 mL free-water flush every 4 hours",
+    );
+    expect(report.gi.enteralAccess.value).toBe(
+      "Dobhoff tube\nSite: left nare",
+    );
+  });
+
   it("projects configured BGM slots from timestamped readings", () => {
     expect(report.bgm["0800"].value).toBe("118 mg/dL");
     expect(report.bgm["1200"].value).toBe("162 mg/dL");
