@@ -2671,6 +2671,36 @@
       "imported_at": "2026-09-20T18:30:00-04:00"
     },
     {
+      "id": "src-rad-ct-chest",
+      "source_system": "mock-fixture",
+      "source_resource_type": "DiagnosticReport",
+      "source_resource_id": "DiagnosticReport/mock-rad-ct-chest",
+      "source_endpoint": "DiagnosticReport (Results)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-rad-cxr-current",
+      "source_system": "mock-fixture",
+      "source_resource_type": "DiagnosticReport",
+      "source_resource_id": "DiagnosticReport/mock-rad-cxr-current",
+      "source_endpoint": "DiagnosticReport (Results)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
+      "id": "src-rad-cxr-error",
+      "source_system": "mock-fixture",
+      "source_resource_type": "DiagnosticReport",
+      "source_resource_id": "DiagnosticReport/mock-rad-cxr-error",
+      "source_endpoint": "DiagnosticReport (Results)",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "imported_at": "2026-09-20T18:30:00-04:00"
+    },
+    {
       "id": "src-use-cvc-001",
       "source_system": "mock-fixture",
       "source_resource_type": "DeviceUseStatement",
@@ -2831,6 +2861,9 @@
         "src-obs-weight-current",
         "src-obs-weight-old",
         "src-patient-001",
+        "src-rad-ct-chest",
+        "src-rad-cxr-current",
+        "src-rad-cxr-error",
         "src-use-cvc-001",
         "src-use-dht-001",
         "src-use-foley-001",
@@ -2882,6 +2915,95 @@
         "lab-k-error"
       ],
       "created_at": "2026-09-20T18:30:00-04:00"
+    }
+  ],
+  "radiology_reports": [
+    {
+      "id": "rad-cxr-current",
+      "source_ref": "src-rad-cxr-current",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "status": "final",
+      "category_codes": [
+        {
+          "system": "http://loinc.org",
+          "code": "LP29684-5",
+          "display": "Radiology"
+        }
+      ],
+      "code": {
+        "system": "mock-loinc",
+        "code": "CXR-PORTABLE",
+        "display": "Portable chest radiograph"
+      },
+      "effective_time": "2026-09-20T16:40:00-04:00",
+      "issued_time": "2026-09-20T17:02:00-04:00",
+      "impression": "Persistent bibasilar airspace opacities, right greater than left, with small bilateral pleural effusions.",
+      "findings": "Portable AP chest demonstrates persistent bibasilar patchy airspace opacities, greater on the right, and small bilateral pleural effusions. No pneumothorax.",
+      "study_refs": [
+        "ImagingStudy/mock-cxr-001"
+      ],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "rad-ct-chest",
+      "source_ref": "src-rad-ct-chest",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "status": "final",
+      "category_codes": [
+        {
+          "system": "http://loinc.org",
+          "code": "LP29684-5",
+          "display": "Radiology"
+        }
+      ],
+      "code": {
+        "system": "mock-loinc",
+        "code": "CT-CHEST-CONTRAST",
+        "display": "CT chest with contrast"
+      },
+      "effective_time": "2026-09-18T17:05:00-04:00",
+      "issued_time": "2026-09-18T17:48:00-04:00",
+      "impression": "Multifocal bilateral lower-lobe predominant airspace disease with small bilateral pleural effusions.",
+      "findings": "Patchy bilateral lower-lobe predominant airspace disease is present with small bilateral pleural effusions.",
+      "study_refs": [
+        "ImagingStudy/mock-ct-chest-001"
+      ],
+      "availability": {
+        "state": "present"
+      }
+    },
+    {
+      "id": "rad-cxr-error",
+      "source_ref": "src-rad-cxr-error",
+      "patient_ref": "patient-001",
+      "encounter_ref": "enc-icu-001",
+      "status": "entered-in-error",
+      "category_codes": [
+        {
+          "system": "http://loinc.org",
+          "code": "LP29684-5",
+          "display": "Radiology"
+        }
+      ],
+      "code": {
+        "system": "mock-loinc",
+        "code": "CXR-PORTABLE",
+        "display": "Portable chest radiograph"
+      },
+      "effective_time": "2026-09-20T18:10:00-04:00",
+      "issued_time": "2026-09-20T18:18:00-04:00",
+      "impression": "No acute cardiopulmonary abnormality.",
+      "findings": "Fixture-only entered-in-error report used to test exclusion.",
+      "study_refs": [
+        "ImagingStudy/mock-cxr-error"
+      ],
+      "availability": {
+        "state": "present"
+      }
     }
   ]
 }
