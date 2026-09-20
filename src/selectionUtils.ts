@@ -5,6 +5,7 @@ import type {
   Period,
   QuantityValue,
   ReportField,
+  TrendDirection,
 } from "./types";
 
 const unusable = new Set(["entered-in-error", "cancelled", "invalid"]);
@@ -23,8 +24,9 @@ export function field<T>(
   provenance: ReportField<T>["provenance"],
   sourceIds: string[] = [],
   note?: string,
+  meta: Partial<Omit<ReportField<T>, "value" | "provenance" | "sourceIds" | "note">> = {},
 ): ReportField<T> {
-  return { value, provenance, sourceIds, note };
+  return { value, provenance, sourceIds, note, ...meta };
 }
 
 export const missing = <T>(note: string): ReportField<T> =>
@@ -123,4 +125,33 @@ export function latestLab(fixture: IcuFixture, code: string): LabResultRecord | 
     ),
     (lab) => lab.effective_time,
   );
+}
+
+
+export function numericValue(value: unknown): number | null {
+  if (typeof value === "number") return value;
+
+  if (
+    value &&
+    typeof value === "object" &&
+    "value" in value &&
+    typeof (value as { value?: unknown }).value === "number"
+  ) {
+    return (value as { value: number }).value;
+  }
+
+  return null;
+}
+
+export function trendDirection(
+  current: unknown,
+  previous: unknown,
+): TrendDirection | undefined {
+  const currentNumber = numericValue(current);
+  const previousNumber = numericValue(previous);
+
+  if (currentNumber === null || previousNumber === null) return undefined;
+  if (currentNumber > previousNumber) return "up";
+  if (currentNumber < previousNumber) return "down";
+  return "same";
 }
