@@ -240,3 +240,26 @@ Public Epic FHIR documentation indicates that Observation APIs can retrieve vita
 
 ### New Exact Resume Point
 Continue with **Respiratory**: confirm the prototype's `Oxygen`, `LPM`, and `Percentage` semantics, preserve device/settings source detail, then model lobe-specific lung findings.
+### Respiratory: Oxygen, LPM, and FiO2
+- The prototype's `Percentage` field means **FiO2 / oxygen concentration percentage** and is intended primarily to accompany ventilator settings.
+- Preserve FiO2 as source data when available, including source value, units/representation, timestamp, and useful provenance.
+- `Oxygen` stores the source-documented delivery method/device.
+- `LPM` stores source flow rate when applicable.
+- Do not force oxygen device, LPM, and FiO2 into a mutually exclusive model. Preserve whichever combination the approved source actually provides.
+- The report may compress these fields for scanability while an expanded view retains richer source detail.
+
+Conceptual shape:
+```text
+respiratory:
+  oxygen_device: <source device/method>
+  flow_lpm: <source flow if applicable>
+  fio2_percent: <source FiO2 if applicable>
+  vent:
+    mode: <source mode>
+    tidal_volume: <source value + unit>
+    peep: <source value + unit>
+    rate: <source value>
+```
+
+### New Exact Resume Point
+Continue Respiratory with **lung findings by lobe/site**. Preserve source-documented detail rather than collapsing every lobe to a single generic `clear/abnormal` flag.
