@@ -134,6 +134,18 @@ Audit note: a newer potassium result of 6.8 mmol/L is preserved in the source fi
 
 ---
 
+## Radiology
+
+**Portable chest radiograph — 09/20 16:40 — FINAL**  
+Impression: Persistent bibasilar airspace opacities, right greater than left, with small bilateral pleural effusions.
+
+**CT chest with contrast — 09/18 17:05 — FINAL**  
+Impression: Multifocal bilateral lower-lobe predominant airspace disease with small bilateral pleural effusions.
+
+The newer fixture report `rad-cxr-error` is preserved in source history but excluded because its status is `entered-in-error`. Full findings remain preserved underneath the compact report view.
+
+---
+
 ## Treatment / To Do
 
 ### Source-backed handoff
@@ -178,6 +190,7 @@ The report is compact, but the source history was **not destroyed** to make it c
 - UOP shift total is derived from an explicit time window.
 - Lab H/H is derived from separate hemoglobin/hematocrit records.
 - Manual report notes remain distinct from Epic/source data.
+- Radiology displays source DiagnosticReport impressions without inventing a local interpretation.
 - There is no arbitrary four-IV limit.
 
 ## Next engineering step
