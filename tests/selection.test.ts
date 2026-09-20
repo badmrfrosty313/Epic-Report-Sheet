@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
 import fixtureJson from "../Support Sheets/15_MOCK_ICU_FIXTURE.json";
+import stressFixtureJson from "../Support Sheets/18_STRESS_ICU_FIXTURE.json";
 import { buildReportState } from "../src/selection";
 import type { IcuFixture } from "../src/types";
 
 const fixture = fixtureJson as unknown as IcuFixture;
 const report = buildReportState(fixture);
+const stressFixture = stressFixtureJson as unknown as IcuFixture;
+const stressReport = buildReportState(stressFixture);
 
 describe("ICU selection engine", () => {
   it("derives the expected patient header", () => {
@@ -78,6 +81,13 @@ describe("ICU selection engine", () => {
     );
   });
 
+  it("builds the shift I/O snapshot from explicit source observations", () => {
+    expect(report.io.intake.value).toBe("770 mL");
+    expect(report.io.output.value).toBe("450 mL");
+    expect(report.io.net.value).toBe("+320 mL");
+    expect(report.io.net.provenance).toBe("derived");
+  });
+
   it("projects configured BGM slots from timestamped readings", () => {
     expect(report.bgm["0800"].value).toBe("118 mg/dL");
     expect(report.bgm["1200"].value).toBe("162 mg/dL");
@@ -104,9 +114,19 @@ describe("ICU selection engine", () => {
     expect(report.labs["Potassium"].sourceIds).toEqual(["lab-k-current"]);
   });
 
-  it("keeps source lab interpretation available for the UI", () => {
-    expect(report.labs["Potassium"].note).toBe("LOW");
-    expect(report.labs["WBC"].note).toBe("HIGH");
+  it("keeps lab flags and numeric trends available for the UI", () => {
+    expect(report.labs["Potassium"].flag).toBe("LOW");
+    expect(report.labs["Potassium"].trend).toBe("down");
+    expect(report.labs["Potassium"].previousValue).toBe("4.1 mmol/L");
+    expect(report.labs["WBC"].flag).toBe("HIGH");
+    expect(report.labs["WBC"].trend).toBe("down");
+    expect(report.labs["Creatinine"].trend).toBe("down");
+  });
+
+  it("adds source-time freshness metadata without inventing clinical staleness thresholds", () => {
+    expect(report.pain.observedAt).toBe("2026-09-20T17:45:00-04:00");
+    expect(report.pain.freshness).toBe("this-shift");
+    expect(report.header.codeStatus.freshness).toBe("pre-shift");
   });
 
   it("selects active-encounter radiology and rejects entered-in-error reports", () => {
@@ -117,8 +137,20 @@ describe("ICU selection engine", () => {
     expect(report.radiology.some((item) => item.sourceIds.includes("rad-cxr-error"))).toBe(false);
   });
 
-  it("keeps manual annotations distinct from source-backed handoff", () => {
+  it("promotes source To Do separately from other handoff context", () => {
+    expect(report.treatment.todo).toHaveLength(1);
+    expect(report.treatment.todo[0].value).toContain("recheck potassium");
     expect(report.treatment.handoff[0].provenance).toBe("source");
     expect(report.treatment.annotations[0].provenance).toBe("report-only");
+  });
+
+  it("survives the high-density ICU stress fixture", () => {
+    expect(stressReport.header.patientName.value).toBe("Morgan Stress Test");
+    expect(stressReport.ldas.length).toBeGreaterThanOrEqual(10);
+    expect(stressReport.drips.length).toBe(8);
+    expect(Object.keys(stressReport.labs).length).toBeGreaterThanOrEqual(28);
+    expect(stressReport.radiology.length).toBeGreaterThanOrEqual(4);
+    expect(stressReport.treatment.todo[0].value).toContain("Repeat ABG");
+    expect(stressReport.io.net.value).toBe("+320 mL");
   });
 });
