@@ -120,17 +120,37 @@ Audit note: a newer 10/10 source observation exists at 18:05 but has status `ent
 
 ## Labs
 
-| Lab | Selected result |
-|---|---:|
-| WBC | 15.2 10^3/uL |
-| H/H | 9.1 g/dL / 28.2% |
-| Platelets | 210 10^3/uL |
-| Na | 139 mmol/L |
-| K | 3.4 mmol/L |
-| Creatinine | 1.8 mg/dL |
-| Magnesium | **Not documented** |
+The lab section is full-width and source-driven. This fixture currently has 23 usable resulted labs:
 
-Audit note: a newer potassium result of 6.8 mmol/L is preserved in the source fixture but excluded because its status is `entered-in-error`.
+| Lab | Result |
+|---|---:|
+| WBC | 15.2 10^3/uL (HIGH) |
+| Red blood cells | 3.15 10^6/uL (LOW) |
+| Hemoglobin | 9.1 g/dL (LOW) |
+| Hematocrit | 28.2% (LOW) |
+| Platelets | 210 10^3/uL |
+| Prothrombin time | 15.8 sec (HIGH) |
+| INR | 1.3 (HIGH) |
+| aPTT | 32 sec |
+| Sodium | 139 mmol/L |
+| Potassium | 3.4 mmol/L (LOW) |
+| Chloride | 104 mmol/L |
+| CO2 | 22 mmol/L |
+| Anion gap | 13 mmol/L |
+| BUN | 34 mg/dL (HIGH) |
+| Creatinine | 1.8 mg/dL (HIGH) |
+| eGFR | 42 mL/min/1.73m2 (LOW) |
+| Calcium | 8.1 mg/dL (LOW) |
+| Albumin | 2.8 g/dL (LOW) |
+| Total protein | 5.9 g/dL (LOW) |
+| ALT | 42 U/L |
+| AST | 51 U/L (HIGH) |
+| Total bilirubin | 0.9 mg/dL |
+| Phosphorus | 2.4 mg/dL (LOW) |
+
+The newer potassium result of 6.8 mmol/L is preserved in source history but excluded because it is `entered-in-error`.
+
+Magnesium is intentionally not documented in this fixture and therefore is not shown as a resulted lab.
 
 ---
 
@@ -188,7 +208,7 @@ The report is compact, but the source history was **not destroyed** to make it c
 - Lung inheritance happens only in presentation.
 - BGM slots are derived from timestamped readings.
 - UOP shift total is derived from an explicit time window.
-- Lab H/H is derived from separate hemoglobin/hematocrit records.
+- Labs render dynamically from all usable current source results; hemoglobin and hematocrit remain separate source results.
 - Manual report notes remain distinct from Epic/source data.
 - Radiology displays source DiagnosticReport impressions without inventing a local interpretation.
 - There is no arbitrary four-IV limit.
