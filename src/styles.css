@@ -367,6 +367,76 @@ select {
   white-space: normal;
 }
 
+.labs-section {
+  margin-top: 18px;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.lab-cell {
+  min-width: 0;
+  padding: 9px 10px 8px;
+  border-right: 1px solid #dce2e9;
+  border-bottom: 1px solid #dce2e9;
+  background: white;
+}
+
+.lab-cell:nth-child(6n) {
+  border-right: 0;
+}
+
+.lab-cell-label {
+  margin-bottom: 4px;
+  font-size: 0.7rem;
+  font-weight: 850;
+  line-height: 1.15;
+  color: #526076;
+}
+
+.lab-cell-reading {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.lab-cell-value {
+  min-width: 0;
+  font-size: 0.95rem;
+  font-weight: 760;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.lab-cell-flag {
+  flex: none;
+  font-size: 0.58rem;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  color: #6b5660;
+}
+
+.lab-source-detail {
+  margin-top: 5px;
+  font-size: 0.62rem;
+  color: #89919d;
+}
+
+.lab-source-detail summary {
+  cursor: pointer;
+  width: fit-content;
+}
+
+.lab-source-detail code {
+  display: block;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
 .audit-footer {
   margin-top: 18px;
   padding: 10px 12px;
@@ -380,6 +450,20 @@ select {
 .audit-footer summary {
   cursor: pointer;
   font-weight: 750;
+}
+
+@media (max-width: 1100px) {
+  .lab-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lab-cell:nth-child(6n) {
+    border-right: 1px solid #dce2e9;
+  }
+
+  .lab-cell:nth-child(4n) {
+    border-right: 0;
+  }
 }
 
 @media (max-width: 720px) {
@@ -399,6 +483,17 @@ select {
     grid-template-columns: 105px minmax(0, 1fr);
   }
 
+  .lab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lab-cell:nth-child(4n) {
+    border-right: 1px solid #dce2e9;
+  }
+
+  .lab-cell:nth-child(2n) {
+    border-right: 0;
+  }
 }
 
 @media print {
@@ -415,6 +510,7 @@ select {
   .print-button,
   .field-meta,
   .source-detail,
+  .lab-source-detail,
   .audit-footer {
     display: none !important;
   }
@@ -458,6 +554,37 @@ select {
 
   .report-section h2 {
     padding: 5px 7px;
+  }
+
+  .labs-section {
+    margin-top: 6px;
+  }
+
+  .lab-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .lab-cell,
+  .lab-cell:nth-child(2n),
+  .lab-cell:nth-child(4n) {
+    border-right: 1px solid #dce2e9;
+    padding: 4px 6px;
+  }
+
+  .lab-cell:nth-child(6n) {
+    border-right: 0;
+  }
+
+  .lab-cell-label {
+    font-size: 0.58rem;
+  }
+
+  .lab-cell-value {
+    font-size: 0.75rem;
+  }
+
+  .lab-cell-flag {
+    font-size: 0.5rem;
   }
 
   .field-label,
