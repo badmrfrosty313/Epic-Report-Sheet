@@ -31,7 +31,7 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Later: nurses on additional units, unit educators, charge nurses, or organizations that want standardized report-sheet templates.
 
 ## Current Status
-- Stage: **Epic-first source mapping complete / normalized model definition next**
+- Stage: **Canonical normalized ICU model defined / mock vertical slice next**
 - Last updated: 2026-09-20
 - ICU remains the first target workflow.
 - Full visible-field inventory is complete.
@@ -39,7 +39,8 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Every prototype field is mapped in `13_EPIC_SOURCE_MAP.md` to a source domain, a presentation derivation, or an explicit manual report annotation.
 - Header, Neuro, Cardiac, and Respiratory field-level decisions already made remain preserved unless customer-specific Epic evidence requires a change.
 - Exact customer-specific FLO IDs, LDA codes, local value lists, security/scopes, and organization configuration remain a later deployment-adapter task.
-- Current focus: define the canonical normalized ICU model and vertical-slice rules from the completed source map.
+- `14_ICU_NORMALIZED_MODEL.md` now defines the canonical source-shaped ICU model, derived-value/provenance rules, adapter boundary, selection framework, and v0.1 model contract.
+- Current focus: build a realistic source-shaped mock ICU fixture and the explicit selection policies that project it into the first nurse report.
 - Repository: badmrfrosty313/Epic-Report-Sheet
 
 ## Constraints
@@ -70,7 +71,7 @@ This remains a workflow project first and an Epic integration project later, but
 Preserve clinically relevant values, codes, units, timestamps, statuses, labels, components, and other useful attributes that can legitimately be pulled from an approved Epic/EHR source. Derived summaries, flags, calculations, and display shorthand remain separate and must never overwrite source facts. Missing source data stay missing rather than defaulting to normal.
 
 ### Resume Rule
-When this project resumes, do **not** restart discovery, re-inventory the PDF, or reopen settled Neuro decisions. Continue from the Cardiac section using `11_ICU_FIELD_CLASSIFICATION.md`, `12_ICU_MODEL_DECISIONS.md`, and `09_CHATGPT_HANDOFF.md`.
+Do **not** restart field discovery. Source mapping and the canonical model are complete. Resume from `14_ICU_NORMALIZED_MODEL.md`: build the realistic source-shaped mock fixture and selection-policy table, then project it into the first ICU report.
 
 ### Epic-First Modeling Rule
 - Build the source adapter and normalized model from how Epic/EHR actually represents the data, not from handwritten paper conventions.
