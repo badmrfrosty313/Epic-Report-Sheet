@@ -17,9 +17,10 @@
 
 ## Next
 - [x] Define the canonical normalized ICU data model in `14_ICU_NORMALIZED_MODEL.md`.
-- [ ] Build the first realistic source-shaped mock ICU fixture.
-- [ ] Define the explicit current-value / recency / encounter-selection policy table against that fixture.
-- [ ] Finalize the first ICU vertical-slice requirements using the normalized model and selection policies.
+- [x] Build the first realistic source-shaped mock ICU fixture in `15_MOCK_ICU_FIXTURE.json`.
+- [x] Define the explicit current-value / recency / encounter-selection policy table in `16_ICU_SELECTION_POLICIES.md`.
+- [x] Prove the deterministic nurse-report projection in `17_FIRST_REPORT_PROJECTION.md`.
+- [x] Finalize the first ICU vertical-slice behavior using the normalized model, fixture, and selection policies.
 - [ ] Choose the implementation stack based on the now-known model and UI requirements.
 - [ ] Build the first working ICU report from mock source-shaped data.
 - [ ] Add expandable source-detail views where useful.
@@ -60,6 +61,9 @@
 - [x] `12_ICU_MODEL_DECISIONS.md`
 - [x] `13_EPIC_SOURCE_MAP.md`
 - [x] `14_ICU_NORMALIZED_MODEL.md`
+- [x] `15_MOCK_ICU_FIXTURE.json`
+- [x] `16_ICU_SELECTION_POLICIES.md`
+- [x] `17_FIRST_REPORT_PROJECTION.md`
 - [x] Governing source-preservation rule.
 - [x] Epic-first model-authority decision.
 
@@ -71,4 +75,4 @@
 A realistic source-shaped mock ICU patient/encounter goes in and a useful, readable, printable nurse report comes out. The report preserves source provenance and makes derived/report-only values distinguishable. No live Epic connection is required.
 
 ## Next Starting Point
-Read `14_ICU_NORMALIZED_MODEL.md`, then create the **realistic source-shaped mock ICU fixture** and selection-policy table. Do not return to paper-field modeling.
+Choose the implementation stack, scaffold the local app, and implement the normalization/selection engine against `15_MOCK_ICU_FIXTURE.json` until it reproduces `17_FIRST_REPORT_PROJECTION.md`.
