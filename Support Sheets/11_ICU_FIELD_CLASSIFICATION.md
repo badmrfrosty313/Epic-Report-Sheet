@@ -4,12 +4,13 @@ Source: `10_ICU_FIELD_INVENTORY.md`, transcribed from `Report Sheet V.2 ICU - Pr
 
 This file separates what can be inferred safely from the prototype's layout from decisions that still require clinical/workflow confirmation. `TBD` means the prototype does not provide enough information to decide without inventing behavior.
 
-## Checkpoint Status
+## Classification Status — Complete at Source-Family Level
 - Field inventory: complete.
-- Header modeling: partially resolved.
-- Neuro modeling: resolved for the current v0.1 specification.
-- **Resume next at Cardiac.**
-- Project paused 2026-09-17 while two newly available WGU classes take priority.
+- Header / Neuro / Cardiac / Respiratory behavior decisions: complete for current v0.1.
+- GI / GU / IV access / Skin / IV drips / BGM / Pain / Treatment / Labs: source-first classification complete.
+- Comprehensive Epic field/source mapping: `13_EPIC_SOURCE_MAP.md`.
+- Remaining uncertainty is **customer-specific adapter configuration**, not missing product classification.
+- Next step: canonical normalized model.
 
 ## Classification Key
 - **Scalar structured**: one discrete value for the patient/report.
@@ -249,14 +250,22 @@ Fields:
 15. Extremity strength preserves RUE/LUE/RLE/LLE documented grades separately.
 16. Source facts are preserved; derived values remain separate; missing data are never defaulted to normal.
 
-## Clinical / Workflow Decisions Still Needed
-1. Exact representation of abdomen and urine.
-2. Mandatory vs conditional/optional field pass.
-3. Which fields are mandatory for every ICU report vs conditional/optional.
-4. Whether BGM should be stored as timestamped readings beneath fixed display slots.
-5. Whether Pain is one current assessment or a repeating/time-based set.
-6. Which metadata labs should retain beyond what the approved source provides and what the report needs to display.
-7. Which Epic diagnosis category should populate the report's `Diagnosis` list for the ICU workflow.
+## Source-First Completion Decisions
 
-## Resume Pin
-**Next action: GI -> define the Abdomen field structure.** Respiratory oxygen/flow/FiO2 and lung-scope behavior are resolved for the current pass.
+The remaining paper sections are classified as follows:
+
+- **GI abdomen / GU urine / bedside assessment detail** -> timestamped source observations using the target customer's actual flowsheet/assessment/SmartData mappings.
+- **Diet / tube feeds** -> NutritionOrder.
+- **DHT / NG/OG / Foley / IV access / airway / wound LDA data** -> Device + DeviceUseStatement + Observation (Lines, Drains, Airways), with customer-specific LDA codes/properties.
+- **Purewick** -> whichever approved external-device/LDA/flowsheet representation the target organization actually uses.
+- **IV drips** -> MedicationAdministration for administered state; medication order resources for ordered intent.
+- **BGM** -> repeating timestamped glucose observations; fixed 8a/12p/16p values are report projection only.
+- **Pain** -> repeating timestamped assessment observations.
+- **Treatment** -> projection of source handoff fields, nursing interventions, selected notes, plus explicitly manual report annotations where needed.
+- **Labs** -> generic Observation (Labs) collection; paper lab names are template selectors.
+- **Misc** -> source-backed handoff/note excerpt or manual report annotation, not a generic canonical clinical-data property.
+
+Exact Epic FLO IDs, local codes, and value sets are deployment-adapter configuration.
+
+## Completion Pin
+**All ICU prototype fields are now classified and conceptually mapped. Next action: define the canonical normalized ICU model from `13_EPIC_SOURCE_MAP.md`.**
