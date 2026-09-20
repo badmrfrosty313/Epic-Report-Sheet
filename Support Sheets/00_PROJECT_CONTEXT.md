@@ -31,7 +31,7 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Later: nurses on additional units, unit educators, charge nurses, or organizations that want standardized report-sheet templates.
 
 ## Current Status
-- Stage: **Canonical normalized ICU model defined / mock vertical slice next**
+- Stage: **Source-shaped mock vertical slice proven / implementation next**
 - Last updated: 2026-09-20
 - ICU remains the first target workflow.
 - Full visible-field inventory is complete.
@@ -40,7 +40,11 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Header, Neuro, Cardiac, and Respiratory field-level decisions already made remain preserved unless customer-specific Epic evidence requires a change.
 - Exact customer-specific FLO IDs, LDA codes, local value lists, security/scopes, and organization configuration remain a later deployment-adapter task.
 - `14_ICU_NORMALIZED_MODEL.md` now defines the canonical source-shaped ICU model, derived-value/provenance rules, adapter boundary, selection framework, and v0.1 model contract.
-- Current focus: build a realistic source-shaped mock ICU fixture and the explicit selection policies that project it into the first nurse report.
+- `15_MOCK_ICU_FIXTURE.json` provides a deterministic fake ICU encounter with stale, conflicting, missing, repeating, and source-vs-derived cases.
+- `16_ICU_SELECTION_POLICIES.md` defines deterministic current/relevant-value rules.
+- `17_FIRST_REPORT_PROJECTION.md` proves those rules produce the expected compact nurse report while preserving source history.
+- Fixture integrity validation passed: JSON parses, all 93 source references resolve to source records, entered-in-error values are excluded, shift UOP = 365 mL, BGM slots select the intended readings, and current LDA/drip/nutrition selections are deterministic.
+- Current focus: choose the implementation stack and turn this validated fixture/policy set into executable code and the first interactive ICU report.
 - Repository: badmrfrosty313/Epic-Report-Sheet
 
 ## Constraints
@@ -71,7 +75,7 @@ This remains a workflow project first and an Epic integration project later, but
 Preserve clinically relevant values, codes, units, timestamps, statuses, labels, components, and other useful attributes that can legitimately be pulled from an approved Epic/EHR source. Derived summaries, flags, calculations, and display shorthand remain separate and must never overwrite source facts. Missing source data stay missing rather than defaulting to normal.
 
 ### Resume Rule
-Do **not** restart field discovery. Source mapping and the canonical model are complete. Resume from `14_ICU_NORMALIZED_MODEL.md`: build the realistic source-shaped mock fixture and selection-policy table, then project it into the first ICU report.
+Do **not** restart field discovery or mock design. Source mapping, canonical model, fixture, selection policies, and first report projection are complete. Resume by implementing the validated fixture/policy behavior in code.
 
 ### Epic-First Modeling Rule
 - Build the source adapter and normalized model from how Epic/EHR actually represents the data, not from handwritten paper conventions.
