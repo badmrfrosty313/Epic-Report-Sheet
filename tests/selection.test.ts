@@ -94,6 +94,14 @@ describe("ICU selection engine", () => {
     expect(report.neuro.nihss.provenance).toBe("missing");
   });
 
+  it("selects active-encounter radiology and rejects entered-in-error reports", () => {
+    expect(report.radiology).toHaveLength(2);
+    expect(report.radiology[0].value).toContain("Study: Portable chest radiograph");
+    expect(report.radiology[0].value).toContain("Impression: Persistent bibasilar airspace opacities");
+    expect(report.radiology[0].sourceIds).toEqual(["rad-cxr-current"]);
+    expect(report.radiology.some((item) => item.sourceIds.includes("rad-cxr-error"))).toBe(false);
+  });
+
   it("keeps manual annotations distinct from source-backed handoff", () => {
     expect(report.treatment.handoff[0].provenance).toBe("source");
     expect(report.treatment.annotations[0].provenance).toBe("report-only");
