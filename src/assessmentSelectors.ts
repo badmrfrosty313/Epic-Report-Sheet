@@ -144,7 +144,7 @@ export function selectEdema(fixture: IcuFixture): ReportField<string> {
           value.grade ?? valueText(obs.value)
         }${value.type ? ` ${value.type}` : ""}`;
       })
-      .join(" | "),
+      .join("\n"),
     "derived",
     selected.map((obs) => obs.id),
   );
@@ -164,7 +164,7 @@ export function selectOxygen(fixture: IcuFixture): ReportField<string> {
       fio2 && `FiO2 ${valueText(fio2.value)}`,
     ]
       .filter(Boolean)
-      .join(", "),
+      .join("\n"),
     "derived",
     [device, flow, fio2].filter(Boolean).map((item) => item!.id),
   );
@@ -218,7 +218,7 @@ export function selectAbdomen(fixture: IcuFixture): ReportField<string> {
             }`
           : valueText(obs!.value),
       )
-      .join("; "),
+      .join("\n"),
     "derived",
     selected.filter(Boolean).map((item) => item!.id),
   );
