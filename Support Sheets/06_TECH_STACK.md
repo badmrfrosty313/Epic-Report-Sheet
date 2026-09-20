@@ -1,62 +1,108 @@
 # Technical Stack
 
-The implementation stack is intentionally not locked yet. We will choose it after the first nursing workflow and report interface are defined.
+Stack locked for v0.1 on 2026-09-20.
 
 ## Languages
-- Application language: TBD.
+- Application language: **TypeScript**.
+- Styling: plain CSS.
 
 ## Frameworks / Libraries
-- UI framework: TBD.
-- Report/print tooling: TBD.
-- Validation/model library: TBD if needed.
+- UI framework: **React 18.3.1**.
+- Local build/dev server: **Vite 5.4.10**.
+- Testing: **Vitest 2.1.4**.
+- Type checking: **TypeScript 5.6.3**.
+- Report/print tooling: browser-native print CSS for v0.1.
+- Validation/model library: none yet. Add one only if runtime fixture/input validation becomes complex enough to justify it.
+
+## Why This Stack
+- The product is primarily an interactive local report UI with expandable source detail and print output.
+- React gives us a clean boundary between report-state data and unit-specific presentation without requiring a server framework.
+- Vite is lightweight and fast on the development laptop.
+- TypeScript makes the normalized model and selector contracts explicit.
+- Vitest lets the selection engine prove that stale, missing, conflicting, and entered-in-error source values are handled deterministically.
+- Plain CSS avoids a UI-framework dependency before the ICU layout is validated.
+- No backend or database is necessary for the first vertical slice.
 
 ## Database
-- None required for the first vertical slice unless persistence becomes part of the validated workflow.
+- None for v0.1.
+- Mock fixture data are loaded from repository JSON.
+- Persistence should be added only after the workflow demonstrates a real need.
 
 ## APIs / Services
-- v0.1: None required.
-- Future Epic/EHR integration: TBD after authorized access/export feasibility is researched.
+- v0.1: none.
+- Future Epic/EHR integration remains behind the adapter boundary and must use an authorized method.
+- The UI and selection engine do not depend on live Epic connectivity.
 
 ## Development Tools
-- IDE: VS Code available locally.
+- IDE: VS Code.
 - Version control: Git + GitHub.
 - Repository: badmrfrosty313/Epic-Report-Sheet
-- Package manager: TBD based on selected language/framework.
-- Build system: TBD.
-- Testing: TBD with the implementation stack; automated tests are required for data normalization/validation logic.
-- Containers: Not required for v0.1.
-- CI/CD: Not required for the first local prototype; revisit when useful.
+- Package manager: npm.
+- Build system: Vite.
+- Automated testing: Vitest.
+- CI: GitHub Actions runs install, test, and build.
+- Containers: not required for v0.1.
 
-## Hardware
-- Existing Windows development laptop.
-- Printer or PDF print target for report-layout validation.
+## Runtime
+- Node.js **20 or newer**.
+- Browser: current Chromium/Chrome-class browser for local development.
+- Printer/PDF: browser Print / Save PDF path for v0.1 validation.
 
-## Versions
-| Tool | Version | Why It Matters |
-|---|---|---|
-| Git | Local version TBD | Source control |
-| VS Code | Local version TBD | Development environment |
-| Runtime | TBD | Record after stack selection |
+## Exact Package Versions
+| Package | Version | Purpose |
+|---|---:|---|
+| react | 18.3.1 | UI |
+| react-dom | 18.3.1 | Browser rendering |
+| vite | 5.4.10 | Local dev/build |
+| @vitejs/plugin-react | 4.3.3 | React/Vite integration |
+| typescript | 5.6.3 | Static typing |
+| vitest | 2.1.4 | Selection-engine tests |
+| @types/react | 18.3.12 | React types |
+| @types/react-dom | 18.3.1 | React DOM types |
 
 ## Environment Variables
 > Never put real passwords, API keys, secrets, PHI, or production credentials in this file or repository.
 
-| Variable | Purpose |
-|---|---|
-| None currently | v0.1 requires no external service credentials |
+None are required for v0.1.
 
-## Setup Procedure
-1. Clone the repository.
-2. Pull the latest `main` branch.
-3. Read `Support Sheets/09_CHATGPT_HANDOFF.md` and `Support Sheets/04_TASKS.md` before resuming work.
-4. After the first workflow is defined, select the smallest stack that supports the required UI and print/export behavior.
-5. Record exact runtime/tool versions here when implementation begins.
+## Local Setup
 
-## Stack Selection Criteria
-Prefer the simplest stack that can:
-- Represent and validate structured patient data cleanly.
-- Render a responsive, highly scannable report layout.
-- Produce reliable print/PDF output.
-- Run locally without unnecessary infrastructure.
-- Keep future EHR ingestion behind a separate adapter boundary.
-- Be maintainable without adding complexity merely because a more elaborate architecture exists.
+```bash
+git pull
+npm install
+npm run test:run
+npm run dev
+```
+
+Production build check:
+
+```bash
+npm run build
+```
+
+## Current App Structure
+
+```text
+Support Sheets/
+  15_MOCK_ICU_FIXTURE.json
+  16_ICU_SELECTION_POLICIES.md
+  17_FIRST_REPORT_PROJECTION.md
+
+src/
+  types.ts
+  selectionUtils.ts
+  assessmentSelectors.ts
+  supportSelectors.ts
+  selection.ts
+  App.tsx
+  main.tsx
+  styles.css
+
+tests/
+  selection.test.ts
+```
+
+## Architectural Rule
+The browser UI consumes **ReportState**, not raw Epic payloads. Future source adapters emit the normalized model; selector modules determine current/relevant values; React renders the report state.
+
+Do not add a server, database, state-management library, CSS framework, or component library merely because one exists. Add infrastructure only when the workflow demonstrates a need.
