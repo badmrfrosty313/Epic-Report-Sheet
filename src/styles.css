@@ -37,6 +37,38 @@ select {
   margin-bottom: 14px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.fixture-switcher {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid #aab4c3;
+  border-radius: 8px;
+  background: white;
+}
+
+.fixture-switcher a {
+  padding: 8px 10px;
+  border-right: 1px solid #d4dbe4;
+  color: #566276;
+  font-size: 0.74rem;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.fixture-switcher a:last-child {
+  border-right: 0;
+}
+
+.fixture-switcher a.active {
+  background: #e8eef5;
+  color: #18212f;
+}
+
 .app-header h1 {
   margin: 0;
   font-size: clamp(1.8rem, 4vw, 3rem);
@@ -225,6 +257,20 @@ select {
   opacity: 0.72;
 }
 
+.time-chip {
+  font-variant-numeric: tabular-nums;
+  color: #5e6b7d;
+}
+
+.freshness-chip {
+  border: 1px solid #d5c7a6;
+  border-radius: 999px;
+  padding: 1px 5px;
+  background: #fbf7ee;
+  color: #755f30;
+  font-weight: 750;
+}
+
 .source-detail {
   margin-top: 5px;
   font-size: 0.68rem;
@@ -329,6 +375,13 @@ select {
   color: #707b8b;
 }
 
+.lung-cell-time {
+  padding: 0 6px 6px;
+  font-size: 0.6rem;
+  color: #818b99;
+  font-variant-numeric: tabular-nums;
+}
+
 .lung-source-detail {
   margin-top: 9px;
   font-size: 0.68rem;
@@ -365,6 +418,119 @@ select {
   grid-column: 3;
   overflow-wrap: anywhere;
   white-space: normal;
+}
+
+.io-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.io-cell {
+  min-width: 0;
+  padding: 11px 10px;
+  border-right: 1px solid #dce2e9;
+  text-align: center;
+}
+
+.io-cell:last-child {
+  border-right: 0;
+}
+
+.io-label {
+  margin-bottom: 3px;
+  font-size: 0.67rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #697587;
+}
+
+.io-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.io-time {
+  margin-top: 4px;
+  font-size: 0.6rem;
+  color: #88919d;
+}
+
+.drip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+}
+
+.drip-card {
+  min-width: 0;
+  padding: 10px 11px;
+  border-right: 1px solid #dce2e9;
+  border-bottom: 1px solid #dce2e9;
+  background: white;
+}
+
+.drip-card:nth-child(2n) {
+  border-right: 0;
+}
+
+.drip-card-title {
+  margin-bottom: 5px;
+  font-size: 0.82rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.drip-card-line {
+  margin-top: 2px;
+  font-size: 0.75rem;
+  line-height: 1.25;
+  color: #475468;
+}
+
+.todo-zone {
+  background: #fbfcfe;
+}
+
+.todo-card {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 9px;
+  padding: 11px 12px;
+  border-bottom: 1px solid #dce2e9;
+}
+
+.todo-marker {
+  height: fit-content;
+  padding: 4px 5px;
+  border: 1px solid #aeb9c8;
+  border-radius: 5px;
+  background: #eef3f8;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-align: center;
+  color: #425067;
+}
+
+.todo-text {
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.secondary-treatment {
+  border-top: 1px solid #d7dee7;
+  background: #fbfcfd;
+}
+
+.secondary-treatment > summary {
+  padding: 9px 12px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #657184;
 }
 
 .labs-section {
@@ -419,6 +585,25 @@ select {
   color: #6b5660;
 }
 
+.lab-trend {
+  margin-top: 5px;
+  font-size: 0.66rem;
+  line-height: 1.2;
+  color: #5d697a;
+}
+
+.lab-trend strong {
+  margin-right: 2px;
+  font-size: 0.8rem;
+}
+
+.lab-time {
+  margin-top: 3px;
+  font-size: 0.6rem;
+  color: #8a93a0;
+  font-variant-numeric: tabular-nums;
+}
+
 .lab-source-detail {
   margin-top: 5px;
   font-size: 0.62rem;
@@ -466,6 +651,21 @@ select {
   }
 }
 
+@media (max-width: 900px) {
+  .header-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .drip-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .drip-card {
+    border-right: 0;
+  }
+}
+
 @media (max-width: 720px) {
   .page-shell {
     width: min(100% - 20px, 1480px);
@@ -496,10 +696,17 @@ select {
   }
 }
 
+@page {
+  size: landscape;
+  margin: 0.32in;
+}
+
 @media print {
   :root,
   body {
     background: white;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 
   .page-shell {
@@ -508,9 +715,11 @@ select {
   }
 
   .print-button,
+  .fixture-switcher,
   .field-meta,
   .source-detail,
   .lab-source-detail,
+  .lung-source-detail,
   .audit-footer {
     display: none !important;
   }
@@ -550,6 +759,20 @@ select {
   .report-section {
     border-radius: 0;
     box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .labs-section {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .lab-cell,
+  .drip-card,
+  .todo-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .report-section h2 {
@@ -585,6 +808,38 @@ select {
 
   .lab-cell-flag {
     font-size: 0.5rem;
+  }
+
+  .lab-trend {
+    margin-top: 2px;
+    font-size: 0.52rem;
+  }
+
+  .lab-time,
+  .lung-cell-time {
+    font-size: 0.48rem;
+  }
+
+  .io-cell {
+    padding: 5px 6px;
+  }
+
+  .io-value {
+    font-size: 0.82rem;
+  }
+
+  .drip-card {
+    padding: 5px 7px;
+  }
+
+  .drip-card-title {
+    margin-bottom: 2px;
+    font-size: 0.7rem;
+  }
+
+  .drip-card-line,
+  .todo-text {
+    font-size: 0.62rem;
   }
 
   .field-label,
