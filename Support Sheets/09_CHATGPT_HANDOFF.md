@@ -19,7 +19,7 @@ Build a digital nursing report-sheet system that takes structured patient data a
 - Initial architecture remains: input adapter -> normalized patient/report model -> validation -> report engine/unit template -> screen + print/export.
 - Prototype data must be mock or safely de-identified.
 - Implementation stack remains TBD until the ICU field/workflow model is sufficiently defined.
-- **Project is paused as of 2026-09-17 because two more WGU classes became available and school work temporarily takes priority.**
+- Project resumed on **2026-09-20** from the pinned Cardiac checkpoint.
 
 ## What We Just Finished
 - Inspected the actual two-page ICU prototype rather than brainstorming a replacement.
@@ -38,16 +38,17 @@ Build a digital nursing report-sheet system that takes structured patient data a
 If clinically relevant data can legitimately be pulled directly from an approved Epic/EHR source, preserve the original source facts and useful provenance when practical: values, codes, units, timestamps, statuses, labels, components, etc. Normalization may reorganize those facts but must not silently reinterpret them. Derived summaries, flags, calculations, comparisons, and display shorthand remain separate and never overwrite source data. Missing source data remain missing rather than becoming invented normal/default values.
 
 ## EXACT RESUME POINT
-Continue with the **Cardiac** section of the ICU prototype.
+Cardiac modeling is resolved for the current v0.1 pass:
+- Rhythm remains source-preserved.
+- Pulses are repeating site/laterality findings so bilateral radial/pedal detail and more specific source sites can be retained.
+- Edema is a repeating structured finding with source-provided location/laterality/grade/type/detail.
 
-The immediate unresolved modeling decision is:
-- Preserve source-documented rhythm/detail.
-- Model **radial pulses bilaterally** (right/left).
-- Model **pedal pulses bilaterally** (right/left).
-- Model **edema as repeating structured findings** so location/laterality/grade/type and other source detail can be retained when available.
+Continue with **Respiratory** next:
+- Confirm `Oxygen`, `LPM`, and `Percentage` semantics.
+- Preserve respiratory device/settings source detail.
+- Model lobe-specific lung findings without flattening richer source data.
 
-After Cardiac, continue the same field-by-field pass through Respiratory, GI, GU, IV access, Skin, IV drips, BGM, Pain, Treatment, and Labs.
-
+Then continue GI, GU, IV access, Skin, IV drips, BGM, Pain, Treatment, and Labs.
 ## Important Decisions Already Made
 - Workflow prototype first; live Epic integration later.
 - Mock/de-identified data only during prototype development.
