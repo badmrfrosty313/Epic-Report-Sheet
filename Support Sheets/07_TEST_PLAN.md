@@ -3,21 +3,34 @@
 ## Core Behaviors
 | Test ID | Behavior | Expected Result | Status |
 |---|---|---|---|
-| T-001 | Load a valid mock patient. | Data are accepted and normalized without losing required values. | Not implemented |
-| T-002 | Render the first unit report from normalized data. | Every mapped field appears in the intended location with correct values. | Not implemented |
-| T-003 | Omit an optional field. | Report remains readable and clearly handles the missing value. | Not implemented |
-| T-004 | Omit a required field. | Validation identifies the missing data; the application does not invent a clinical value. | Not implemented |
-| T-005 | Supply multiple repeating items. | Diagnoses/lines/drains/etc. render without data loss or layout corruption. | Not implemented |
-| T-006 | Supply unusually long realistic values. | Layout remains usable or handles overflow intentionally. | Not implemented |
-| T-007 | Print/export the report. | Printed/PDF result preserves essential content and readability. | Not implemented |
+| T-001 | Load a valid mock patient. | Data are accepted and normalized without losing required values. | **Passed automated** |
+| T-002 | Render the first unit report from normalized data. | Every mapped field appears in the intended location with correct values. | **Executable/build passes; visual validation pending** |
+| T-003 | Omit an optional field. | Report remains readable and clearly handles the missing value. | **Passed automated for missing Mg/NIHSS; visual validation pending** |
+| T-004 | Omit a required field. | Validation identifies the missing data; the application does not invent a clinical value. | Not yet separately implemented |
+| T-005 | Supply multiple repeating items. | Diagnoses/lines/drains/etc. render without data loss or layout corruption. | **Passed automated selection/build; visual overflow validation pending** |
+| T-006 | Supply unusually long realistic values. | Layout remains usable or handles overflow intentionally. | Not yet tested |
+| T-007 | Print/export the report. | Printed/PDF result preserves essential content and readability. | **Implemented; manual print/PDF validation pending** |
 | T-008 | Change input source adapter while preserving normalized data. | Report output does not depend on source-specific field names. | Future |
 
-## Unit Tests
-- Patient/report model validation.
-- Required vs optional fields.
-- Normalization of repeating collections.
+## Automated Tests Implemented
+- Patient header/location/code-status/weight/age selection.
+- Source-vs-derived separation.
+- Missing magnesium and NIHSS remain missing.
+- Repeating active LDA selection with completed device exclusion.
+- Side-level lung finding inheritance with lobe-specific source override.
+- Shift-window UOP calculation.
+- BGM slot projection from timestamped readings.
+- Pain selection rejects newer entered-in-error observation.
+- Lab selection rejects newer entered-in-error potassium result.
+- H/H display derives from separate hemoglobin/hematocrit source records.
+- Current drip comes from administration state, not merely medication order intent.
+- Manual report annotations remain distinct from source-backed handoff.
+
+## Unit Tests Still Needed
+- Runtime fixture/schema validation for malformed input.
+- Required-field validation rules once the final nurse workflow defines what is truly required.
+- Additional conflict/tie cases.
 - Source-adapter mapping once adapters exist.
-- Template/report transformation logic that is not purely visual.
 
 ## Integration Tests
 - Input fixture -> normalization -> report model.
