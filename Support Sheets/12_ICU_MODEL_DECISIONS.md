@@ -263,3 +263,29 @@ respiratory:
 
 ### New Exact Resume Point
 Continue Respiratory with **lung findings by lobe/site**. Preserve source-documented detail rather than collapsing every lobe to a single generic `clear/abnormal` flag.
+### Respiratory: Lung Finding Scope
+- The ICU report needs **one displayed value per lobe**: RUL, RML, RLL, LUL, and LLL.
+- Preserve the source scope exactly as charted. A source observation can apply to a specific lobe, the entire right lung, or the entire left lung.
+- If Epic/source data provide a right-lung-wide finding only, derive the same **display value** for RUL, RML, and RLL.
+- If Epic/source data provide a left-lung-wide finding only, derive the same **display value** for LUL and LLL.
+- Do not duplicate a side-level source finding into fake lobe-level source records.
+- If a lobe-specific source value exists, that lobe-specific value overrides the broader side-level value for that lobe's display.
+- The normalized model should retain whether a displayed lobe value is source-direct or derived from a broader source scope.
+
+Conceptual shape:
+```text
+lung_findings:
+  - scope: "right_lung"
+    value: "clear"
+    source_direct: true
+
+effective_lobe_display:
+  rul: { value: "clear", derived_from: "right_lung" }
+  rml: { value: "clear", derived_from: "right_lung" }
+  rll: { value: "clear", derived_from: "right_lung" }
+```
+
+If a source-direct RLL value later exists, the effective RLL display uses that lobe-specific value while RUL/RML can still inherit the right-lung-wide value.
+
+### New Exact Resume Point
+Respiratory is resolved for the current classification pass. Continue with **GI**, starting with the `Abdomen` field structure.
