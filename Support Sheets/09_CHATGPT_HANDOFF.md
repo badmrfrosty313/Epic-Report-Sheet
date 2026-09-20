@@ -57,6 +57,9 @@ Administered/current infusion state -> MedicationAdministration. Ordered intent 
 ### Labs
 Generic Observation (Labs) collection. The PDF lab list is a set of display selectors, not schema fields. `H/H` is a display combination of hemoglobin and hematocrit unless the source itself supplies a combined result.
 
+### Radiology
+Radiology is modeled as repeating DiagnosticReport (Results) records. Preserve study/code, report status, effective/issued times, source impression/conclusion, full findings, and imaging/study references when available. Nurse-facing display is study + time + status + **source impression**, newest-first for usable reports in the active encounter. Do not invent or AI-summarize a radiology interpretation.
+
 ### Treatment / Narrative
 Handoff -> DocumentReference (Handoff) + Binary when available; nursing interventions -> Procedure (Nursing Intervention); selected notes -> DocumentReference (Clinical Notes). Report-only notes remain explicitly manual annotations.
 
