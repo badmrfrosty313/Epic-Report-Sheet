@@ -16,10 +16,10 @@
 - [x] Decide that IV access/LDA, skin/wounds, drips, nutrition, labs, and treatment/handoff should follow their native source collections rather than paper-row limits.
 
 ## Next
-- [ ] Define the canonical normalized ICU data model in schema/code form.
-- [ ] Define explicit current-value / recency / encounter-selection rules by source domain.
-- [ ] Finalize the first ICU vertical-slice requirements using the normalized model.
-- [ ] Create realistic mock ICU fixtures shaped like the source-first model.
+- [x] Define the canonical normalized ICU data model in `14_ICU_NORMALIZED_MODEL.md`.
+- [ ] Build the first realistic source-shaped mock ICU fixture.
+- [ ] Define the explicit current-value / recency / encounter-selection policy table against that fixture.
+- [ ] Finalize the first ICU vertical-slice requirements using the normalized model and selection policies.
 - [ ] Choose the implementation stack based on the now-known model and UI requirements.
 - [ ] Build the first working ICU report from mock source-shaped data.
 - [ ] Add expandable source-detail views where useful.
@@ -59,6 +59,7 @@
 - [x] `11_ICU_FIELD_CLASSIFICATION.md`
 - [x] `12_ICU_MODEL_DECISIONS.md`
 - [x] `13_EPIC_SOURCE_MAP.md`
+- [x] `14_ICU_NORMALIZED_MODEL.md`
 - [x] Governing source-preservation rule.
 - [x] Epic-first model-authority decision.
 
@@ -70,4 +71,4 @@
 A realistic source-shaped mock ICU patient/encounter goes in and a useful, readable, printable nurse report comes out. The report preserves source provenance and makes derived/report-only values distinguishable. No live Epic connection is required.
 
 ## Next Starting Point
-Read `13_EPIC_SOURCE_MAP.md`, then define the **canonical normalized ICU model**. Do not return to one-by-one paper-field modeling unless source evidence or workflow validation exposes a gap.
+Read `14_ICU_NORMALIZED_MODEL.md`, then create the **realistic source-shaped mock ICU fixture** and selection-policy table. Do not return to paper-field modeling.
