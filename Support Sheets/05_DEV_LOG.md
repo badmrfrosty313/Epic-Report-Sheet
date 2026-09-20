@@ -219,3 +219,46 @@ Create the first realistic source-shaped ICU fixture and the selection-policy ta
 ```text
 git pull
 ```
+
+
+---
+
+## 2026-09-20 - Mock Vertical Slice and Selection Proof
+
+### What We Worked On
+- Built the first deterministic source-shaped ICU mock fixture.
+- Defined the v0.1 selection-policy table.
+- Produced the first compact nurse-report projection.
+- Ran an integrity/audit pass over the fixture instead of trusting the documents by inspection.
+
+### What Changed
+- Created `15_MOCK_ICU_FIXTURE.json`.
+- Created `16_ICU_SELECTION_POLICIES.md`.
+- Created `17_FIRST_REPORT_PROJECTION.md`.
+- Fixture includes stale values, entered-in-error values, missing data, repeating assessments, active/historical LDAs, current/stopped drips, nutrition, BGM, UOP, pain, labs, handoff, nursing intervention, and manual report annotation.
+- Added complete source-record/provenance coverage for all fixture references.
+
+### Validation Results
+- Fixture JSON parses successfully.
+- All 93 referenced source IDs resolve to `source_records`.
+- No duplicate object IDs detected.
+- Derived age = 48.
+- Shift UOP = 365 mL.
+- Pain selection correctly chooses `obs-pain-current` and rejects newer entered-in-error pain.
+- Potassium selection correctly chooses `lab-k-current` and rejects newer entered-in-error K.
+- Current LDAs: CVC, PIV, Foley, DHT, wound.
+- Current drip: active norepinephrine administration only.
+- Current nutrition: active enteral order only.
+- BGM slots deterministically select 07:55 / 12:05 / 16:10 readings.
+
+### Project State
+The conceptual model has now survived its first deterministic end-to-end test on paper:
+`source-shaped history -> selection policies -> derived values -> nurse report projection`.
+
+### Next Starting Point
+Choose the implementation stack and make executable code reproduce `17_FIRST_REPORT_PROJECTION.md` from `15_MOCK_ICU_FIXTURE.json`.
+
+### Local Sync
+```text
+git pull
+```
