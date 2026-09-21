@@ -349,3 +349,36 @@ Then review the report as an ICU nurse would: scanability, information grouping,
 
 ### Next Starting Point
 Continue local nurse-layout validation with Radiology now included. Do not add local interpretation or AI-generated radiology summaries; display the source impression.
+
+
+---
+
+## 2026-09-20 - Agentic ICU Workflow Upgrade
+
+### Workstreams Completed
+- source timing / pre-shift cues
+- numeric lab trends
+- compact ICU drip presentation
+- To Do prominence
+- shift I/O snapshot
+- landscape print hardening
+- high-density stress fixture
+- regression tests and CI
+
+### Implementation
+- Report fields can now carry source time, shift freshness, source flag, previous value/time, and numeric trend direction.
+- Timing metadata is attached automatically from selected normalized source IDs.
+- v0.1 does not invent a medical staleness threshold; the only freshness cue is whether a selected value is from the current configured shift or pre-shift.
+- Labs compare the newest valid numeric result with the immediately prior valid result for the same source code.
+- Drips render medication/rate/access as compact cards and inherit administration start time.
+- Source Handoff fields whose purpose contains To Do are promoted into a dedicated To Do zone.
+- Added explicit `io.intake` / `io.output` mock observations and a derived Intake/Output/Net snapshot.
+- Added `18_STRESS_ICU_FIXTURE.json` plus an in-app Standard / Stress Test fixture switcher.
+- Stress fixture currently contains 12 LDA records, 8 active drips, 36 lab records, 5 radiology records, and expanded clinical/narrative density.
+- Print CSS now requests landscape output, hides debug/provenance controls, and avoids splitting clinical cards where practical.
+
+### Automated Validation
+GitHub Actions CI run #55 passed after these changes. Tests now cover I/O totals, lab trends/flags, source-time freshness, To Do separation, and successful report generation from the stress fixture.
+
+### Remaining Manual Validation
+A browser/print rendering still needs human inspection. Use `19_UI_STRESS_AND_PRINT_CHECKLIST.md`; automated CI proves deterministic data behavior and build integrity but does not replace visual nurse-workflow judgment.
