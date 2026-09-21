@@ -697,23 +697,42 @@ select {
 }
 
 @page {
-  size: Letter landscape;
+  size: Letter portrait;
   margin: 0.2in;
 }
 
+/* Portrait output is intentionally different from the browser layout.
+   Screen stays roomy and dual-column; print/PDF becomes a compact,
+   upright nursing sheet with the lab panel starting on a fresh page. */
+
+.lda-grid {
+  display: block;
+}
+
 @media print {
-  :root,
+  html,
   body {
+    width: 8.5in !important;
+    min-width: 8.5in !important;
+    max-width: 8.5in !important;
     background: white;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
 
-  .page-shell {
-    width: 100%;
-    margin: 0;
+  body {
+    margin: 0 !important;
+    overflow: visible !important;
+    font-size: 7.2pt;
   }
 
+  .page-shell {
+    width: 8.1in !important;
+    max-width: 8.1in !important;
+    margin: 0 auto !important;
+  }
+
+  .header-actions,
   .print-button,
   .fixture-switcher,
   .field-meta,
@@ -725,11 +744,16 @@ select {
   }
 
   .app-header {
-    margin-bottom: 7px;
+    margin-bottom: 5px;
   }
 
   .app-header h1 {
-    font-size: 1.4rem;
+    font-size: 14pt;
+  }
+
+  .eyebrow {
+    font-size: 5.6pt;
+    margin-bottom: 2px;
   }
 
   .subhead {
@@ -737,187 +761,21 @@ select {
   }
 
   .patient-banner {
-    margin-bottom: 7px;
+    margin-bottom: 5px;
     border-radius: 0;
     box-shadow: none;
+    font-size: 6.4pt;
   }
 
   .patient-banner > * {
-    padding: 6px 8px;
-  }
-
-  .report-columns {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 6px;
-    align-items: start;
-  }
-
-  .report-column {
-    gap: 6px;
-  }
-
-  .report-section {
-    border-radius: 0;
-    box-shadow: none;
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-
-  .labs-section {
-    break-inside: auto;
-    page-break-inside: auto;
-  }
-
-  .lab-cell,
-  .drip-card,
-  .todo-card {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-
-  .report-section h2 {
-    padding: 5px 7px;
-  }
-
-  .labs-section {
-    margin-top: 6px;
-  }
-
-  .lab-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .lab-cell,
-  .lab-cell:nth-child(2n),
-  .lab-cell:nth-child(4n) {
-    border-right: 1px solid #dce2e9;
-    padding: 4px 6px;
-  }
-
-  .lab-cell:nth-child(6n) {
-    border-right: 0;
-  }
-
-  .lab-cell-label {
-    font-size: 0.58rem;
-  }
-
-  .lab-cell-value {
-    font-size: 0.75rem;
-  }
-
-  .lab-cell-flag {
-    font-size: 0.5rem;
-  }
-
-  .lab-trend {
-    margin-top: 2px;
-    font-size: 0.52rem;
-  }
-
-  .lab-time,
-  .lung-cell-time {
-    font-size: 0.48rem;
-  }
-
-  .io-cell {
-    padding: 5px 6px;
-  }
-
-  .io-value {
-    font-size: 0.82rem;
-  }
-
-  .drip-card {
-    padding: 5px 7px;
-  }
-
-  .drip-card-title {
-    margin-bottom: 2px;
-    font-size: 0.7rem;
-  }
-
-  .drip-card-line,
-  .todo-text {
-    font-size: 0.62rem;
-  }
-
-  .field-label,
-  .field-content,
-  .lung-assessment-label,
-  .lung-assessment-content {
-    padding: 5px 7px;
-  }
-
-  .lung-side + .lung-side {
-    margin-top: 5px;
-  }
-
-  .lung-lobes {
-    gap: 3px;
-  }
-
-  .lung-cell-label {
-    padding: 3px 4px;
-  }
-
-  .lung-cell-value {
-    padding: 4px;
-    font-size: 0.82rem;
-  }
-
-  .lung-source-detail {
-    display: none;
-  }
-
-  .field-value-line + .field-value-line {
-    margin-top: 1px;
-    padding-top: 2px;
-  }
-}
-
-
-/* Shared compact output layout.
-   Native print uses this inside @media print.
-   Client PDF export uses the same rules via body.pdf-exporting. */
-
-.lda-grid {
-  display: block;
-}
-
-@media print {
-  html,
-  body {
-    width: 11in !important;
-    min-width: 11in !important;
-    max-width: 11in !important;
-  }
-
-  body {
-    margin: 0 !important;
-    overflow: visible !important;
-    font-size: 8pt;
-  }
-
-  .page-shell {
-    width: 10.6in !important;
-    max-width: 10.6in !important;
-    margin: 0 auto !important;
-  }
-
-  .header-actions {
-    display: none !important;
+    padding: 4px 5px;
   }
 
   .report-columns {
     display: block !important;
     column-count: 2;
-    column-gap: 0.09in;
+    column-gap: 0.08in;
     column-fill: auto;
-  }
-
-  .fixture-stress .report-columns {
-    column-count: 3;
   }
 
   .report-column {
@@ -926,7 +784,9 @@ select {
 
   .report-section {
     width: 100%;
-    margin: 0 0 0.06in;
+    margin: 0 0 0.05in;
+    border-radius: 0;
+    box-shadow: none;
     break-inside: avoid-column;
     page-break-inside: avoid;
   }
@@ -950,118 +810,168 @@ select {
 
   .report-section h2 {
     padding: 3px 5px;
-    font-size: 7.5pt;
+    font-size: 7pt;
   }
 
   .report-section h3 {
     padding: 3px 5px;
-    font-size: 5.8pt;
+    font-size: 5.3pt;
   }
 
   .field-row {
-    grid-template-columns: minmax(0.55in, 0.26fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0.52in, 0.25fr) minmax(0, 1fr);
   }
 
   .field-label {
-    font-size: 5.8pt;
+    font-size: 5.2pt;
   }
 
   .field-value {
-    font-size: 6.5pt;
-    line-height: 1.18;
+    font-size: 5.9pt;
+    line-height: 1.15;
   }
 
   .field-label,
   .field-content,
   .lung-assessment-label,
   .lung-assessment-content {
-    padding: 3px 5px;
+    padding: 3px 4px;
   }
 
   .field-value-line {
     padding: 0 0 1px;
   }
 
-  .lda-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .field-value-line + .field-value-line {
+    margin-top: 1px;
+    padding-top: 1px;
   }
 
-  .lda-grid .field-row {
-    border-right: 1px solid #dce2e9;
+  .lung-side + .lung-side {
+    margin-top: 3px;
+  }
+
+  .lung-lobes {
+    gap: 2px;
+  }
+
+  .lung-cell-label {
+    padding: 2px 3px;
+    font-size: 4.8pt;
+  }
+
+  .lung-cell-value {
+    padding: 3px;
+    font-size: 5.8pt;
+  }
+
+  .lung-cell-time {
+    font-size: 4.2pt;
+  }
+
+  .io-cell {
+    padding: 4px;
+  }
+
+  .io-label {
+    font-size: 4.8pt;
+  }
+
+  .io-value {
+    font-size: 7pt;
   }
 
   .drip-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .drip-card,
   .drip-card:nth-child(2n) {
+    padding: 4px 5px;
     border-right: 1px solid #dce2e9;
   }
 
-  .drip-card:nth-child(4n) {
+  .drip-card:nth-child(2n) {
     border-right: 0;
   }
 
+  .drip-card-title {
+    margin-bottom: 1px;
+    font-size: 5.9pt;
+  }
+
+  .drip-card-line,
+  .todo-text {
+    font-size: 5.3pt;
+    line-height: 1.16;
+  }
+
+  .todo-card {
+    grid-template-columns: 0.38in minmax(0, 1fr);
+    gap: 3px;
+    padding: 4px;
+  }
+
+  .todo-marker {
+    padding: 2px;
+    font-size: 4pt;
+  }
+
+  .labs-section {
+    margin-top: 0;
+    break-before: page;
+    page-break-before: always;
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .labs-section h2 {
+    font-size: 8pt;
+  }
+
   .lab-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .lab-cell,
   .lab-cell:nth-child(2n),
   .lab-cell:nth-child(4n),
   .lab-cell:nth-child(6n) {
+    padding: 4px 5px;
     border-right: 1px solid #dce2e9;
-    padding: 3px 4px;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
-  .lab-cell:nth-child(12n) {
+  .lab-cell:nth-child(6n) {
     border-right: 0;
   }
 
   .lab-cell-label {
-    font-size: 5pt;
+    font-size: 5.4pt;
   }
 
   .lab-cell-value {
-    font-size: 6.4pt;
+    font-size: 6.8pt;
   }
 
-  .lab-cell-flag,
-  .lab-trend,
-  .lab-time {
-    font-size: 4.6pt;
-  }
-
-  .lung-cell-label {
-    font-size: 5pt;
-  }
-
-  .lung-cell-value {
-    font-size: 6.4pt;
-    padding: 3px;
-  }
-
-  .todo-card {
-    grid-template-columns: 0.42in minmax(0, 1fr);
-    gap: 4px;
-    padding: 4px 5px;
-  }
-
-  .todo-marker {
+  .lab-cell-flag {
     font-size: 4.5pt;
-    padding: 2px 3px;
   }
 
-  .todo-text {
-    font-size: 6pt;
-    line-height: 1.2;
+  .lab-trend {
+    margin-top: 2px;
+    font-size: 4.7pt;
+  }
+
+  .lab-time {
+    margin-top: 1px;
+    font-size: 4.3pt;
   }
 }
 
-/* html2pdf.js renders screen media, so mirror the compact landscape
-   print layout while the export is being captured. */
+/* html2pdf.js captures screen media, so mirror the portrait print
+   rules while the export snapshot is being built. */
 body.pdf-exporting {
   margin: 0 !important;
   background: white !important;
@@ -1069,10 +979,10 @@ body.pdf-exporting {
 }
 
 body.pdf-exporting .page-shell {
-  width: 10.6in !important;
-  max-width: 10.6in !important;
+  width: 8.1in !important;
+  max-width: 8.1in !important;
   margin: 0 auto !important;
-  font-size: 8pt;
+  font-size: 7.2pt;
 }
 
 body.pdf-exporting .header-actions,
@@ -1089,7 +999,12 @@ body.pdf-exporting .app-header {
 }
 
 body.pdf-exporting .app-header h1 {
-  font-size: 15pt;
+  font-size: 14pt;
+}
+
+body.pdf-exporting .eyebrow {
+  font-size: 5.6pt;
+  margin-bottom: 2px;
 }
 
 body.pdf-exporting .subhead {
@@ -1100,23 +1015,18 @@ body.pdf-exporting .patient-banner {
   margin-bottom: 5px;
   border-radius: 0;
   box-shadow: none;
+  font-size: 6.4pt;
 }
 
 body.pdf-exporting .patient-banner > * {
-  padding: 4px 6px;
-  font-size: 7pt;
+  padding: 4px 5px;
 }
 
 body.pdf-exporting .report-columns {
   display: block !important;
   column-count: 2;
-  column-gap: 0.09in;
+  column-gap: 0.08in;
   column-fill: auto;
-}
-
-body.pdf-exporting .fixture-stress.report-columns,
-body.pdf-exporting .fixture-stress .report-columns {
-  column-count: 3;
 }
 
 body.pdf-exporting .report-column {
@@ -1125,7 +1035,7 @@ body.pdf-exporting .report-column {
 
 body.pdf-exporting .report-section {
   width: 100%;
-  margin: 0 0 0.06in;
+  margin: 0 0 0.05in;
   border-radius: 0;
   box-shadow: none;
   break-inside: avoid-column;
@@ -1152,82 +1062,145 @@ body.pdf-exporting .lab-cell {
 
 body.pdf-exporting .report-section h2 {
   padding: 3px 5px;
-  font-size: 7.5pt;
+  font-size: 7pt;
 }
 
 body.pdf-exporting .report-section h3 {
   padding: 3px 5px;
-  font-size: 5.8pt;
+  font-size: 5.3pt;
 }
 
 body.pdf-exporting .field-row {
-  grid-template-columns: minmax(0.55in, 0.26fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0.52in, 0.25fr) minmax(0, 1fr);
 }
 
 body.pdf-exporting .field-label {
-  font-size: 5.8pt;
+  font-size: 5.2pt;
 }
 
 body.pdf-exporting .field-value {
-  font-size: 6.5pt;
-  line-height: 1.18;
+  font-size: 5.9pt;
+  line-height: 1.15;
 }
 
 body.pdf-exporting .field-label,
 body.pdf-exporting .field-content,
 body.pdf-exporting .lung-assessment-label,
 body.pdf-exporting .lung-assessment-content {
-  padding: 3px 5px;
-}
-
-body.pdf-exporting .lda-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-body.pdf-exporting .drip-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-body.pdf-exporting .lab-grid {
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-}
-
-body.pdf-exporting .lab-cell {
   padding: 3px 4px;
 }
 
-body.pdf-exporting .lab-cell-label {
-  font-size: 5pt;
+body.pdf-exporting .field-value-line {
+  padding: 0 0 1px;
 }
 
-body.pdf-exporting .lab-cell-value {
-  font-size: 6.4pt;
+body.pdf-exporting .field-value-line + .field-value-line {
+  margin-top: 1px;
+  padding-top: 1px;
 }
 
-body.pdf-exporting .lab-cell-flag,
-body.pdf-exporting .lab-trend,
-body.pdf-exporting .lab-time {
-  font-size: 4.6pt;
+body.pdf-exporting .lung-side + .lung-side {
+  margin-top: 3px;
+}
+
+body.pdf-exporting .lung-lobes {
+  gap: 2px;
+}
+
+body.pdf-exporting .lung-cell-label {
+  padding: 2px 3px;
+  font-size: 4.8pt;
 }
 
 body.pdf-exporting .lung-cell-value {
   padding: 3px;
-  font-size: 6.4pt;
+  font-size: 5.8pt;
 }
 
-body.pdf-exporting .todo-card {
-  grid-template-columns: 0.42in minmax(0, 1fr);
-  gap: 4px;
+body.pdf-exporting .lung-cell-time {
+  font-size: 4.2pt;
+}
+
+body.pdf-exporting .io-cell {
+  padding: 4px;
+}
+
+body.pdf-exporting .io-label {
+  font-size: 4.8pt;
+}
+
+body.pdf-exporting .io-value {
+  font-size: 7pt;
+}
+
+body.pdf-exporting .drip-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body.pdf-exporting .drip-card {
   padding: 4px 5px;
 }
 
+body.pdf-exporting .drip-card-title {
+  margin-bottom: 1px;
+  font-size: 5.9pt;
+}
+
+body.pdf-exporting .drip-card-line,
+body.pdf-exporting .todo-text {
+  font-size: 5.3pt;
+  line-height: 1.16;
+}
+
+body.pdf-exporting .todo-card {
+  grid-template-columns: 0.38in minmax(0, 1fr);
+  gap: 3px;
+  padding: 4px;
+}
+
 body.pdf-exporting .todo-marker {
-  padding: 2px 3px;
+  padding: 2px;
+  font-size: 4pt;
+}
+
+body.pdf-exporting .labs-section {
+  margin-top: 0;
+  break-before: page;
+  page-break-before: always;
+}
+
+body.pdf-exporting .labs-section h2 {
+  font-size: 8pt;
+}
+
+body.pdf-exporting .lab-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+body.pdf-exporting .lab-cell {
+  padding: 4px 5px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+body.pdf-exporting .lab-cell-label {
+  font-size: 5.4pt;
+}
+
+body.pdf-exporting .lab-cell-value {
+  font-size: 6.8pt;
+}
+
+body.pdf-exporting .lab-cell-flag {
   font-size: 4.5pt;
 }
 
-body.pdf-exporting .todo-text {
-  font-size: 6pt;
-  line-height: 1.2;
+body.pdf-exporting .lab-trend {
+  margin-top: 2px;
+  font-size: 4.7pt;
+}
+
+body.pdf-exporting .lab-time {
+  margin-top: 1px;
+  font-size: 4.3pt;
 }
