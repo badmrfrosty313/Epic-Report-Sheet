@@ -42,6 +42,15 @@ npm run dev
 
 Vite will print the local browser URL.
 
+## Fixture modes
+
+The UI can switch between two deterministic fictional fixtures:
+
+- `?fixture=standard` — normal development patient
+- `?fixture=stress` — high-density ICU patient with many LDAs, eight active drips, expanded labs, extra imaging, and longer handoff text
+
+The in-app fixture switcher changes between them.
+
 ## Build
 
 ```bash
@@ -55,6 +64,8 @@ npm run build
 - `Support Sheets/15_MOCK_ICU_FIXTURE.json`
 - `Support Sheets/16_ICU_SELECTION_POLICIES.md`
 - `Support Sheets/17_FIRST_REPORT_PROJECTION.md`
+- `Support Sheets/18_STRESS_ICU_FIXTURE.json`
+- `Support Sheets/19_UI_STRESS_AND_PRINT_CHECKLIST.md`
 
 The executable selection engine in `src/selection.ts` is expected to reproduce the deterministic behavior documented in those artifacts.
 
@@ -81,6 +92,19 @@ The UI never reads raw Epic payloads directly.
 - Missing source data must remain missing rather than being converted to normal/default values.
 - Report-only annotations must stay distinguishable from chart-sourced facts.
 
+## Current UI capabilities
+
+- two-column nurse report layout
+- source timestamps with pre-shift cues
+- dynamic full-width lab panel
+- numeric lab trends against the immediately prior valid result
+- compact ICU drip cards with rate/access and source timing
+- shift I/O snapshot from explicit intake/output observations
+- prominent source-backed To Do area
+- radiology source impressions
+- standard/stress fixture switcher
+- landscape print CSS
+
 ## Next milestone
 
-Make the executable selection engine pass the deterministic test suite, then refine the first ICU layout and print behavior before adding any live EHR integration.
+Run the standard and stress fixtures locally as a nurse-workflow review, then manually inspect Print / Save PDF using the checklist in `19_UI_STRESS_AND_PRINT_CHECKLIST.md`. Do not add live EHR integration yet.
