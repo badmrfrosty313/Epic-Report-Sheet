@@ -26,6 +26,13 @@
 - [x] Add expandable source-detail views with source/derived/report-only/missing provenance.
 - [x] Add browser-native print/export behavior with print CSS.
 - [x] Add radiology to the ICU report using source DiagnosticReport records, compact impression display, and entered-in-error exclusion.
+- [x] Add source timestamps / pre-shift cues without arbitrary clinical staleness thresholds.
+- [x] Add numeric lab trends using prior valid source results.
+- [x] Add compact ICU drip cards with rate/access/timing.
+- [x] Promote source-backed To Do content above secondary handoff context.
+- [x] Add explicit shift Intake / Output / Net snapshot while keeping UOP separate.
+- [x] Add high-density stress fixture and in-app standard/stress switcher.
+- [x] Harden landscape print CSS and create a manual print/stress checklist.
 - [ ] Run local nurse-workflow / visual validation of the interactive report.
 - [ ] Validate Print / Save PDF output and refine layout if needed.
 
@@ -54,7 +61,7 @@
 - [x] Test active vs historical LDA/device lifecycle behavior.
 - [x] Test timestamped BGM, UOP, pain, and assessment selection.
 - [x] Test selected lab values, H/H derivation, missing lab behavior, and entered-in-error exclusion.
-- [ ] Test realistic long values and visual overflow handling.
+- [x] Exercise realistic long values/high cardinality through the stress fixture; final human visual review still pending.
 - [ ] Test Print / Save PDF output manually.
 - [ ] Run a manual ICU nursing-workflow validation.
 
