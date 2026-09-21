@@ -467,6 +467,116 @@ function LabsSection() {
   );
 }
 
+function PrimaryClinicalColumn({
+  includeRadiology,
+}: {
+  includeRadiology: boolean;
+}) {
+  return (
+    <>
+      <Section title="Header">
+        <DisplayField label="Diagnosis" field={report.header.diagnoses} />
+        <DisplayField label="PMH" field={report.header.pmh} />
+        <DisplayField label="Allergies" field={report.header.allergies} />
+      </Section>
+
+      <Section title="Neuro">
+        <DisplayField label="A/O" field={report.neuro.orientation} />
+        <DisplayField label="Pupils" field={report.neuro.pupils} />
+        <DisplayField label="GCS" field={report.neuro.gcs} />
+        <DisplayField label="Strength" field={report.neuro.strength} />
+        <DisplayField label="NIHSS" field={report.neuro.nihss} />
+      </Section>
+
+      <Section title="Cardiac">
+        <DisplayField label="Rhythm" field={report.cardiac.rhythm} />
+        <DisplayField label="Radial" field={report.cardiac.radial} />
+        <DisplayField label="Pedal" field={report.cardiac.pedal} />
+        <DisplayField label="Edema" field={report.cardiac.edema} />
+      </Section>
+
+      <Section title="Respiratory">
+        <DisplayField label="Oxygen" field={report.respiratory.oxygen} />
+        <LungAssessment />
+        <DisplayField label="Vent" field={report.respiratory.vent} />
+      </Section>
+
+      {includeRadiology ? <RadiologySection /> : null}
+    </>
+  );
+}
+
+function SecondaryClinicalColumn({
+  includeTreatment,
+}: {
+  includeTreatment: boolean;
+}) {
+  return (
+    <>
+      <Section title="GI / Nutrition">
+        <DisplayField label="Abdomen" field={report.gi.abdomen} />
+        <DisplayField label="Nutrition" field={report.gi.nutrition} />
+        <DisplayField
+          label="Enteral access"
+          field={report.gi.enteralAccess}
+          valueCase="title"
+        />
+      </Section>
+
+      <Section title="GU">
+        <DisplayField label="Urine" field={report.gu.urine} />
+        <DisplayField
+          label="Device"
+          field={report.gu.device}
+          valueCase="title"
+        />
+        <DisplayField label="Shift UOP" field={report.gu.shiftUop} />
+      </Section>
+
+      <Section title="I/O Snapshot" className="io-section">
+        <IoSnapshot />
+      </Section>
+
+      <Section title="Lines / Devices / Wounds" className="lines-section">
+        <div className="lda-grid">
+          {report.ldas.map((item, index) => (
+            <DisplayField
+              key={index}
+              label={`LDA ${index + 1}`}
+              field={item}
+              valueCase="title"
+            />
+          ))}
+        </div>
+      </Section>
+
+      <Section title="IV Drips" className="drips-section">
+        {report.drips.length ? (
+          <div className="drip-grid">
+            {report.drips.map((item, index) => (
+              <DripCard key={index} field={item} index={index} />
+            ))}
+          </div>
+        ) : (
+          <p className="missing section-message">No current drips</p>
+        )}
+      </Section>
+
+      <Section title="BGM">
+        {Object.entries(report.bgm).map(([slot, value]) => (
+          <DisplayField key={slot} label={slot} field={value} />
+        ))}
+      </Section>
+
+      <Section title="Pain">
+        <DisplayField label="Current" field={report.pain} />
+      </Section>
+
+      {includeTreatment ? <TreatmentSection /> : null}
+    </>
+  );
+}
+
 export default function App() {
   const [isExportingPdf, setIsExportingPdf] = useState(false);
 
@@ -537,102 +647,23 @@ export default function App() {
         <strong>{report.header.codeStatus.value ?? "Code status unavailable"}</strong>
       </section>
 
-      <div className="report-columns">
+      <div className="report-columns screen-report-columns">
         <div className="report-column">
-          <Section title="Header">
-            <DisplayField label="Diagnosis" field={report.header.diagnoses} />
-            <DisplayField label="PMH" field={report.header.pmh} />
-            <DisplayField label="Allergies" field={report.header.allergies} />
-          </Section>
-
-          <Section title="Neuro">
-            <DisplayField label="A/O" field={report.neuro.orientation} />
-            <DisplayField label="Pupils" field={report.neuro.pupils} />
-            <DisplayField label="GCS" field={report.neuro.gcs} />
-            <DisplayField label="Strength" field={report.neuro.strength} />
-            <DisplayField label="NIHSS" field={report.neuro.nihss} />
-          </Section>
-
-          <Section title="Cardiac">
-            <DisplayField label="Rhythm" field={report.cardiac.rhythm} />
-            <DisplayField label="Radial" field={report.cardiac.radial} />
-            <DisplayField label="Pedal" field={report.cardiac.pedal} />
-            <DisplayField label="Edema" field={report.cardiac.edema} />
-          </Section>
-
-          <Section title="Respiratory">
-            <DisplayField label="Oxygen" field={report.respiratory.oxygen} />
-            <LungAssessment />
-            <DisplayField label="Vent" field={report.respiratory.vent} />
-          </Section>
-
-          <div className="screen-only">
-            <RadiologySection />
-          </div>
+          <PrimaryClinicalColumn includeRadiology={true} />
         </div>
 
         <div className="report-column">
-          <Section title="GI / Nutrition">
-            <DisplayField label="Abdomen" field={report.gi.abdomen} />
-            <DisplayField label="Nutrition" field={report.gi.nutrition} />
-            <DisplayField
-              label="Enteral access"
-              field={report.gi.enteralAccess}
-              valueCase="title"
-            />
-          </Section>
+          <SecondaryClinicalColumn includeTreatment={true} />
+        </div>
+      </div>
 
-          <Section title="GU">
-            <DisplayField label="Urine" field={report.gu.urine} />
-            <DisplayField
-              label="Device"
-              field={report.gu.device}
-              valueCase="title"
-            />
-            <DisplayField label="Shift UOP" field={report.gu.shiftUop} />
-          </Section>
-
-          <Section title="I/O Snapshot" className="io-section">
-            <IoSnapshot />
-          </Section>
-
-          <Section title="Lines / Devices / Wounds" className="lines-section">
-            <div className="lda-grid">
-              {report.ldas.map((item, index) => (
-                <DisplayField
-                  key={index}
-                  label={`LDA ${index + 1}`}
-                  field={item}
-                  valueCase="title"
-                />
-              ))}
-            </div>
-          </Section>
-
-          <Section title="IV Drips" className="drips-section">
-            {report.drips.length ? (
-              <div className="drip-grid">
-                {report.drips.map((item, index) => (
-                  <DripCard key={index} field={item} index={index} />
-                ))}
-              </div>
-            ) : (
-              <p className="missing section-message">No current drips</p>
-            )}
-          </Section>
-
-          <Section title="BGM">
-            {Object.entries(report.bgm).map(([slot, value]) => (
-              <DisplayField key={slot} label={slot} field={value} />
-            ))}
-          </Section>
-
-          <Section title="Pain">
-            <DisplayField label="Current" field={report.pain} />
-          </Section>
-
-          <div className="screen-only">
-            <TreatmentSection />
+      <div className="print-only-output output-page-one">
+        <div className="output-page-one-grid">
+          <div className="output-column">
+            <PrimaryClinicalColumn includeRadiology={false} />
+          </div>
+          <div className="output-column">
+            <SecondaryClinicalColumn includeTreatment={false} />
           </div>
         </div>
       </div>
