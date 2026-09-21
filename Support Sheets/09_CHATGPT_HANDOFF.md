@@ -25,7 +25,7 @@ Build a digital ICU nursing report system that ingests structured patient/encoun
 - Shift I/O snapshot is derived from explicit intake/output observations; UOP remains separate.
 - To Do is promoted from source Handoff purpose while other handoff/interventions remain secondary context.
 - Standard and high-density stress fixtures can be switched in-app.
-- Print/PDF now has two output paths: a dedicated client-side **Save Landscape PDF** path that explicitly generates Letter landscape pages, and native **Print** for physical/system printer validation.
+- Print/PDF now has two output paths: a dedicated client-side **Save Portrait PDF** path that explicitly generates Letter portrait pages, and native **Print** for physical/system printer validation.
 - The dedicated PDF path was added after Microsoft Print to PDF generated the stress report as a 5-page portrait Letter file with sideways landscape content.
 
 ## Governing Architecture
@@ -113,7 +113,7 @@ Browser:
 
 Use `Support Sheets/19_UI_STRESS_AND_PRINT_CHECKLIST.md`.
 
-For PDF testing, use **Save Landscape PDF** first rather than Microsoft Print to PDF. The new exporter creates Letter landscape directly. Use **Print** separately to validate physical/system-printer behavior.
+For PDF testing, use **Save Portrait PDF** first. The exporter creates Letter portrait directly while the browser UI remains dual-column. Labs are intentionally pushed to a fresh portrait page. Use **Print** separately to validate physical/system-printer behavior.
 
 The clinical selection regression was green at CI run #55; the newer PDF-export implementation must also pass the latest CI/build. Remaining work after that is nurse-eye validation of density, ordering, timestamps/trends, stress overflow, and generated PDF appearance. Do not add live Epic integration yet.
 ## Do Not Undo
