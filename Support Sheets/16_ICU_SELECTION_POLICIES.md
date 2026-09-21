@@ -54,6 +54,10 @@ Fixture report time: **2026-09-20 18:30 EDT**.
 | SEL-023 | Edema display | Include latest valid edema finding per source scope/laterality. | RLE 2+ pitting; LLE 1+ pitting |
 | SEL-024 | Oxygen summary | Select each concept independently under SEL-006; do not treat device/flow/FiO2 as mutually exclusive. | HFNC 40 L/min, FiO2 50% |
 | SEL-025 | Treatment / To Do | Project selected handoff fields + relevant nursing interventions + explicit manual annotations. Do not merge provenance. | source To Do + repositioning intervention + report-only family reminder |
+| SEL-027 | Source time cue | Attach selected source time to report fields. Mark only whether the selected source predates shift start; do not invent clinical stale/fresh thresholds. | Current pain shows 17:45; older effective code status is marked pre-shift |
+| SEL-028 | Lab trend | For each numeric lab, compare the newest usable result with the immediately prior usable result of the same source code and unit representation. | K 3.4 ↓ from 4.1; WBC 15.2 ↓ from 17.8; creatinine 1.8 ↓ from 2.1 |
+| SEL-029 | Shift I/O | Sum explicit `io.intake` and `io.output` observations inside the configured shift. Net = intake - output only when both collections exist. | Intake 770 mL; Output 450 mL; Net +320 mL |
+| SEL-030 | To Do prominence | Separate current handoff fields whose source purpose is To Do from other handoff context, preserving provenance. | To Do content renders first; Medications remains secondary handoff |
 | SEL-026 | Radiology | Include usable radiology DiagnosticReports from the active encounter at/before report time, sorted newest-first. Preserve multiple studies; exclude entered-in-error/cancelled/invalid source reports. Display study + time + status + source impression. | Current portable CXR first, prior CT chest second; exclude `rad-cxr-error` |
 
 ---
@@ -308,3 +312,42 @@ These must remain visually/provenance-distinct in the eventual UI.
 ## Pass condition
 
 If an implementation produces the deterministic results in this document from `15_MOCK_ICU_FIXTURE.json`, the first normalization/selection vertical slice passes.
+
+
+## Source-Time Cues and Lab Trends
+
+Source timestamps are presentation metadata. v0.1 displays clock time where useful and marks a selected value **pre-shift** if its source timestamp predates the configured shift start. No arbitrary clinical staleness threshold is applied.
+
+Lab trend arrows compare only the newest valid numeric result with the immediately prior valid result for the same source code:
+
+```text
+K           3.4 mmol/L  LOW
+            ↓ from 4.1 mmol/L @ 12:00
+            Current @ 17:10
+
+WBC         15.2 10^3/uL HIGH
+            ↓ from 17.8 10^3/uL @ 12:00
+            Current @ 17:10
+```
+
+The arrow means numerical direction only, not improvement/worsening.
+
+## Shift I/O
+
+Current deterministic fixture:
+- Intake = 770 mL
+- Output = 450 mL
+- Net = +320 mL
+- UOP remains separately calculated at 365 mL
+
+Do not substitute UOP for total output.
+
+## Stress Fixture
+
+`18_STRESS_ICU_FIXTURE.json` must build successfully with the same selection engine. It currently exercises:
+- at least 10 current/relevant LDA records
+- 8 active medication administrations/drips
+- 28+ distinct current lab codes
+- 4+ usable radiology reports
+- long source To Do text
+- additional PMH/diagnoses and report notes
