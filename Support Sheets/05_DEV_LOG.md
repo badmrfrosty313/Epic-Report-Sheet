@@ -463,3 +463,26 @@ The first true-portrait stress PDF was finally upright and readable, but paginat
 Two balanced portrait pages for the stress fixture whenever content density permits:
 - Page 1 = bedside/current state
 - Page 2 = results + tasks/context
+
+
+---
+
+## 2026-09-20 - Explicit Portrait Page Grid
+
+### Trigger
+The third stress PDF exposed a second pagination failure: page 2 contained only the LDA/drip/BGM/pain tail of the bedside report and then a very large blank region, while Labs/Radiology/To Do started on page 3.
+
+### Root Cause
+The PDF renderer did not honor the intended CSS multi-column flow reliably. Large repeating sections were pushed as blocks, creating artificial page gaps.
+
+### Fix
+- Removed CSS multi-column pagination from print/PDF output.
+- Added an explicit portrait page-1 grid with two fixed bedside columns.
+- Page 1 left: Header, Neuro, Cardiac, Respiratory.
+- Page 1 right: GI/Nutrition, GU, I/O, LDAs, IV Drips, BGM, Pain.
+- Page 2 remains explicit: Labs followed by Radiology and Treatment / To Do.
+- Increased page-2 lab density vertically by using four columns so the page is used more evenly.
+- Browser layout remains unchanged.
+
+### Validation
+GitHub Actions CI run #90 passed after the explicit-page-grid refactor.
