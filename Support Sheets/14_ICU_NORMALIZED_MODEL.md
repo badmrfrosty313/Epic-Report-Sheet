@@ -1509,3 +1509,46 @@ The model is now exercised by:
 - `17_FIRST_REPORT_PROJECTION.md`
 
 The fixture/policy audit passes deterministically. Next: implement the model and selection engine in executable code.
+
+
+---
+
+## Report-State Freshness and Trend Metadata
+
+The canonical source records remain unchanged. The **report projection** may attach presentation metadata to a selected/derived `ReportField`:
+
+```text
+ReportField
+  value
+  provenance
+  sourceIds[]
+  note?
+  flag?
+  observedAt?
+  freshness?            # this-shift | pre-shift | unknown
+  previousValue?
+  previousObservedAt?
+  trend?                # up | down | same
+```
+
+Rules:
+- `observedAt` comes from source timing.
+- `freshness` does **not** use an invented clinical staleness threshold. Current v0.1 only distinguishes whether the source time is inside the configured shift or predates shift start.
+- Lab `trend` is a deterministic numeric comparison with the immediately prior usable result for the same source code.
+- Trend direction is descriptive only; it is not a clinical interpretation.
+- Source abnormal flags remain source flags, separate from numeric trend direction.
+
+## Shift I/O Projection
+
+```text
+io:
+  intake
+  output
+  net
+```
+
+Each is a report field derived from explicit timestamped source observations within the configured shift. Net is produced only when both intake and output are available. UOP remains a separate source-specific GU projection.
+
+## High-Density Stress Fixture
+
+`18_STRESS_ICU_FIXTURE.json` exercises cardinality and layout pressure without changing the model. It intentionally contains many LDAs, eight current drips, additional lab codes/trends, multiple radiology reports, longer To Do text, and more diagnoses/PMH.
