@@ -77,6 +77,16 @@ The 06:30 200 mL measurement is preserved in source history but excluded because
 
 ---
 
+## I/O Snapshot
+
+**Intake:** 770 mL  
+**Output:** 450 mL  
+**Net:** +320 mL
+
+These values are derived only from explicit `io.intake` / `io.output` source observations in the configured shift window. UOP remains separate at 365 mL.
+
+---
+
 ## Lines / Devices / Wounds
 
 - Right IJ triple lumen CVC
@@ -217,3 +227,39 @@ The report is compact, but the source history was **not destroyed** to make it c
 ## Next engineering step
 
 Choose the implementation stack and turn this exact fixture + policy set into executable normalization/selection code and the first interactive ICU report.
+
+
+---
+
+## UI Enhancements After Initial Projection
+
+### Source-time cues
+Selected source-backed/derived report fields now carry the selected source timestamp. The UI shows time quietly and marks a value **Pre-shift** only when its selected source predates the configured shift start.
+
+### Lab trend display
+Examples from the deterministic fixture:
+
+```text
+Potassium     3.4 mmol/L LOW
+              ↓ from 4.1 mmol/L @ 12:00
+              Current @ 17:10
+
+WBC           15.2 10^3/uL HIGH
+              ↓ from 17.8 10^3/uL @ 12:00
+              Current @ 17:10
+
+Creatinine    1.8 mg/dL HIGH
+              ↓ from 2.1 mg/dL @ 12:00
+              Current @ 17:10
+```
+
+Direction is numeric only and is not labeled as clinically better/worse.
+
+### Treatment / To Do
+Current handoff content whose source purpose is `To Do` is promoted to the top of the Treatment / To Do section. Other handoff fields and nursing interventions remain available as secondary source context. Manual report annotations remain report-only.
+
+### IV Drips
+Current administered infusions render as compact cards showing medication, current rate, access when linked, and selected source timing.
+
+### Stress mode
+Use `?fixture=stress` or the in-app **Stress Test** control to load the high-density fixture.
