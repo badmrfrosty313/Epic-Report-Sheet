@@ -381,6 +381,92 @@ function Section({
   );
 }
 
+
+function RadiologySection() {
+  return (
+    <Section title="Radiology" className="radiology-section">
+      {report.radiology.length ? (
+        report.radiology.map((item, index) => (
+          <DisplayField
+            key={index}
+            label={`Study ${index + 1}`}
+            field={item}
+            valueCase="preserve"
+          />
+        ))
+      ) : (
+        <p className="missing section-message">No radiology results</p>
+      )}
+    </Section>
+  );
+}
+
+function TreatmentSection() {
+  return (
+    <Section title="Treatment / To Do" className="treatment-section">
+      <h3>Shift To Do</h3>
+      <TodoZone />
+
+      {report.treatment.annotations.length ? (
+        <>
+          <h3>Report Notes</h3>
+          {report.treatment.annotations.map((item, index) => (
+            <DisplayField
+              key={index}
+              label={`Note ${index + 1}`}
+              field={item}
+            />
+          ))}
+        </>
+      ) : null}
+
+      {(report.treatment.handoff.length ||
+        report.treatment.interventions.length) ? (
+        <details className="secondary-treatment">
+          <summary>Other source context</summary>
+          {report.treatment.handoff.length ? (
+            <>
+              <h3>Other Handoff</h3>
+              {report.treatment.handoff.map((item, index) => (
+                <DisplayField
+                  key={index}
+                  label={`Handoff ${index + 1}`}
+                  field={item}
+                />
+              ))}
+            </>
+          ) : null}
+          {report.treatment.interventions.length ? (
+            <>
+              <h3>Nursing Interventions</h3>
+              {report.treatment.interventions.map((item, index) => (
+                <DisplayField
+                  key={index}
+                  label={`Intervention ${index + 1}`}
+                  field={item}
+                />
+              ))}
+            </>
+          ) : null}
+        </details>
+      ) : null}
+    </Section>
+  );
+}
+
+function LabsSection() {
+  return (
+    <section className="report-section labs-section">
+      <h2>Labs</h2>
+      <div className="lab-grid">
+        {Object.entries(report.labs).map(([name, value]) => (
+          <LabCell key={name} label={name} field={value} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function App() {
   const [isExportingPdf, setIsExportingPdf] = useState(false);
 
@@ -480,20 +566,9 @@ export default function App() {
             <DisplayField label="Vent" field={report.respiratory.vent} />
           </Section>
 
-          <Section title="Radiology" className="radiology-section">
-            {report.radiology.length ? (
-              report.radiology.map((item, index) => (
-                <DisplayField
-                  key={index}
-                  label={`Study ${index + 1}`}
-                  field={item}
-                  valueCase="preserve"
-                />
-              ))
-            ) : (
-              <p className="missing section-message">No radiology results</p>
-            )}
-          </Section>
+          <div className="screen-only">
+            <RadiologySection />
+          </div>
         </div>
 
         <div className="report-column">
@@ -556,65 +631,23 @@ export default function App() {
             <DisplayField label="Current" field={report.pain} />
           </Section>
 
-          <Section title="Treatment / To Do" className="treatment-section">
-            <h3>Shift To Do</h3>
-            <TodoZone />
-
-            {report.treatment.annotations.length ? (
-              <>
-                <h3>Report Notes</h3>
-                {report.treatment.annotations.map((item, index) => (
-                  <DisplayField
-                    key={index}
-                    label={`Note ${index + 1}`}
-                    field={item}
-                  />
-                ))}
-              </>
-            ) : null}
-
-            {(report.treatment.handoff.length ||
-              report.treatment.interventions.length) ? (
-              <details className="secondary-treatment">
-                <summary>Other source context</summary>
-                {report.treatment.handoff.length ? (
-                  <>
-                    <h3>Other Handoff</h3>
-                    {report.treatment.handoff.map((item, index) => (
-                      <DisplayField
-                        key={index}
-                        label={`Handoff ${index + 1}`}
-                        field={item}
-                      />
-                    ))}
-                  </>
-                ) : null}
-                {report.treatment.interventions.length ? (
-                  <>
-                    <h3>Nursing Interventions</h3>
-                    {report.treatment.interventions.map((item, index) => (
-                      <DisplayField
-                        key={index}
-                        label={`Intervention ${index + 1}`}
-                        field={item}
-                      />
-                    ))}
-                  </>
-                ) : null}
-              </details>
-            ) : null}
-          </Section>
+          <div className="screen-only">
+            <TreatmentSection />
+          </div>
         </div>
       </div>
 
-      <section className="report-section labs-section">
-        <h2>Labs</h2>
-        <div className="lab-grid">
-          {Object.entries(report.labs).map(([name, value]) => (
-            <LabCell key={name} label={name} field={value} />
-          ))}
+      <div className="screen-only">
+        <LabsSection />
+      </div>
+
+      <div className="print-only-output output-page-two">
+        <LabsSection />
+        <div className="output-page-two-lower">
+          <RadiologySection />
+          <TreatmentSection />
         </div>
-      </section>
+      </div>
 
       <footer className="audit-footer">
         <details>
