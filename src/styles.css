@@ -709,6 +709,10 @@ select {
   display: block;
 }
 
+.print-only-output {
+  display: none;
+}
+
 @media print {
   html,
   body {
@@ -743,6 +747,78 @@ select {
     display: none !important;
   }
 
+
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only-output {
+    display: block !important;
+  }
+
+  .output-page-two {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .output-page-two .labs-section {
+    margin-top: 0;
+    break-before: auto;
+    page-break-before: auto;
+  }
+
+  .output-page-two .lab-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .output-page-two .lab-cell,
+  .output-page-two .lab-cell:nth-child(2n),
+  .output-page-two .lab-cell:nth-child(4n),
+  .output-page-two .lab-cell:nth-child(5n),
+  .output-page-two .lab-cell:nth-child(6n) {
+    padding: 6px 6px;
+    border-right: 1px solid #dce2e9;
+  }
+
+  .output-page-two .lab-cell:nth-child(5n) {
+    border-right: 0;
+  }
+
+  .output-page-two .lab-cell-label {
+    font-size: 6.1pt;
+  }
+
+  .output-page-two .lab-cell-value {
+    font-size: 7.5pt;
+  }
+
+  .output-page-two .lab-cell-flag {
+    font-size: 5pt;
+  }
+
+  .output-page-two .lab-trend {
+    font-size: 5.2pt;
+  }
+
+  .output-page-two .lab-time {
+    font-size: 4.8pt;
+  }
+
+  .output-page-two-lower {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 0.14in;
+    margin-top: 0.12in;
+    align-items: start;
+  }
+
+  .output-page-two-lower .report-section {
+    break-inside: auto;
+    page-break-inside: auto;
+    margin-bottom: 0;
+  }
+
+
   .app-header {
     margin-bottom: 5px;
   }
@@ -774,7 +850,7 @@ select {
   .report-columns {
     display: block !important;
     column-count: 2;
-    column-gap: 0.08in;
+    column-gap: 0.14in;
     column-fill: auto;
   }
 
@@ -994,6 +1070,67 @@ body.pdf-exporting .audit-footer {
   display: none !important;
 }
 
+body.pdf-exporting .screen-only {
+  display: none !important;
+}
+
+body.pdf-exporting .print-only-output {
+  display: block !important;
+}
+
+body.pdf-exporting .output-page-two {
+  break-before: page;
+  page-break-before: always;
+}
+
+body.pdf-exporting .output-page-two .labs-section {
+  margin-top: 0;
+  break-before: auto;
+  page-break-before: auto;
+}
+
+body.pdf-exporting .output-page-two .lab-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+body.pdf-exporting .output-page-two .lab-cell {
+  padding: 6px 6px;
+}
+
+body.pdf-exporting .output-page-two .lab-cell-label {
+  font-size: 6.1pt;
+}
+
+body.pdf-exporting .output-page-two .lab-cell-value {
+  font-size: 7.5pt;
+}
+
+body.pdf-exporting .output-page-two .lab-cell-flag {
+  font-size: 5pt;
+}
+
+body.pdf-exporting .output-page-two .lab-trend {
+  font-size: 5.2pt;
+}
+
+body.pdf-exporting .output-page-two .lab-time {
+  font-size: 4.8pt;
+}
+
+body.pdf-exporting .output-page-two-lower {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 0.14in;
+  margin-top: 0.12in;
+  align-items: start;
+}
+
+body.pdf-exporting .output-page-two-lower .report-section {
+  margin-bottom: 0;
+  break-inside: auto;
+  page-break-inside: auto;
+}
+
 body.pdf-exporting .app-header {
   margin-bottom: 5px;
 }
@@ -1025,7 +1162,7 @@ body.pdf-exporting .patient-banner > * {
 body.pdf-exporting .report-columns {
   display: block !important;
   column-count: 2;
-  column-gap: 0.08in;
+  column-gap: 0.14in;
   column-fill: auto;
 }
 
