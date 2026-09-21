@@ -47,7 +47,7 @@
   - handoff field purposes
   - authorization, scopes, security, and environment configuration
 - [ ] Build the authorized Epic/EHR ingestion adapter if feasible.
-- [ ] Validate the report against a realistic ICU shift-handoff scenario.
+- [x] Validate the report against a realistic synthetic ICU shift-handoff scenario (`20_ICU_ACCEPTANCE_FIXTURE.json` + 11-test acceptance suite; CI #94 passed).
 - [ ] Refine layout and prioritization from nurse workflow feedback.
 - [ ] Add a second unit template to prove the architecture generalizes.
 - [ ] Document setup and end-user workflow.
@@ -63,7 +63,7 @@
 - [x] Test selected lab values, H/H derivation, missing lab behavior, and entered-in-error exclusion.
 - [x] Exercise realistic long values/high cardinality through the stress fixture; final human visual review still pending.
 - [ ] Test Print / Save PDF output manually.
-- [ ] Run a manual ICU nursing-workflow validation.
+- [x] Run an automated scenario-level ICU handoff acceptance validation when reliable historical patient detail was unavailable; human visual/nurse-eye review remains separate.
 
 ## Completed Artifacts
 - [x] `10_ICU_FIELD_INVENTORY.md`
