@@ -1,6 +1,8 @@
+import { useState } from "react";
 import fixtureJson from "../Support Sheets/15_MOCK_ICU_FIXTURE.json";
 import stressFixtureJson from "../Support Sheets/18_STRESS_ICU_FIXTURE.json";
 import { buildReportState } from "./selection";
+import { saveReportPdf } from "./pdfExport";
 import type {
   FieldProvenance,
   IcuFixture,
@@ -380,8 +382,28 @@ function Section({
 }
 
 export default function App() {
+  const [isExportingPdf, setIsExportingPdf] = useState(false);
+
+  async function handleSavePdf() {
+    const element = document.getElementById("report-sheet");
+    if (!element || isExportingPdf) return;
+
+    setIsExportingPdf(true);
+    try {
+      await saveReportPdf(
+        element,
+        `epic-report-sheet-${fixtureKey}.pdf`,
+      );
+    } finally {
+      setIsExportingPdf(false);
+    }
+  }
+
   return (
-    <main className="page-shell">
+    <main
+      id="report-sheet"
+      className={`page-shell fixture-${fixtureKey}`}
+    >
       <header className="app-header">
         <div>
           <p className="eyebrow">
@@ -408,8 +430,15 @@ export default function App() {
               Stress Test
             </a>
           </nav>
+          <button
+            className="print-button"
+            onClick={handleSavePdf}
+            disabled={isExportingPdf}
+          >
+            {isExportingPdf ? "Building PDF..." : "Save Landscape PDF"}
+          </button>
           <button className="print-button" onClick={() => window.print()}>
-            Print / Save PDF
+            Print
           </button>
         </div>
       </header>
@@ -451,7 +480,7 @@ export default function App() {
             <DisplayField label="Vent" field={report.respiratory.vent} />
           </Section>
 
-          <Section title="Radiology">
+          <Section title="Radiology" className="radiology-section">
             {report.radiology.length ? (
               report.radiology.map((item, index) => (
                 <DisplayField
@@ -492,15 +521,17 @@ export default function App() {
             <IoSnapshot />
           </Section>
 
-          <Section title="Lines / Devices / Wounds">
-            {report.ldas.map((item, index) => (
-              <DisplayField
-                key={index}
-                label={`LDA ${index + 1}`}
-                field={item}
-                valueCase="title"
-              />
-            ))}
+          <Section title="Lines / Devices / Wounds" className="lines-section">
+            <div className="lda-grid">
+              {report.ldas.map((item, index) => (
+                <DisplayField
+                  key={index}
+                  label={`LDA ${index + 1}`}
+                  field={item}
+                  valueCase="title"
+                />
+              ))}
+            </div>
           </Section>
 
           <Section title="IV Drips" className="drips-section">
