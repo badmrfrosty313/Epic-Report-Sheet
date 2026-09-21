@@ -392,7 +392,7 @@ export default function App() {
     try {
       await saveReportPdf(
         element,
-        `epic-report-sheet-${fixtureKey}.pdf`,
+        `epic-report-sheet-${fixtureKey}-portrait.pdf`,
       );
     } finally {
       setIsExportingPdf(false);
@@ -435,7 +435,7 @@ export default function App() {
             onClick={handleSavePdf}
             disabled={isExportingPdf}
           >
-            {isExportingPdf ? "Building PDF..." : "Save Landscape PDF"}
+            {isExportingPdf ? "Building PDF..." : "Save Portrait PDF"}
           </button>
           <button className="print-button" onClick={() => window.print()}>
             Print
