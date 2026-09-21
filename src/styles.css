@@ -697,8 +697,8 @@ select {
 }
 
 @page {
-  size: landscape;
-  margin: 0.32in;
+  size: Letter landscape;
+  margin: 0.2in;
 }
 
 @media print {
@@ -874,4 +874,360 @@ select {
     margin-top: 1px;
     padding-top: 2px;
   }
+}
+
+
+/* Shared compact output layout.
+   Native print uses this inside @media print.
+   Client PDF export uses the same rules via body.pdf-exporting. */
+
+.lda-grid {
+  display: block;
+}
+
+@media print {
+  html,
+  body {
+    width: 11in !important;
+    min-width: 11in !important;
+    max-width: 11in !important;
+  }
+
+  body {
+    margin: 0 !important;
+    overflow: visible !important;
+    font-size: 8pt;
+  }
+
+  .page-shell {
+    width: 10.6in !important;
+    max-width: 10.6in !important;
+    margin: 0 auto !important;
+  }
+
+  .header-actions {
+    display: none !important;
+  }
+
+  .report-columns {
+    display: block !important;
+    column-count: 2;
+    column-gap: 0.09in;
+    column-fill: auto;
+  }
+
+  .fixture-stress .report-columns {
+    column-count: 3;
+  }
+
+  .report-column {
+    display: contents !important;
+  }
+
+  .report-section {
+    width: 100%;
+    margin: 0 0 0.06in;
+    break-inside: avoid-column;
+    page-break-inside: avoid;
+  }
+
+  .radiology-section,
+  .lines-section,
+  .drips-section,
+  .treatment-section {
+    break-inside: auto;
+    page-break-inside: auto;
+  }
+
+  .radiology-section .field-row,
+  .lines-section .field-row,
+  .drips-section .drip-card,
+  .treatment-section .todo-card,
+  .treatment-section .field-row {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .report-section h2 {
+    padding: 3px 5px;
+    font-size: 7.5pt;
+  }
+
+  .report-section h3 {
+    padding: 3px 5px;
+    font-size: 5.8pt;
+  }
+
+  .field-row {
+    grid-template-columns: minmax(0.55in, 0.26fr) minmax(0, 1fr);
+  }
+
+  .field-label {
+    font-size: 5.8pt;
+  }
+
+  .field-value {
+    font-size: 6.5pt;
+    line-height: 1.18;
+  }
+
+  .field-label,
+  .field-content,
+  .lung-assessment-label,
+  .lung-assessment-content {
+    padding: 3px 5px;
+  }
+
+  .field-value-line {
+    padding: 0 0 1px;
+  }
+
+  .lda-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lda-grid .field-row {
+    border-right: 1px solid #dce2e9;
+  }
+
+  .drip-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .drip-card,
+  .drip-card:nth-child(2n) {
+    border-right: 1px solid #dce2e9;
+  }
+
+  .drip-card:nth-child(4n) {
+    border-right: 0;
+  }
+
+  .lab-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .lab-cell,
+  .lab-cell:nth-child(2n),
+  .lab-cell:nth-child(4n),
+  .lab-cell:nth-child(6n) {
+    border-right: 1px solid #dce2e9;
+    padding: 3px 4px;
+  }
+
+  .lab-cell:nth-child(12n) {
+    border-right: 0;
+  }
+
+  .lab-cell-label {
+    font-size: 5pt;
+  }
+
+  .lab-cell-value {
+    font-size: 6.4pt;
+  }
+
+  .lab-cell-flag,
+  .lab-trend,
+  .lab-time {
+    font-size: 4.6pt;
+  }
+
+  .lung-cell-label {
+    font-size: 5pt;
+  }
+
+  .lung-cell-value {
+    font-size: 6.4pt;
+    padding: 3px;
+  }
+
+  .todo-card {
+    grid-template-columns: 0.42in minmax(0, 1fr);
+    gap: 4px;
+    padding: 4px 5px;
+  }
+
+  .todo-marker {
+    font-size: 4.5pt;
+    padding: 2px 3px;
+  }
+
+  .todo-text {
+    font-size: 6pt;
+    line-height: 1.2;
+  }
+}
+
+/* html2pdf.js renders screen media, so mirror the compact landscape
+   print layout while the export is being captured. */
+body.pdf-exporting {
+  margin: 0 !important;
+  background: white !important;
+  overflow: visible !important;
+}
+
+body.pdf-exporting .page-shell {
+  width: 10.6in !important;
+  max-width: 10.6in !important;
+  margin: 0 auto !important;
+  font-size: 8pt;
+}
+
+body.pdf-exporting .header-actions,
+body.pdf-exporting .field-meta,
+body.pdf-exporting .source-detail,
+body.pdf-exporting .lab-source-detail,
+body.pdf-exporting .lung-source-detail,
+body.pdf-exporting .audit-footer {
+  display: none !important;
+}
+
+body.pdf-exporting .app-header {
+  margin-bottom: 5px;
+}
+
+body.pdf-exporting .app-header h1 {
+  font-size: 15pt;
+}
+
+body.pdf-exporting .subhead {
+  display: none;
+}
+
+body.pdf-exporting .patient-banner {
+  margin-bottom: 5px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body.pdf-exporting .patient-banner > * {
+  padding: 4px 6px;
+  font-size: 7pt;
+}
+
+body.pdf-exporting .report-columns {
+  display: block !important;
+  column-count: 2;
+  column-gap: 0.09in;
+  column-fill: auto;
+}
+
+body.pdf-exporting .fixture-stress.report-columns,
+body.pdf-exporting .fixture-stress .report-columns {
+  column-count: 3;
+}
+
+body.pdf-exporting .report-column {
+  display: contents !important;
+}
+
+body.pdf-exporting .report-section {
+  width: 100%;
+  margin: 0 0 0.06in;
+  border-radius: 0;
+  box-shadow: none;
+  break-inside: avoid-column;
+  page-break-inside: avoid;
+}
+
+body.pdf-exporting .radiology-section,
+body.pdf-exporting .lines-section,
+body.pdf-exporting .drips-section,
+body.pdf-exporting .treatment-section,
+body.pdf-exporting .labs-section {
+  break-inside: auto;
+  page-break-inside: auto;
+}
+
+body.pdf-exporting .radiology-section .field-row,
+body.pdf-exporting .lines-section .field-row,
+body.pdf-exporting .drip-card,
+body.pdf-exporting .todo-card,
+body.pdf-exporting .lab-cell {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+body.pdf-exporting .report-section h2 {
+  padding: 3px 5px;
+  font-size: 7.5pt;
+}
+
+body.pdf-exporting .report-section h3 {
+  padding: 3px 5px;
+  font-size: 5.8pt;
+}
+
+body.pdf-exporting .field-row {
+  grid-template-columns: minmax(0.55in, 0.26fr) minmax(0, 1fr);
+}
+
+body.pdf-exporting .field-label {
+  font-size: 5.8pt;
+}
+
+body.pdf-exporting .field-value {
+  font-size: 6.5pt;
+  line-height: 1.18;
+}
+
+body.pdf-exporting .field-label,
+body.pdf-exporting .field-content,
+body.pdf-exporting .lung-assessment-label,
+body.pdf-exporting .lung-assessment-content {
+  padding: 3px 5px;
+}
+
+body.pdf-exporting .lda-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body.pdf-exporting .drip-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+body.pdf-exporting .lab-grid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+body.pdf-exporting .lab-cell {
+  padding: 3px 4px;
+}
+
+body.pdf-exporting .lab-cell-label {
+  font-size: 5pt;
+}
+
+body.pdf-exporting .lab-cell-value {
+  font-size: 6.4pt;
+}
+
+body.pdf-exporting .lab-cell-flag,
+body.pdf-exporting .lab-trend,
+body.pdf-exporting .lab-time {
+  font-size: 4.6pt;
+}
+
+body.pdf-exporting .lung-cell-value {
+  padding: 3px;
+  font-size: 6.4pt;
+}
+
+body.pdf-exporting .todo-card {
+  grid-template-columns: 0.42in minmax(0, 1fr);
+  gap: 4px;
+  padding: 4px 5px;
+}
+
+body.pdf-exporting .todo-marker {
+  padding: 2px 3px;
+  font-size: 4.5pt;
+}
+
+body.pdf-exporting .todo-text {
+  font-size: 6pt;
+  line-height: 1.2;
 }
