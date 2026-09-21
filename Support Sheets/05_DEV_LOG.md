@@ -486,3 +486,28 @@ The PDF renderer did not honor the intended CSS multi-column flow reliably. Larg
 
 ### Validation
 GitHub Actions CI run #90 passed after the explicit-page-grid refactor.
+
+
+---
+
+## 2026-09-20 - Synthetic ICU Acceptance Test
+
+### Why
+The user did not have enough detailed historical patient information to reconstruct a trustworthy real remembered case. Rather than fabricate one from memory, a new independent synthetic ICU scenario was created.
+
+### Scenario
+Ventilated septic shock from multifocal pneumonia with AKI, four active infusions, invasive lines, enteral nutrition, pressure injury, positive fluid balance, lab trends, current imaging, shift To Do items, intentionally missing neuro fields, and entered-in-error source traps.
+
+### Artifacts
+- `20_ICU_ACCEPTANCE_FIXTURE.json`
+- `tests/icuAcceptance.test.ts`
+- `21_ICU_ACCEPTANCE_TEST.md`
+
+### Result
+GitHub Actions CI run #94 passed:
+- 18 existing selector tests
+- 11 new scenario-level acceptance tests
+- 29 total tests
+- production build passed
+
+The acceptance scenario required no scenario-specific changes to the selection engine.
