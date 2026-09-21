@@ -93,6 +93,8 @@ The portrait output intentionally differs from the browser screen:
 - [ ] Content is upright with no viewer rotation.
 - [ ] Main report reads naturally top-to-bottom in portrait.
 - [ ] Labs begin on a fresh page.
+- [ ] Page 2 uses its remaining space for Radiology and Treatment / To Do rather than leaving a large blank region.
+- [ ] Page 1 remains focused on bedside/current-state content.
 - [ ] Standard fixture page count is compact.
 - [ ] Stress fixture page count is acceptable.
 - [ ] Patient banner is not clipped.
