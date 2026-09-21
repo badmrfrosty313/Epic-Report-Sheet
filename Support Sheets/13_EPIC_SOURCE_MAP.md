@@ -393,3 +393,22 @@ Define the canonical normalized ICU model from these source domains, including:
 - manual report annotations
 
 Then build realistic mock fixtures against that model and choose the implementation stack based on the actual shape we now know.
+
+
+## Intake / Output Snapshot
+
+The report may show a compact shift I/O snapshot **only when explicit source intake and output measurements are available**.
+
+Canonical source:
+- timestamped customer-configured Observation / flowsheet rows for intake and output
+- exact Epic FLO IDs and local value semantics remain deployment-specific
+
+Presentation behavior:
+- preserve each source intake/output measurement
+- derive shift Intake and Output totals only from measurements inside the configured shift window
+- derive Net as Intake minus Output only when both source collections are present
+- never treat UOP alone as total output
+- never convert missing intake/output documentation into zero
+- keep UOP visible separately because it is a clinically useful source-specific subset
+
+The current mock uses application concept tags `io.intake` and `io.output` solely as adapter-facing prototype concepts; these are **not universal Epic row names**.
