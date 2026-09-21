@@ -415,3 +415,25 @@ The first stress-fixture PDF test exposed a major output bug: Microsoft Print to
 
 ### Validation Status
 Automated tests still cover clinical selection behavior. CI/build validation is required for the new PDF dependency/export path; human visual validation remains required because generated-page appearance cannot be certified by TypeScript tests alone.
+
+
+---
+
+## 2026-09-20 - Portrait Output Reflow
+
+### Trigger
+The second PDF test was cleaner and reduced to two pages, but the report still read as a landscape sheet rotated inside portrait pages. The preferred physical/report-sheet form is portrait.
+
+### Change
+- Direct PDF export now generates **Letter portrait**.
+- Native print CSS now requests **Letter portrait**.
+- Browser UI remains dual-column and unchanged.
+- Portrait output uses a compact two-column clinical flow.
+- Labs begin on a fresh page.
+- Drips use two columns in output.
+- Output font/spacing were retuned for the narrower portrait page.
+- The export control is now **Save Portrait PDF**.
+
+### Target
+Standard fixture: compact portrait clinical page plus portrait lab page where possible.
+Stress fixture: portrait first, with extra pages allowed only when content density genuinely requires them.
