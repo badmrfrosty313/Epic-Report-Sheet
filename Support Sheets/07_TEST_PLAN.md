@@ -11,6 +11,11 @@
 | T-006 | Supply unusually long realistic values. | Layout remains usable or handles overflow intentionally. | Not yet tested |
 | T-007 | Print/export the report. | Printed/PDF result preserves essential content and readability. | **Implemented; manual print/PDF validation pending** |
 | T-008 | Change input source adapter while preserving normalized data. | Report output does not depend on source-specific field names. | Future |
+| T-009 | Load high-density stress fixture. | Same selection engine handles 10+ LDAs, 8 current drips, expanded labs/imaging, and long narrative content without data loss. | **Passed automated report-state/build test** |
+| T-010 | Derive source time/freshness. | Report field carries selected source time and only distinguishes this-shift vs pre-shift, without arbitrary medical stale thresholds. | **Passed automated** |
+| T-011 | Calculate lab trend. | Current numeric lab compares against immediately prior valid same-code result; entered-in-error values remain excluded. | **Passed automated** |
+| T-012 | Calculate shift I/O. | Explicit source intake/output observations produce 770 mL intake, 450 mL output, +320 mL net; UOP remains separate. | **Passed automated** |
+| T-013 | Print stress fixture. | Landscape print remains readable with no clipped/split critical cards. | **Manual validation pending** |
 
 ## Automated Tests Implemented
 - Patient header/location/code-status/weight/age selection.
