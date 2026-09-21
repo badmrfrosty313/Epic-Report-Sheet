@@ -103,8 +103,9 @@ The UI never reads raw Epic payloads directly.
 - prominent source-backed To Do area
 - radiology source impressions
 - standard/stress fixture switcher
-- landscape print CSS
+- explicit Letter-landscape print CSS
+- direct client-side **Save Landscape PDF** export that bypasses printer-driver orientation quirks
 
 ## Next milestone
 
-Run the standard and stress fixtures locally as a nurse-workflow review, then manually inspect Print / Save PDF using the checklist in `19_UI_STRESS_AND_PRINT_CHECKLIST.md`. Do not add live EHR integration yet.
+Run the standard and stress fixtures locally as a nurse-workflow review. Validate **Save Landscape PDF** first because it creates Letter landscape directly; use native **Print** separately for physical printer testing. Follow `19_UI_STRESS_AND_PRINT_CHECKLIST.md`. Do not add live EHR integration yet.
