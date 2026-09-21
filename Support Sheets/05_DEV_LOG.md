@@ -382,3 +382,36 @@ GitHub Actions CI run #55 passed after these changes. Tests now cover I/O totals
 
 ### Remaining Manual Validation
 A browser/print rendering still needs human inspection. Use `19_UI_STRESS_AND_PRINT_CHECKLIST.md`; automated CI proves deterministic data behavior and build integrity but does not replace visual nurse-workflow judgment.
+
+
+---
+
+## 2026-09-20 - Print/PDF Orientation Fix
+
+### Trigger
+The first stress-fixture PDF test exposed a major output bug: Microsoft Print to PDF produced a **portrait Letter PDF with the landscape report content rotated sideways**, expanding the report to five pages.
+
+### Verified Failure
+- Uploaded test PDF: 5 pages.
+- Actual media box: 612 x 792 pt = portrait Letter.
+- PDF rotation metadata: 0.
+- Producer: Microsoft Print To PDF.
+- Therefore the output problem was not merely a PDF viewer rotation setting; the printer path itself produced portrait pages.
+
+### Fix
+- Changed CSS page request from generic `landscape` to explicit `Letter landscape`.
+- Added print-specific 11 in x 8.5 in layout sizing.
+- Added denser print pagination:
+  - multi-column clinical flow
+  - stress fixture uses three print columns
+  - LDA list uses two columns
+  - drip cards use four columns
+  - labs use twelve columns
+  - large sections may split between records while individual rows/cards remain protected
+- Split output controls into:
+  - **Save Landscape PDF**
+  - **Print**
+- Added `html2pdf.js` and `src/pdfExport.ts` so Save Landscape PDF creates Letter-landscape PDF pages directly instead of relying on the Windows printer driver.
+
+### Validation Status
+Automated tests still cover clinical selection behavior. CI/build validation is required for the new PDF dependency/export path; human visual validation remains required because generated-page appearance cannot be certified by TypeScript tests alone.
