@@ -17,9 +17,14 @@ Build a digital ICU nursing report system that ingests structured patient/encoun
 - The comprehensive map is `Support Sheets/13_EPIC_SOURCE_MAP.md`.
 - The source map is based on Epic's public FHIR/API catalog and specifications; exact customer-specific flowsheet/LDA codes remain deployment configuration.
 - v0.1 stack is TypeScript + React + Vite + Vitest with plain CSS and browser-native print CSS.
-- Automated selector tests and the Vite production build pass in GitHub Actions CI (run #2 successful).
+- Automated selector tests and the Vite production build pass in GitHub Actions; the latest expanded regression pass is CI run #55 successful.
 - Live Epic access is not required for v0.1.
 - Mock/de-identified source-shaped fixtures only during prototype development.
+- Report fields now expose source-time cues and pre-shift state without arbitrary medical staleness thresholds.
+- Labs display numeric direction vs the immediately prior valid source result when available.
+- Shift I/O snapshot is derived from explicit intake/output observations; UOP remains separate.
+- To Do is promoted from source Handoff purpose while other handoff/interventions remain secondary context.
+- Standard and high-density stress fixtures can be switched in-app.
 
 ## Governing Architecture
 `Epic/EHR adapter -> source-preserving normalized model -> validation/selection -> ICU report projection -> interactive UI + print/export`
@@ -91,7 +96,7 @@ Public Epic docs do not provide universal customer-independent mappings for many
 These are adapter configuration, not blockers for the mock prototype.
 
 ## Exact Next Step
-Run the executable prototype locally and perform the first nurse-layout validation.
+Run **both** fixture modes locally and do the human visual/print pass.
 
 ```text
 git pull
@@ -100,15 +105,13 @@ npm run test:run
 npm run dev
 ```
 
-Then, in the browser:
-1. confirm the mock report is quickly scannable as an ICU handoff sheet,
-2. expand several Source IDs to verify provenance interaction feels useful rather than noisy,
-3. verify missing NIHSS/Magnesium are unmistakably missing rather than normal,
-4. verify repeated LDA/drip/treatment sections remain readable,
-5. use **Print / Save PDF** and inspect the print layout,
-6. record concrete layout/workflow changes before adding additional features.
+Browser:
+- Standard fixture: `?fixture=standard`
+- Stress fixture: `?fixture=stress`
 
-Do not add live Epic integration yet.
+Use `Support Sheets/19_UI_STRESS_AND_PRINT_CHECKLIST.md`.
+
+The automated selector/build regression is green (CI run #55). Remaining work is specifically nurse-eye validation of density, ordering, timestamps/trends, stress overflow, and Print / Save PDF. Do not add live Epic integration yet.
 ## Do Not Undo
 - Do not rebuild the model field-for-field from the PDF.
 - Do not invent universal Epic flowsheet IDs.
