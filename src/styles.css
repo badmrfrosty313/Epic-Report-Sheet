@@ -768,7 +768,7 @@ select {
   }
 
   .output-page-two .lab-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .output-page-two .lab-cell,
@@ -776,11 +776,11 @@ select {
   .output-page-two .lab-cell:nth-child(4n),
   .output-page-two .lab-cell:nth-child(5n),
   .output-page-two .lab-cell:nth-child(6n) {
-    padding: 6px 6px;
+    padding: 7px 7px;
     border-right: 1px solid #dce2e9;
   }
 
-  .output-page-two .lab-cell:nth-child(5n) {
+  .output-page-two .lab-cell:nth-child(4n) {
     border-right: 0;
   }
 
@@ -847,15 +847,23 @@ select {
     padding: 4px 5px;
   }
 
-  .report-columns {
-    display: block !important;
-    column-count: 2;
-    column-gap: 0.14in;
-    column-fill: auto;
+  .screen-report-columns {
+    display: none !important;
   }
 
-  .report-column {
-    display: contents !important;
+  .output-page-one {
+    display: block !important;
+  }
+
+  .output-page-one-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.14in;
+    align-items: start;
+  }
+
+  .output-column {
+    min-width: 0;
   }
 
   .report-section {
@@ -1090,7 +1098,7 @@ body.pdf-exporting .output-page-two .labs-section {
 }
 
 body.pdf-exporting .output-page-two .lab-grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 body.pdf-exporting .output-page-two .lab-cell {
@@ -1159,15 +1167,23 @@ body.pdf-exporting .patient-banner > * {
   padding: 4px 5px;
 }
 
-body.pdf-exporting .report-columns {
-  display: block !important;
-  column-count: 2;
-  column-gap: 0.14in;
-  column-fill: auto;
+body.pdf-exporting .screen-report-columns {
+  display: none !important;
 }
 
-body.pdf-exporting .report-column {
-  display: contents !important;
+body.pdf-exporting .output-page-one {
+  display: block !important;
+}
+
+body.pdf-exporting .output-page-one-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.14in;
+  align-items: start;
+}
+
+body.pdf-exporting .output-column {
+  min-width: 0;
 }
 
 body.pdf-exporting .report-section {
