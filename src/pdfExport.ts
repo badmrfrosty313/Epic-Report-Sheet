@@ -13,8 +13,7 @@ export async function saveReportPdf(
   });
 
   try {
-    await html2pdf()
-      .set({
+    const options = {
         margin: [0.2, 0.2, 0.2, 0.2],
         filename,
         image: {
@@ -42,7 +41,12 @@ export async function saveReportPdf(
             ".todo-card",
           ],
         },
-      })
+      };
+
+    await html2pdf()
+      // html2pdf.js supports pagebreak at runtime, but its current TS
+      // declaration omits that option.
+      .set(options as any)
       .from(element)
       .save();
   } finally {
