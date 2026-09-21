@@ -27,6 +27,7 @@ Build a digital ICU nursing report system that ingests structured patient/encoun
 - Standard and high-density stress fixtures can be switched in-app.
 - Print/PDF now has two output paths: a dedicated client-side **Save Portrait PDF** path that explicitly generates Letter portrait pages, and native **Print** for physical/system printer validation.
 - The dedicated PDF path was added after Microsoft Print to PDF generated the stress report as a 5-page portrait Letter file with sideways landscape content.
+- Page 2 is now intentionally composed rather than being a Labs-only page: Labs lead, with Radiology and Treatment / To Do / report notes underneath. Page 1 is bedside/current-state focused.
 
 ## Governing Architecture
 `Epic/EHR adapter -> source-preserving normalized model -> validation/selection -> ICU report projection -> interactive UI + print/export`
