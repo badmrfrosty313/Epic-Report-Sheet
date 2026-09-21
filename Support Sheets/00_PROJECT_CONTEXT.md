@@ -31,7 +31,7 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Later: nurses on additional units, unit educators, charge nurses, or organizations that want standardized report-sheet templates.
 
 ## Current Status
-- Stage: **Executable v0.1 scaffold passing CI / local nurse-layout validation next**
+- Stage: **Executable v0.1 feature-complete for current pass / stress + print nurse validation next**
 - Last updated: 2026-09-20
 - ICU remains the first target workflow.
 - Full visible-field inventory is complete.
@@ -48,7 +48,11 @@ Produce a working prototype that can accept safe/mock patient data and generate 
 - Executable selector modules now load the deterministic mock fixture and produce a typed `ReportState`; the React UI renders the first interactive ICU report with expandable provenance and missing/source/derived/report-only distinctions.
 - Automated tests cover the core deterministic selection cases, and GitHub Actions CI run #2 completed successfully with tests + production build.
 - Radiology is now a first-class source domain using Epic/FHIR DiagnosticReport Results; the compact report shows study/time/status/source impression while preserving full source findings underneath.
-- Current focus: run the app locally and perform nurse-workflow / visual / print validation before polishing the layout.
+- High-density stress mode is available through `?fixture=stress`.
+- Source-time/pre-shift cues, lab numeric trends, shift I/O, compact drip cards, and To Do prominence are implemented.
+- Landscape print CSS has been hardened; human Print / Save PDF inspection remains.
+- Expanded regression passed in GitHub Actions CI run #55.
+- Current focus: human nurse-workflow review of both Standard and Stress fixtures plus the print checklist.
 - Repository: badmrfrosty313/Epic-Report-Sheet
 
 ## Constraints
