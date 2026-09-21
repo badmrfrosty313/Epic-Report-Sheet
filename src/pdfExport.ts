@@ -31,7 +31,6 @@ export async function saveReportPdf(
           unit: "in",
           format: "letter",
           orientation: "landscape",
-          compress: true,
         },
         pagebreak: {
           mode: ["css", "legacy"],
