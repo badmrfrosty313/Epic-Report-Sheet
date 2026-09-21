@@ -437,3 +437,29 @@ The second PDF test was cleaner and reduced to two pages, but the report still r
 ### Target
 Standard fixture: compact portrait clinical page plus portrait lab page where possible.
 Stress fixture: portrait first, with extra pages allowed only when content density genuinely requires them.
+
+
+---
+
+## 2026-09-20 - Portrait Page Rebalance
+
+### Trigger
+The first true-portrait stress PDF was finally upright and readable, but pagination was visually unbalanced: page 1 was nearly full while page 2 contained Labs at the top followed by a large empty region.
+
+### Change
+- Browser layout remains unchanged.
+- Print/PDF page 1 now focuses on bedside/current-state content.
+- Radiology and Treatment / To Do are removed from page 1 output only.
+- Page 2 now intentionally contains:
+  1. Labs
+  2. Radiology
+  3. Treatment / To Do + report notes
+- Labs expand to five columns on page 2 for larger, more readable values.
+- Radiology and Treatment / To Do share the lower page in two columns.
+- Portrait center gutter increased slightly.
+- Screen components remain in their original locations through screen-only wrappers; print/PDF uses a separate reusable page-2 composition.
+
+### Target
+Two balanced portrait pages for the stress fixture whenever content density permits:
+- Page 1 = bedside/current state
+- Page 2 = results + tasks/context
