@@ -29,7 +29,7 @@ export async function saveReportPdf(
         jsPDF: {
           unit: "in",
           format: "letter",
-          orientation: "landscape",
+          orientation: "portrait",
         },
         pagebreak: {
           mode: ["css", "legacy"],
