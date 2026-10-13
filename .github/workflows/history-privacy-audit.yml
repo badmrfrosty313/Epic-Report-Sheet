@@ -1,0 +1,18 @@
+name: Public history disclosure audit
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-history:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check tracked Git history for accidental disclosures
+        run: python3 tools/history_audit.py
