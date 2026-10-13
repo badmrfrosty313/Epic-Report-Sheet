@@ -70,4 +70,4 @@ The `Support Sheets/` directory also preserves historical planning notes and pro
 
 All included JSON encounters and tests are intended to be fictional. Do not add protected health information, credentials, organization-specific clinical exports, or live patient records. No live Epic/FHIR connection is supplied. This prototype is not suitable for making treatment decisions.
 
-The GitHub repository is currently being prepared for a public portfolio release. **Licensing is not yet finalized**, and public visibility alone does not grant permission to reuse the contents. See [publication checks](docs/PUBLICATION_CHECKLIST.md) for the source-history, prototype-PDF, and licensing decisions required before making it public.
+The original source code, tests, and project-authored documentation are [MIT licensed](LICENSE), subject to the separate third-party dependencies' licenses. This repository is prepared for a portfolio release; confirm the remaining history and disclosure checks before enabling public visibility. See [publication checks](docs/PUBLICATION_CHECKLIST.md).
