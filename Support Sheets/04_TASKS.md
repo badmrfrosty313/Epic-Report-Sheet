@@ -1,5 +1,8 @@
 # Task Board
 
+> **Historical engineering tracker (September 2026):** the user accepted v0.1 as complete within its synthetic, standalone scope on September 20, 2026. Older unchecked human validation and deployment tasks are retained for provenance and do not imply authorization to use the software clinically. See the root README and publication checklist for release status.
+
+
 ## Project State
 **Active as of 2026-09-20.** The full ICU prototype has now been mapped source-first against Epic's public FHIR/API surface. The old paper layout remains a workflow/display reference, not the canonical schema.
 
