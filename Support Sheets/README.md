@@ -4,7 +4,7 @@ This folder is the persistent project memory for Epic Report Sheet. It exists so
 
 ## Current Project Snapshot
 
-Epic Report Sheet is in **Planning** as of **2026-09-17**. The v0.1 finish line is intentionally narrow:
+**Historical project records:** initial planning began September 17, 2026. The mock-data v0.1 application was accepted as scope-complete on September 20, 2026; see the root README and the v0.1 release notes for the current status. The v0.1 finish line is intentionally narrow:
 
 > A realistic mock patient goes in and a useful, readable, printable first-unit nursing report sheet comes out.
 
@@ -42,5 +42,5 @@ At the end of a meaningful session:
 3. Refresh `09_CHATGPT_HANDOFF.md` if the project state materially changed.
 4. Commit the finished state.
 
-## Immediate Next Move
-Define the first nursing report's purpose, target unit/workflow, and exact information requirements. The implementation stack comes after that decision, not before it.
+## Current Status
+This directory preserves earlier design, development and test records. It is not an active task list for v0.1. New work should be limited to portfolio publication review unless a separately scoped clinical or integration project is approved.
