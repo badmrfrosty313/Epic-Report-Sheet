@@ -1,5 +1,8 @@
 # Project Context
 
+> **Portfolio status (October 2026):** the user accepted the v0.1 synthetic-data implementation as complete in September 2026. The original milestone notes below are historical. They do not imply actual Epic connectivity, real-world clinical validation, or completion of every manual print check. See the root README and publication checklist for current release status.
+
+
 ## Project Name
 Epic Report Sheet
 
